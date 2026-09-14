@@ -2606,7 +2606,7 @@ class AssistsCoreManager(private val context: Context) {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or immutableFlag()
         )
-        val iconRes = context.applicationInfo.icon.takeIf { it != 0 } ?: R.mipmap.ic_launcher
+        val iconRes = R.drawable.ic_notification
         val notification = NotificationCompat.Builder(
             context,
             SCHEDULED_SUBAGENT_NOTIFICATION_CHANNEL
