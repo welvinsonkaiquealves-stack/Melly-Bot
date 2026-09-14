@@ -707,3 +707,7 @@ Codex Plan 补验：用户指定模拟器验收，实际 UI 27 步（计划、�
 - 无模型请求或 ACP，未修改权限或持久化配置，排查范围缩小到 Codex 沙箱执行边界。具体内部原因仍未查明，**未修复、待真机验证**。
 - 证据 `artifacts/codex-terminal-exit-20260909/maintained-sandbox-probe.json`；完整说明见 [Codex 终端验收](codex-terminal-exit-20260909.md)。
 - 同一入口新增 `--native` 诊断并实际运行：直接原生二进制仍 status=182、signal=null，普通 bash 对照通过；记录 `maintained-native-probe.json`。排除当前 npm 包装层的信号转换，内部原因仍未确定。没有修改产品配置或权限。
+
+## 0.6.3 DSH thinking toggle and idle configuration restart
+
+See [DSH reasoning acceptance](dsh-reasoning-0.6.3.md). Executable coverage: `AgentWebRuntimeTest`, `LocalAcpRuntimeConfigTest`, `scripts/verify-dsh-reasoning-wire.mjs`, and `scripts/verify-dsh-phone-reasoning.py`. Wire on/off, physical generation, idle-edit restart, and post-restart Off/re-enabled High generation passed on PJE110 with final 0.6.3/code 16. A separately observed offline turn failed without automatic replay.
