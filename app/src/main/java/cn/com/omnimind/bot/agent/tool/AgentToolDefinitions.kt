@@ -739,10 +739,6 @@ object AgentToolDefinitions {
                                         put("type", "string")
                                     }
                                 }
-                                putJsonObject("confirmed") {
-                                    put("type", "boolean")
-                                    put("description", text("仅用于已完成用户确认的高风险动作。", "Use only after the user has confirmed a high-risk action."))
-                                }
                             }
                             put("additionalProperties", false)
                             put(
