@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Temporary Melly launcher identity; replace during E9 visual design. -->
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/launcher_logo"
     android:gravity="fill" />
