@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Omnibot</string>
-    <string name="omni_app_name">Omnibot</string>
+    <string name="app_name">Melly</string>
+    <string name="omni_app_name">Melly</string>
     <string name="quick_log_widget_title">Memory</string>
     <string name="quick_log_widget_description">Capture memories from the home screen and sync them to short-term memory</string>
     <string name="quick_log_widget_add">Add</string>

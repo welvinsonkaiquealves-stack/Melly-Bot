@@ -1,7 +1,7 @@
 # Melly: execution handoff
 
 **Updated:** 2026-09-15 UTC  
-**Current stage:** P0-A merged; infrastructure/documentation PR in preparation
+**Current stage:** E0-A2 minimum install identity in progress
 
 ## Current state
 
@@ -11,10 +11,11 @@ the OpenOmniBot history and contains the Gradle wrapper and tracked binary
 assets. P0-A is the first functional Melly security change.
 
 E0-A was merged through pull request #1. P0-A passed independent diff review and
-was merged through pull request #2. The current unit adds reproducible CI
-metrics, retains the debug APK for mobile installation, and brings the approved
-Melly planning/measurement documents into Git without importing the incomplete
-source snapshot.
+was merged through pull request #2. CI artifacts and documentation were merged
+through pull request #3. Device installation then exposed a pre-existing
+identity collision: the inherited APK still used OpenOmniBot's application ID,
+name and launcher art. E0-A2 gives the test build a minimal independent identity
+without renaming Kotlin packages or beginning the E9 brand redesign.
 
 ## Base
 
@@ -24,12 +25,14 @@ source snapshot.
 - Initial upstream branch: `main`
 - E0-A merge commit on `main`: `eef88dc81bbd6c79a42274a05d93160351071e09`
 - P0-A merge commit on `main`: `442967a11a4607dc74079abe07dab3ab4e77a5cc`
-- Current working branch: `infra/ci-artifacts-docs`
+- Infrastructure/docs merge commit on `main`: `0a81b43d42098f1c414ced0cb9803f5c5fa60b67`
+- Current working branch: `e0a2/minimum-app-identity`
 - Upstream `HEAD` and `main` both resolved to the audited commit before clone.
 - Initial working tree: clean.
 - GitHub `main` was verified at the audited commit before this bootstrap branch.
 - Bootstrap pull request #1 was merged with a merge commit.
 - P0-A pull request #2 was merged with a merge commit.
+- Infrastructure/documentation pull request #3 was merged with a merge commit.
 - `upstream-54aeae8` preserves the original commit as an archival branch. The
   GitHub connector could not create a tag; convert this reference to a tag when
   tag operations are available.
@@ -144,10 +147,18 @@ separate infrastructure change; do not mix it into this security patch.
 
 ### Infrastructure/documentation verification
 
-The current branch adds a CI step that summarizes JUnit XML, Android lint XML
-and APK size, followed by `actions/upload-artifact@v4` with a 14-day retention.
-Its parser was executed locally against deterministic fixture XML and a 1 MiB
-fixture APK. Full GitHub Actions verification is pending on the pull request.
+Pull request #3 added a CI step that summarizes JUnit XML, Android lint XML and
+APK size, followed by `actions/upload-artifact@v4` with a 14-day retention. Its
+parser was executed locally against deterministic fixture XML and a 1 MiB
+fixture APK. GitHub Actions run `34943803116` passed and published the installable
+debug artifact.
+
+- Flutter tests: 1,257 passed.
+- Kotlin/JVM tests: 1,098 passed; 0 failed, 0 errors, 0 skipped.
+- Worker tests: 24 passed; 0 failed.
+- Android lint: 325 inherited findings; 0 error/fatal findings.
+- Debug APK: one file, 198.17 MiB before artifact compression.
+- Combined Gradle command: `BUILD SUCCESSFUL in 13m 27s`.
 
 The approved planning, audit, architecture, decisions and build documents are
 under `docs/melly/`. The device measurement kit is under `medicao/`. The live
@@ -235,14 +246,26 @@ snapshot were intentionally not imported.
   kit into `medicao/`, with a mobile-only capture path documented.
 - Added CI report summarization and debug APK artifact publication; local parser
   fixture verification passed.
+- Completed pull request #3 CI and merged it as `0a81b43d`.
 - Traced E1-A termination through `AgentOrchestrator`, Xiaowan ACP and Flutter's
   reducer, establishing error rather than success as the correct limit outcome.
+- Confirmed the device installation conflict was caused by the inherited
+  `cn.com.omnimind.bot` application ID, not an Android installer defect.
+- Prepared E0-A2 with application ID `com.melly.assistant`, launcher labels
+  `Melly` in default and English Android resources, and a clearly distinct
+  provisional launcher icon. Kotlin namespace/package names remain unchanged.
+- Audited inherited package literals: provider authorities already derive from
+  `${applicationId}`. Internal Flutter/Kotlin channel IDs, test class names,
+  scripts and custom intent actions retain the old prefix intentionally; they
+  are protocol/namespace debt rather than installation identity. The seven
+  exported debug actions can collide if an unscoped test broadcast is sent
+  while both apps are installed, so device scripts must target the Melly package
+  explicitly until E9 or a dedicated test-harness migration.
 
 ## Work not completed
 
 - Device validation.
-- GitHub Actions verification and review of the infrastructure/documentation
-  pull request.
+- GitHub Actions verification and review of E0-A2.
 - Conversion of archival branch `upstream-54aeae8` into a Git tag.
 - Deletion of obsolete branch `melly/main`.
 - Branch protection for archival branch `upstream-54aeae8`.
@@ -251,10 +274,10 @@ snapshot were intentionally not imported.
 
 ## Next exact action
 
-Open, verify and review the infrastructure/documentation pull request. After it
-passes, download its debug APK artifact on the Android device and begin the E0
-measurement protocol. E1-A may begin with read-only lifecycle investigation in
-parallel, but no loop-limit code is approved by this handoff.
+Open E0-A2 as a pull request and require a green full CI run. Then download that
+run's debug APK, confirm Android installs `com.melly.assistant` beside the
+existing OpenOmniBot app, and begin the E0 measurement protocol. No Agent Loop
+or privileged-tool code belongs in E0-A2.
 
 ## Real blockers and risks
 
@@ -270,10 +293,13 @@ parallel, but no loop-limit code is approved by this handoff.
   the model boundary.
 - GitHub retention for the debug APK is intentionally 14 days; measurement
   evidence must be committed separately, not left only in the artifact.
+- The provisional `M` launcher art is intentionally not the final Melly brand;
+  replace it during E9 rather than expanding E0-A2 into a UI redesign.
 
 ## For the next agent
 
 Do not repeat the architecture audit, baseline setup or P0-A implementation.
-Read this file and inspect the current infrastructure/documentation pull
-request. Never reuse `melly/main` or the P0-A branch. Keep E1-A read-only until
-the lifecycle/UI terminal semantics have been traced and recorded.
+Read this file and inspect the current E0-A2 pull request. Never reuse
+`melly/main`, the P0-A branch or the infrastructure branch. Do not rename the
+Kotlin namespace/packages as part of installation identity. After a green CI
+run, validate side-by-side device installation before continuing E0 metrics.
