@@ -31,6 +31,7 @@ class AgentToolDefinitionsPrivilegedTest {
         assertTrue("packageName" in argumentProperties)
         assertTrue("activityName" in argumentProperties)
         assertTrue("command" in argumentProperties)
+        assertTrue("confirmed" !in argumentProperties)
         assertEquals(false, arguments["additionalProperties"]?.toString()?.toBoolean())
         assertTrue(
             function["description"]?.jsonPrimitive?.contentOrNull?.contains("one-shot arbitrary shell") ==
@@ -46,10 +47,12 @@ class AgentToolDefinitionsPrivilegedTest {
         )
         val function = tool["function"] as JsonObject
         val parameters = function["parameters"] as JsonObject
+        val properties = parameters["properties"] as JsonObject
         val required = parameters["required"] as JsonArray
 
         assertTrue(required.any { it.jsonPrimitive.contentOrNull == "sessionId" })
         assertTrue(required.any { it.jsonPrimitive.contentOrNull == "command" })
+        assertTrue("confirmed" !in properties)
     }
 
     @Test
