@@ -85,8 +85,22 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Verify Android SDK
+        run: |
+          sdkmanager_path="$(command -v sdkmanager || true)"
+          if [[ -z "$sdkmanager_path" ]]; then
+            sdkmanager_path="$(find /usr/local/lib/android/sdk/cmdline-tools -type f -path '*/bin/sdkmanager' | sort -V | tail -n 1)"
+          fi
+          test -x "$sdkmanager_path"
+          sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-}}"
+          if [[ -z "$sdk_root" ]]; then
+            sdkmanager_path="$(readlink -f "$sdkmanager_path")"
+            sdk_root="${sdkmanager_path%%/cmdline-tools/*}"
+          fi
+          test -d "$sdk_root"
+          "$sdkmanager_path" --version
+          echo "ANDROID_SDK_ROOT=$sdk_root" >> "$GITHUB_ENV"
+          echo "$(dirname "$sdkmanager_path")" >> "$GITHUB_PATH"
 
       - name: Cache Android SDK platform
         id: cache-android-platform
