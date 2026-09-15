@@ -1,19 +1,19 @@
 # Melly: execution handoff
 
 **Updated:** 2026-09-15 UTC  
-**Current stage:** E0-A complete — official GitHub base and CI baseline established
+**Current stage:** P0-A implemented and verified; pull request #2 awaiting review
 
 ## Current state
 
 The official persistent repository is
 `https://github.com/welvinsonkaiquealves-stack/Melly-Bot`. It was imported with
 the OpenOmniBot history and contains the Gradle wrapper and tracked binary
-assets. No Melly functional code has been changed.
+assets. P0-A is the first functional Melly security change.
 
-E0-A is complete on pull request #1: the source base and execution branch are
-fixed, and the repository's GitHub Actions workflow completed the full
-application baseline. The pull request remains open for maintainer review;
-`main` has not been modified.
+E0-A was merged through pull request #1. P0-A is implemented on
+`p0a/privileged-approval`, and the full GitHub Actions workflow passed on pull
+request #2. Pull request #2 remains open for independent review; `main` still
+points to the E0-A merge.
 
 ## Base
 
@@ -21,15 +21,18 @@ application baseline. The pull request remains open for maintainer review;
 - Imported source: `https://github.com/omnimind-ai/OpenOmniBot.git`
 - Audited and initial commit: `54aeae8046a4f3bcf0fccc1ca30713722a81d863`
 - Initial upstream branch: `main`
-- Working branch: `melly/main`
+- E0-A merge commit on `main`: `eef88dc81bbd6c79a42274a05d93160351071e09`
+- Current working branch: `p0a/privileged-approval`
 - Upstream `HEAD` and `main` both resolved to the audited commit before clone.
 - Initial working tree: clean.
 - GitHub `main` was verified at the audited commit before this bootstrap branch.
-- The persistent execution branch is `melly/main` and must be used through pull
-  requests; do not push Melly changes directly to `main`.
-- Bootstrap pull request: `https://github.com/welvinsonkaiquealves-stack/Melly-Bot/pull/1`.
-- GitHub state: `main` unchanged; `melly/main` contains only the documented
-  bootstrap/workflow changes and this handoff.
+- Bootstrap pull request #1 was merged with a merge commit.
+- P0-A pull request: `https://github.com/welvinsonkaiquealves-stack/Melly-Bot/pull/2`.
+- `upstream-54aeae8` preserves the original commit as an archival branch. The
+  GitHub connector could not create a tag; convert this reference to a tag when
+  tag operations are available.
+- The obsolete `melly/main` branch still exists because the connector could not
+  delete it. It must not be reused.
 
 ## Environment
 
@@ -116,6 +119,27 @@ Verified by successful run #3:
 The Gradle log did not expose a trustworthy total Kotlin test-case count, so no
 such count is claimed.
 
+### P0-A verification
+
+Workflow: `Pull Request CI`, pull request #2, run #5 (`34935963563`).
+
+- Full workflow: passed.
+- Worker/models.dev suite: 24 tests passed.
+- Flutter tests: 1,257 tests passed.
+- Flutter analyze: passed with the configured non-fatal policy; inherited
+  analyzer findings remain baseline debt.
+- Kotlin unit-test task, Android lint and debug APK assembly: passed.
+- Combined Gradle command: `BUILD SUCCESSFUL in 13m 46s`.
+- Six new focused handler tests cover model-supplied `confirmed`, rejection,
+  missing approval channel, session start, session execution, prohibited
+  commands and the internally approved backend path.
+- Existing schema tests now assert that `confirmed` is absent from action,
+  session-start and session-exec model schemas.
+
+The CI still does not print an aggregate Kotlin test count or retain the APK as
+an artifact. Add report summarization and `actions/upload-artifact@v4` in a
+separate infrastructure change; do not mix it into this security patch.
+
 ## Important files for the next stage
 
 - `app/src/main/java/cn/com/omnimind/bot/agent/tool/AgentToolDefinitions.kt`
@@ -125,6 +149,7 @@ such count is claimed.
 - `baselib/src/main/java/cn/com/omnimind/baselib/shizuku/ShizukuCapabilityManager.kt`
 - `baselib/src/main/java/cn/com/omnimind/baselib/shizuku/PrivilegedCommandExecutor.kt`
 - `app/src/test/java/cn/com/omnimind/bot/agent/AgentToolDefinitionsPrivilegedTest.kt`
+- `app/src/test/java/cn/com/omnimind/bot/agent/tool/handlers/PrivilegedToolHandlerApprovalTest.kt`
 - `baselib/src/test/java/cn/com/omnimind/baselib/shizuku/PrivilegedActionPolicyTest.kt`
 
 ## Confirmed decisions
@@ -135,8 +160,8 @@ such count is claimed.
 - DeepSeek is the only initially active provider. Keep other provider code
   physically present but outside the primary Melly path.
 - Plugins, MCP and external runtimes are not part of the initial default path.
-- The first functional change is P0-A: remove model-controlled privileged
-  approval.
+- P0-A keeps `AgentPermissionRequester` and its `XiaowanAcpConnection`
+  implementation as the authoritative approval boundary.
 
 ## Work completed
 
@@ -155,35 +180,49 @@ such count is claimed.
 - Repaired the inherited CI bootstrap by replacing the incompatible Android SDK
   setup action with explicit discovery/verification of the hosted runner SDK.
 - Completed and recorded the full GitHub Actions baseline in run #3.
+- Preserved the original upstream commit as `upstream-54aeae8` and merged E0-A
+  through pull request #1 with merge commit `eef88dc8`.
+- Removed `confirmed` from the model-facing privileged action schema and
+  discarded unknown model approval fields during parsing.
+- Made privileged action, session start and session execution always require a
+  positive system/UI decision before the backend receives internal approval.
+- Kept forbidden-command policy unconditional and fail-closed behavior when no
+  approval channel exists.
+- Located all direct Shizuku backend callers. The Agent catalog reaches them
+  through `PrivilegedToolHandler`; other direct calls are internal manager
+  diagnostics/helpers, not model approval sources.
+- Added six focused gate tests and completed full CI run #5 successfully.
 
 ## Work not completed
 
-- Any functional Melly code change.
-- P0-A implementation or tests.
 - Device validation.
-- Merge of bootstrap pull request #1 into `main` (maintainer decision).
+- Independent review and merge of P0-A pull request #2.
+- Conversion of archival branch `upstream-54aeae8` into a Git tag.
+- Deletion of obsolete branch `melly/main`.
+- CI publication of APK artifacts and aggregate Kotlin/lint/APK-size metrics.
+- Import of the approved architecture/decision/measurement documents into
+  `docs/`; source documents remain outside Git pending curation.
 
 ## Next exact action
 
-Review and merge bootstrap pull request #1 into `main`. After the user confirms
-the next implementation unit, start P0-A from the merged base: remove every
-model-controlled privileged approval bypass and prove the gate with focused
-tests.
+Review and merge pull request #2 with a merge commit. Do not start Agent Loop
+limits until this security change is merged and its branch is retired.
 
 ## Real blockers and risks
 
 - Local Work still cannot execute the full Flutter/Android suite; GitHub Actions
   is the authoritative application baseline in this workflow.
 - `ui/.android` is generated and remains absent until `flutter pub get` runs.
-- P0-A must not trust `additionalProperties: false`: current registry validation
-  does not recursively reject unknown nested fields. The handler must never
-  consume `confirmed` from model arguments.
-- Existing schema and policy tests do not prove that rejection or missing
-  approval prevents a backend call; P0-A needs a focused handler/gate test.
+- The CI Android SDK fallback searches
+  `/usr/local/lib/android/sdk/cmdline-tools` when `sdkmanager` is not on PATH.
+  If the hosted image layout changes, inspect this bootstrap step first.
+- The lower Shizuku backend still accepts a plain Boolean confirmation. P0-A
+  removes model control at the authoritative Agent handler. An opaque approval
+  capability remains optional defense in depth if future direct callers cross
+  the model boundary.
 
 ## For the next agent
 
-Do not repeat the architecture audit or baseline setup. Read this file, verify
-the current branch/PR state, and begin only the user-approved next unit. P0-A is
-next, but it must not be implemented before the bootstrap PR is merged and the
-user authorizes that unit.
+Do not repeat the architecture audit, baseline setup or P0-A implementation.
+Read this file and inspect pull request #2. After it is merged, use a new branch
+for the next approved unit; never reuse `melly/main` or the P0-A branch.
