@@ -154,6 +154,26 @@ under `docs/melly/`. The device measurement kit is under `medicao/`. The live
 state remains this handoff; the obsolete pre-Git state file and incomplete code
 snapshot were intentionally not imported.
 
+### E1-A read-only lifecycle investigation
+
+- `AgentOrchestrator.run` owns the operational `while (true)` and increments
+  `completedModelRounds` before each model attempt. The name is misleading:
+  the counter also includes the one allowed pre-output overflow recovery.
+- Setting the existing `terminated = true` on budget exhaustion would return
+  `AgentResult.Success`; Xiaowan would emit ACP `END_TURN`, and Flutter would
+  present a completed turn. That is a false success and must not be used.
+- The existing error path is correct for exhaustion: a non-cancellation error
+  becomes `AgentResult.Error`, Xiaowan projects it through the official ACP
+  prompt failure, and Flutter reduces it with `stopReason = error`, settling
+  pending cards without creating a second lifecycle event.
+- `CancellationException` already has a dedicated earlier catch and maps to ACP
+  `CANCELLED`. E1-A must preserve that ordering and behavior.
+- The minimal future patch should inject a small immutable loop policy, check
+  the limit before starting the next LLM request, and test normal completion,
+  infinite tool calls, overflow retry accounting and cancellation precedence.
+  No E1-A code has been changed yet, and the provisional numeric limit remains
+  decision A001 rather than an invented constant.
+
 ## Important files for the next stage
 
 - `app/src/main/java/cn/com/omnimind/bot/agent/tool/AgentToolDefinitions.kt`
@@ -215,6 +235,8 @@ snapshot were intentionally not imported.
   kit into `medicao/`, with a mobile-only capture path documented.
 - Added CI report summarization and debug APK artifact publication; local parser
   fixture verification passed.
+- Traced E1-A termination through `AgentOrchestrator`, Xiaowan ACP and Flutter's
+  reducer, establishing error rather than success as the correct limit outcome.
 
 ## Work not completed
 
