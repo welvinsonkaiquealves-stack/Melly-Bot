@@ -1,7 +1,7 @@
 # Melly: execution handoff
 
 **Updated:** 2026-09-15 UTC  
-**Current stage:** E0-A — official GitHub base established; CI baseline pending
+**Current stage:** E0-A complete — official GitHub base and CI baseline established
 
 ## Current state
 
@@ -10,9 +10,10 @@ The official persistent repository is
 the OpenOmniBot history and contains the Gradle wrapper and tracked binary
 assets. No Melly functional code has been changed.
 
-E0-A is in progress: the source base and execution branch are fixed. The local
-Work baseline remains limited by missing toolchains, so the full application
-baseline will run in the repository's existing GitHub Actions workflow.
+E0-A is complete on pull request #1: the source base and execution branch are
+fixed, and the repository's GitHub Actions workflow completed the full
+application baseline. The pull request remains open for maintainer review;
+`main` has not been modified.
 
 ## Base
 
@@ -26,6 +27,9 @@ baseline will run in the repository's existing GitHub Actions workflow.
 - GitHub `main` was verified at the audited commit before this bootstrap branch.
 - The persistent execution branch is `melly/main` and must be used through pull
   requests; do not push Melly changes directly to `main`.
+- Bootstrap pull request: `https://github.com/welvinsonkaiquealves-stack/Melly-Bot/pull/1`.
+- GitHub state: `main` unchanged; `melly/main` contains only the documented
+  bootstrap/workflow changes and this handoff.
 
 ## Environment
 
@@ -77,7 +81,40 @@ Available in this Work environment:
 - GitHub Actions wrapper validation
 
 These are environment/toolchain blockers, not observed source-code failures.
-No Android or Flutter baseline result may be claimed yet.
+No local Android or Flutter baseline result is claimed; use the GitHub Actions
+baseline recorded below.
+
+### GitHub Actions authoritative baseline
+
+Workflow: `Pull Request CI`, pull request #1.
+
+- Run #1 (`34930516998`) failed before application tests in inherited
+  `android-actions/setup-android@v3`: its implicit `sdkmanager tools` command
+  reported `Failed to find package 'tools'`. This was a CI infrastructure
+  incompatibility, not a source-code failure.
+- Run #2 (`34930675145`) confirmed that the hosted runner did not pre-export
+  `ANDROID_SDK_ROOT`; it failed in the new SDK verification before application
+  tests. This was a bootstrap workflow failure.
+- Run #3 (`34930872510`) completed successfully after detecting the hosted
+  runner SDK and exporting its root/path explicitly.
+
+Verified by successful run #3:
+
+- Secret scan (gitleaks): passed.
+- Worker/models.dev suite: 24 tests passed.
+- Gradle wrapper validation: passed.
+- Flutter dependencies with enforced lockfile: passed.
+- Flutter tests: 1,257 tests passed in approximately 3 minutes 10 seconds.
+- Flutter analyze: command passed with the configured non-fatal flags; 591
+  existing warnings/info items were reported. Do not describe this as zero
+  analyzer findings.
+- `:app:testDevelopStandardDebugUnitTest`: passed as part of the Gradle command.
+- `:app:lintDevelopStandardDebug`: passed as part of the Gradle command.
+- `:app:assembleDevelopStandardDebug`: passed; debug APK assembled.
+- Combined Gradle command: `BUILD SUCCESSFUL in 13m 59s`.
+
+The Gradle log did not expose a trustworthy total Kotlin test-case count, so no
+such count is claimed.
 
 ## Important files for the next stage
 
@@ -114,25 +151,29 @@ No Android or Flutter baseline result may be claimed yet.
 - Verified the imported GitHub `main` at the exact audited commit and confirmed
   that essential wrapper, Flutter and CI files exist.
 - Prepared inherited `sync-models-dev`, `sync-to-cnb` and `codex-bot` workflows
-  for manual dispatch only; CI and release workflows remain unchanged.
+  for manual dispatch only; release remains unchanged.
+- Repaired the inherited CI bootstrap by replacing the incompatible Android SDK
+  setup action with explicit discovery/verification of the hosted runner SDK.
+- Completed and recorded the full GitHub Actions baseline in run #3.
 
 ## Work not completed
 
-- GitHub Actions Flutter/Android baseline (pending bootstrap pull request).
 - Any functional Melly code change.
 - P0-A implementation or tests.
 - Device validation.
+- Merge of bootstrap pull request #1 into `main` (maintainer decision).
 
 ## Next exact action
 
-Open the bootstrap pull request from `melly/main` to `main`, monitor the `CI`
-workflow, and record each runner result here. Only after that baseline is
-recorded, start P0-A.
+Review and merge bootstrap pull request #1 into `main`. After the user confirms
+the next implementation unit, start P0-A from the merged base: remove every
+model-controlled privileged approval bypass and prove the gate with focused
+tests.
 
 ## Real blockers and risks
 
-- This Work environment cannot execute the full Flutter/Android baseline; the
-  authoritative baseline must come from GitHub Actions.
+- Local Work still cannot execute the full Flutter/Android suite; GitHub Actions
+  is the authoritative application baseline in this workflow.
 - `ui/.android` is generated and remains absent until `flutter pub get` runs.
 - P0-A must not trust `additionalProperties: false`: current registry validation
   does not recursively reject unknown nested fields. The handler must never
@@ -142,6 +183,7 @@ recorded, start P0-A.
 
 ## For the next agent
 
-Do not repeat the architecture audit. Read this file and inspect the bootstrap
-PR/CI result. Record the baseline before P0-A. Never call an environment or
-workflow-infrastructure failure a source-code failure.
+Do not repeat the architecture audit or baseline setup. Read this file, verify
+the current branch/PR state, and begin only the user-approved next unit. P0-A is
+next, but it must not be implemented before the bootstrap PR is merged and the
+user authorizes that unit.
