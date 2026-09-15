@@ -85,8 +85,11 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Verify Android SDK
+        run: |
+          test -n "${ANDROID_SDK_ROOT:-}"
+          command -v sdkmanager
+          sdkmanager --version
 
       - name: Cache Android SDK platform
         id: cache-android-platform
