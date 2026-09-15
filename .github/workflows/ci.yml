@@ -157,3 +157,71 @@ jobs:
           :app:lintDevelopStandardDebug
           :app:assembleDevelopStandardDebug
           -Ptarget=lib/main_standard.dart
+
+      - name: Summarize Android verification
+        id: android-verification
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os
+          import xml.etree.ElementTree as ET
+
+          test_reports = sorted(Path("app/build/test-results").glob("**/TEST-*.xml"))
+          if not test_reports:
+              raise SystemExit("No Kotlin/JVM test result XML files were found")
+
+          totals = {key: 0 for key in ("tests", "failures", "errors", "skipped")}
+          duration = 0.0
+          for report in test_reports:
+              root = ET.parse(report).getroot()
+              suites = [root] if root.tag == "testsuite" else list(root.findall("testsuite"))
+              for suite in suites:
+                  for key in totals:
+                      totals[key] += int(suite.attrib.get(key, 0))
+                  duration += float(suite.attrib.get("time", 0))
+
+          lint_reports = sorted(Path("app/build/reports").glob("lint-results-*.xml"))
+          lint_issues = []
+          for report in lint_reports:
+              lint_issues.extend(ET.parse(report).getroot().findall("issue"))
+          lint_errors = sum(
+              issue.attrib.get("severity", "").lower() in {"error", "fatal"}
+              for issue in lint_issues
+          )
+
+          apks = sorted(Path("app/build/outputs/apk").glob("**/*.apk"))
+          if not apks:
+              raise SystemExit("No debug APK was produced")
+          apk_bytes = sum(apk.stat().st_size for apk in apks)
+
+          report_lines = [
+              (
+                  f"Kotlin/JVM tests: {totals['tests']} total, "
+                  f"{totals['failures']} failures, {totals['errors']} errors, "
+                  f"{totals['skipped']} skipped ({duration:.2f}s)"
+              ),
+              (
+                  f"Android lint: {len(lint_issues)} findings, "
+                  f"{lint_errors} errors/fatal"
+              ),
+              (
+                  f"Debug APK: {len(apks)} file(s), "
+                  f"{apk_bytes / 1024 / 1024:.2f} MiB total"
+              ),
+          ]
+
+          summary = os.environ["GITHUB_STEP_SUMMARY"]
+          with open(summary, "a", encoding="utf-8") as output:
+              output.write("## Android verification\n\n")
+              output.writelines(f"- {line}\n" for line in report_lines)
+          print("\n".join(report_lines))
+          PY
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: melly-develop-standard-debug-${{ github.sha }}
+          path: app/build/outputs/apk/**/*.apk
+          if-no-files-found: error
+          retention-days: 14

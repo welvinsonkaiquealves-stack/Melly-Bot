@@ -1,7 +1,7 @@
 # Melly: execution handoff
 
 **Updated:** 2026-09-15 UTC  
-**Current stage:** P0-A implemented and verified; pull request #2 awaiting review
+**Current stage:** P0-A merged; infrastructure/documentation PR in preparation
 
 ## Current state
 
@@ -10,10 +10,11 @@ The official persistent repository is
 the OpenOmniBot history and contains the Gradle wrapper and tracked binary
 assets. P0-A is the first functional Melly security change.
 
-E0-A was merged through pull request #1. P0-A is implemented on
-`p0a/privileged-approval`, and the full GitHub Actions workflow passed on pull
-request #2. Pull request #2 remains open for independent review; `main` still
-points to the E0-A merge.
+E0-A was merged through pull request #1. P0-A passed independent diff review and
+was merged through pull request #2. The current unit adds reproducible CI
+metrics, retains the debug APK for mobile installation, and brings the approved
+Melly planning/measurement documents into Git without importing the incomplete
+source snapshot.
 
 ## Base
 
@@ -22,12 +23,13 @@ points to the E0-A merge.
 - Audited and initial commit: `54aeae8046a4f3bcf0fccc1ca30713722a81d863`
 - Initial upstream branch: `main`
 - E0-A merge commit on `main`: `eef88dc81bbd6c79a42274a05d93160351071e09`
-- Current working branch: `p0a/privileged-approval`
+- P0-A merge commit on `main`: `442967a11a4607dc74079abe07dab3ab4e77a5cc`
+- Current working branch: `infra/ci-artifacts-docs`
 - Upstream `HEAD` and `main` both resolved to the audited commit before clone.
 - Initial working tree: clean.
 - GitHub `main` was verified at the audited commit before this bootstrap branch.
 - Bootstrap pull request #1 was merged with a merge commit.
-- P0-A pull request: `https://github.com/welvinsonkaiquealves-stack/Melly-Bot/pull/2`.
+- P0-A pull request #2 was merged with a merge commit.
 - `upstream-54aeae8` preserves the original commit as an archival branch. The
   GitHub connector could not create a tag; convert this reference to a tag when
   tag operations are available.
@@ -140,6 +142,38 @@ The CI still does not print an aggregate Kotlin test count or retain the APK as
 an artifact. Add report summarization and `actions/upload-artifact@v4` in a
 separate infrastructure change; do not mix it into this security patch.
 
+### Infrastructure/documentation verification
+
+The current branch adds a CI step that summarizes JUnit XML, Android lint XML
+and APK size, followed by `actions/upload-artifact@v4` with a 14-day retention.
+Its parser was executed locally against deterministic fixture XML and a 1 MiB
+fixture APK. Full GitHub Actions verification is pending on the pull request.
+
+The approved planning, audit, architecture, decisions and build documents are
+under `docs/melly/`. The device measurement kit is under `medicao/`. The live
+state remains this handoff; the obsolete pre-Git state file and incomplete code
+snapshot were intentionally not imported.
+
+### E1-A read-only lifecycle investigation
+
+- `AgentOrchestrator.run` owns the operational `while (true)` and increments
+  `completedModelRounds` before each model attempt. The name is misleading:
+  the counter also includes the one allowed pre-output overflow recovery.
+- Setting the existing `terminated = true` on budget exhaustion would return
+  `AgentResult.Success`; Xiaowan would emit ACP `END_TURN`, and Flutter would
+  present a completed turn. That is a false success and must not be used.
+- The existing error path is correct for exhaustion: a non-cancellation error
+  becomes `AgentResult.Error`, Xiaowan projects it through the official ACP
+  prompt failure, and Flutter reduces it with `stopReason = error`, settling
+  pending cards without creating a second lifecycle event.
+- `CancellationException` already has a dedicated earlier catch and maps to ACP
+  `CANCELLED`. E1-A must preserve that ordering and behavior.
+- The minimal future patch should inject a small immutable loop policy, check
+  the limit before starting the next LLM request, and test normal completion,
+  infinite tool calls, overflow retry accounting and cancellation precedence.
+  No E1-A code has been changed yet, and the provisional numeric limit remains
+  decision A001 rather than an invented constant.
+
 ## Important files for the next stage
 
 - `app/src/main/java/cn/com/omnimind/bot/agent/tool/AgentToolDefinitions.kt`
@@ -192,21 +226,35 @@ separate infrastructure change; do not mix it into this security patch.
   through `PrivilegedToolHandler`; other direct calls are internal manager
   diagnostics/helpers, not model approval sources.
 - Added six focused gate tests and completed full CI run #5 successfully.
+- Completed final P0-A CI run #6 on head `769fc45b` and merged pull request #2
+  with merge commit `442967a1` after independent review.
+- Verified `SharedHelper.parseConfirmedFlag` has no remaining callers. It is
+  dead code, but removal is deferred to a code-only patch instead of being mixed
+  into the infrastructure/documentation change.
+- Curated the approved Melly documents into `docs/melly/` and the measurement
+  kit into `medicao/`, with a mobile-only capture path documented.
+- Added CI report summarization and debug APK artifact publication; local parser
+  fixture verification passed.
+- Traced E1-A termination through `AgentOrchestrator`, Xiaowan ACP and Flutter's
+  reducer, establishing error rather than success as the correct limit outcome.
 
 ## Work not completed
 
 - Device validation.
-- Independent review and merge of P0-A pull request #2.
+- GitHub Actions verification and review of the infrastructure/documentation
+  pull request.
 - Conversion of archival branch `upstream-54aeae8` into a Git tag.
 - Deletion of obsolete branch `melly/main`.
-- CI publication of APK artifacts and aggregate Kotlin/lint/APK-size metrics.
-- Import of the approved architecture/decision/measurement documents into
-  `docs/`; source documents remain outside Git pending curation.
+- Branch protection for archival branch `upstream-54aeae8`.
+- Removal of dead `SharedHelper.parseConfirmedFlag` in a code-only patch.
+- E1-A lifecycle investigation and implementation.
 
 ## Next exact action
 
-Review and merge pull request #2 with a merge commit. Do not start Agent Loop
-limits until this security change is merged and its branch is retired.
+Open, verify and review the infrastructure/documentation pull request. After it
+passes, download its debug APK artifact on the Android device and begin the E0
+measurement protocol. E1-A may begin with read-only lifecycle investigation in
+parallel, but no loop-limit code is approved by this handoff.
 
 ## Real blockers and risks
 
@@ -220,9 +268,12 @@ limits until this security change is merged and its branch is retired.
   removes model control at the authoritative Agent handler. An opaque approval
   capability remains optional defense in depth if future direct callers cross
   the model boundary.
+- GitHub retention for the debug APK is intentionally 14 days; measurement
+  evidence must be committed separately, not left only in the artifact.
 
 ## For the next agent
 
 Do not repeat the architecture audit, baseline setup or P0-A implementation.
-Read this file and inspect pull request #2. After it is merged, use a new branch
-for the next approved unit; never reuse `melly/main` or the P0-A branch.
+Read this file and inspect the current infrastructure/documentation pull
+request. Never reuse `melly/main` or the P0-A branch. Keep E1-A read-only until
+the lifecycle/UI terminal semantics have been traced and recorded.
