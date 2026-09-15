@@ -195,22 +195,27 @@ jobs:
               raise SystemExit("No debug APK was produced")
           apk_bytes = sum(apk.stat().st_size for apk in apks)
 
+          report_lines = [
+              (
+                  f"Kotlin/JVM tests: {totals['tests']} total, "
+                  f"{totals['failures']} failures, {totals['errors']} errors, "
+                  f"{totals['skipped']} skipped ({duration:.2f}s)"
+              ),
+              (
+                  f"Android lint: {len(lint_issues)} findings, "
+                  f"{lint_errors} errors/fatal"
+              ),
+              (
+                  f"Debug APK: {len(apks)} file(s), "
+                  f"{apk_bytes / 1024 / 1024:.2f} MiB total"
+              ),
+          ]
+
           summary = os.environ["GITHUB_STEP_SUMMARY"]
           with open(summary, "a", encoding="utf-8") as output:
               output.write("## Android verification\n\n")
-              output.write(
-                  f"- Kotlin/JVM tests: {totals['tests']} total, "
-                  f"{totals['failures']} failures, {totals['errors']} errors, "
-                  f"{totals['skipped']} skipped ({duration:.2f}s)\n"
-              )
-              output.write(
-                  f"- Android lint: {len(lint_issues)} findings, "
-                  f"{lint_errors} errors/fatal\n"
-              )
-              output.write(
-                  f"- Debug APK: {len(apks)} file(s), "
-                  f"{apk_bytes / 1024 / 1024:.2f} MiB total\n"
-              )
+              output.writelines(f"- {line}\n" for line in report_lines)
+          print("\n".join(report_lines))
           PY
 
       - name: Upload debug APK
