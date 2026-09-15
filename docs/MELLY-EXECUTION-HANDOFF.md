@@ -1,7 +1,7 @@
 # Melly: execution handoff
 
 **Updated:** 2026-09-15 UTC  
-**Current stage:** E0-A2 minimum install identity in progress
+**Current stage:** E0-A2 implemented and CI-verified; device validation pending
 
 ## Current state
 
@@ -160,6 +160,29 @@ debug artifact.
 - Debug APK: one file, 198.17 MiB before artifact compression.
 - Combined Gradle command: `BUILD SUCCESSFUL in 13m 27s`.
 
+### E0-A2 minimum identity verification
+
+Workflow: `Pull Request CI`, pull request #4, run #10 (`35000011486`),
+functional head `ef038f133b5980d045faec7d6e9f36bad4b54924`.
+
+- Full workflow: passed.
+- Secret scan and Gradle wrapper validation: passed.
+- Worker/models.dev suite: 24 tests passed; 0 failed.
+- Flutter tests: 1,257 passed.
+- Flutter analyze: command passed with the configured non-fatal policy; 591
+  inherited findings were reported.
+- Kotlin/JVM tests: 1,098 passed; 0 failures, 0 errors, 0 skipped.
+- Android lint: 315 findings; 0 errors/fatal.
+- Debug APK: one file, 198.13 MiB before artifact compression.
+- Combined Gradle command: `BUILD SUCCESSFUL in 14m 10s`.
+- Artifact `melly-develop-standard-debug-e91bc722d4d2abc0569dbd0c8ca9af9603a5759c`
+  was published with 14-day retention. The suffix is GitHub's temporary PR
+  merge SHA; the artifact metadata ties it to functional head `ef038f13`.
+
+CI proves that the new application ID and launcher resources compile and that
+the automated baseline remains green. Only installation on the owner's Android
+device can prove side-by-side coexistence with the reference OpenOmniBot app.
+
 The approved planning, audit, architecture, decisions and build documents are
 under `docs/melly/`. The device measurement kit is under `medicao/`. The live
 state remains this handoff; the obsolete pre-Git state file and incomplete code
@@ -265,7 +288,7 @@ snapshot were intentionally not imported.
 ## Work not completed
 
 - Device validation.
-- GitHub Actions verification and review of E0-A2.
+- Independent review and merge of E0-A2 pull request #4.
 - Conversion of archival branch `upstream-54aeae8` into a Git tag.
 - Deletion of obsolete branch `melly/main`.
 - Branch protection for archival branch `upstream-54aeae8`.
@@ -274,10 +297,10 @@ snapshot were intentionally not imported.
 
 ## Next exact action
 
-Open E0-A2 as a pull request and require a green full CI run. Then download that
-run's debug APK, confirm Android installs `com.melly.assistant` beside the
-existing OpenOmniBot app, and begin the E0 measurement protocol. No Agent Loop
-or privileged-tool code belongs in E0-A2.
+Review and merge E0-A2 pull request #4. Then download run #10's debug APK,
+confirm Android installs `com.melly.assistant` beside the existing OpenOmniBot
+app, and begin the E0 measurement protocol. No Agent Loop or privileged-tool
+code belongs in E0-A2.
 
 ## Real blockers and risks
 
