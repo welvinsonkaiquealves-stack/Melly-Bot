@@ -9,8 +9,8 @@ class LegacyTextLocalizer {
 
   static final Map<String, String> _exactEn = <String, String>{
     '宠物': 'Pet',
-    '小万': 'OmniAi',
-    '小万（OmniAi）': 'OmniAi',
+    '小万': 'Melly',
+    '小万（OmniAi）': 'Melly',
     '默认的桌面悬浮窗宠物': 'Default desktop floating pet',
     '自定义宠物': 'Custom Pet',
     '已选': 'Selected',
@@ -38,10 +38,14 @@ class LegacyTextLocalizer {
     'Token': 'Token',
     '防止任务运行时屏幕休眠': 'Prevent Screen Sleep During Tasks',
     '任务运行期间保持屏幕常亮，适用于小万（OmniAi）、Agent 和纯聊天':
-        'Keep the screen awake while OmniAi, Agent, or chat tasks run',
+        'Keep the screen awake while Melly, Agent, or chat tasks run',
+    '任务运行期间保持屏幕常亮，适用于 Melly、Agent 和纯聊天':
+        'Keep the screen awake while Melly, Agent, or chat tasks run',
     '任务完成通知': 'Task Completion Notifications',
     '小万（OmniAi）、Agent 和纯聊天完成后推送提醒':
-        'Notify when OmniAi, Agent, or chat responses finish',
+        'Notify when Melly, Agent, or chat responses finish',
+    'Melly、Agent 和纯聊天完成后推送提醒':
+        'Notify when Melly, Agent, or chat responses finish',
     '需要开启通知权限': 'Notification permission is required',
     '未生成': 'Not generated',
     '复制地址': 'Copy Address',
@@ -109,16 +113,15 @@ class LegacyTextLocalizer {
         'Home, Hide from Recents, alarms, vibration, and open behavior',
     '后台隐藏、闹钟、振动与打开方式':
         'Hide from Recents, alarms, vibration, and open behavior',
-    '使用小万打开': 'Open with Omnibot',
-    '使用小万打开 - 图片': 'Open with Omnibot - Images',
-    '使用小万打开 - 文件': 'Open with Omnibot - Files',
+    '使用小万打开': 'Open with Melly',
+    '使用小万打开 - 图片': 'Open with Melly - Images',
+    '使用小万打开 - 文件': 'Open with Melly - Files',
     '分别设置图片和文件的打开方式': 'Configure image and file open behavior separately',
     '图片': 'Images',
     '文件': 'Files',
     '复制到 workspace 并在提示词中发送文件路径':
         'Copy to workspace and send file paths in the prompt',
-    '添加到 workspace，附加到对话，并在提示词中发送文件路径':
-        'Add to workspace, attach to chat, and send the file path in the prompt',
+    '添加到 workspace，附加到对话，并在提示词中发送文件路径': 'Add to workspace, attach to chat, and send the file path in the prompt',
     '存入 workspace 并发送路径': 'Save to workspace and send path',
     '图片填入对话，其他文件走文件传输':
         'Attach images to chat; send other files through file transfer',
@@ -130,7 +133,7 @@ class LegacyTextLocalizer {
     '非照片文件会启动文件服务器并生成局域网链接':
         'Non-photo files start the file server and create a LAN link',
     '默认': 'Default',
-    '关于小万': 'About Omnibot',
+    '关于小万': 'About Melly',
     '背景来源': 'Background Source',
     '效果预览': 'Preview',
     '效果调整': 'Adjustments',
@@ -164,7 +167,7 @@ class LegacyTextLocalizer {
     '抱歉，刚刚网络开小差了。再发一次试试？':
         'Sorry, the network stumbled just now. Please try sending it again.',
     '小万忙不过来了，等会儿再试试吧':
-        'Omnibot is busy right now. Please try again in a moment.',
+        'Melly is busy right now. Please try again in a moment.',
     '设置后台隐藏失败': 'Failed to update hide-from-recents',
     '设置失败': 'Failed to save settings',
     'MCP 已关闭': 'MCP disabled',
@@ -188,11 +191,11 @@ class LegacyTextLocalizer {
         'Executing a command in the embedded terminal environment',
     '终端输出更新中': 'Updating terminal output',
     '🎉Hi，我是小万，我会做很多事，让我展示给你下！':
-        '🎉Hi, I\'m Omnibot. I can do many things, let me show you!',
-    'Hi，我是小万': 'Hi, I\'m Omnibot',
+        '🎉Hi, I\'m Melly. I can do many things, let me show you!',
+    'Hi，我是小万': 'Hi, I\'m Melly',
     '你的 AI 助手，随时准备就绪': 'Your AI assistant, always ready',
     '换一换': 'Shuffle',
-    '小万正在思考...': 'Omnibot is thinking...',
+    '小万正在思考...': 'Melly is thinking...',
     '总结中': 'Summarizing',
     '总结如下': 'Summary',
     '全选': 'Select all',
@@ -323,8 +326,7 @@ class LegacyTextLocalizer {
         'The latest 10 AI requests are shown in reverse chronological order.',
     '点击条目展开查看请求与响应正文。':
         'Tap an entry to expand the request and response payloads.',
-    '最近 200 条错误和崩溃日志，按时间倒序展示。':
-        'The latest 200 error and crash logs are shown in reverse chronological order.',
+    '最近 200 条错误和崩溃日志，按时间倒序展示。': 'The latest 200 error and crash logs are shown in reverse chronological order.',
     '含堆栈的条目可展开查看。': 'Entries with stack traces can be expanded for details.',
     '导出运行日志': 'Export runtime logs',
     '已复制全部运行日志': 'All runtime logs copied',
@@ -342,8 +344,7 @@ class LegacyTextLocalizer {
     '已开启': 'Enabled',
     '去开启': 'Enable',
     '清除缓存': 'Clear cache',
-    '查看并配置悬浮窗、后台运行、Shizuku 等权限':
-        'Review overlay, background operation, Shizuku, and related permissions',
+    '查看并配置悬浮窗、后台运行、Shizuku 等权限': 'Review overlay, background operation, Shizuku, and related permissions',
     '权限检查中...': 'Checking permissions...',
     '继续任务': 'Continue task',
     '继续任务仅要求': 'Continue requires only',
@@ -351,13 +352,11 @@ class LegacyTextLocalizer {
     '可选，允许 Agent 通过 Termux 执行终端命令':
         'Optional: allow the Agent to run terminal commands via Termux',
     '可选': 'Optional',
-    '让小万带你执行一次任务吧！': 'Let Omnibot walk you through one task!',
-    '其中 Termux 终端能力为可选项，未开启也不影响基础功能':
-        'Termux capability is optional; leaving it off will not affect basic features',
+    '让小万带你执行一次任务吧！': 'Let Melly walk you through one task!',
+    '其中 Termux 终端能力为可选项，未开启也不影响基础功能': 'Termux capability is optional; leaving it off will not affect basic features',
     '未绑定': 'Unbound',
     '恢复默认': 'Restore default',
-    '点击右侧按钮后，可按 Provider 搜索、折叠并选择模型。':
-        'After tapping the button on the right, you can search, collapse, and select models by Provider.',
+    '点击右侧按钮后，可按 Provider 搜索、折叠并选择模型。': 'After tapping the button on the right, you can search, collapse, and select models by Provider.',
     '使用内置模型服务': 'Use Built-in Model Service',
     '内置模型服务': 'Built-in Model Service',
     '内置模型服务已启用': 'Built-in model service enabled',
@@ -396,12 +395,10 @@ class LegacyTextLocalizer {
     '云端': 'Cloud',
     '无消耗': 'No usage',
     '长期记忆未就绪': 'Long-term memory is not ready',
-    '完成记忆初始化后，这里会展示跨会话沉淀的偏好与事实。':
-        'After memory initialization, cross-session preferences and facts will appear here.',
+    '完成记忆初始化后，这里会展示跨会话沉淀的偏好与事实。': 'After memory initialization, cross-session preferences and facts will appear here.',
     '长期记忆暂时不可用': 'Long-term memory is temporarily unavailable',
     '长期记忆还是空的': 'Long-term memory is still empty',
-    '当 Agent 主动写入长期偏好后，这里会逐渐丰富起来。':
-        'After the Agent writes long-term preferences, this section will gradually fill up.',
+    '当 Agent 主动写入长期偏好后，这里会逐渐丰富起来。': 'After the Agent writes long-term preferences, this section will gradually fill up.',
     '新增长期记忆': 'Add long-term memory',
     '刷新长期记忆': 'Refresh long-term memory',
     '刚刚': 'Just now',
@@ -593,19 +590,27 @@ class LegacyTextLocalizer {
     }
   }
 
-  static bool get isEnglish => _resolvedLocale.languageCode == 'en';
+  /// Legacy bilingual text only has Chinese and English variants. Portuguese
+  /// deliberately uses English until each call site moves to generated ARB.
+  static bool get isEnglish => _resolvedLocale.languageCode != 'zh';
 
   static String localize(String text, {Locale? locale}) {
     final targetLocale = locale ?? _resolvedLocale;
-    if (targetLocale.languageCode != 'en') {
+    if (targetLocale.languageCode == 'zh') {
       return text;
     }
-    final exact = _exactEn[text];
+    // Visible identity strings were renamed to Melly before the legacy
+    // bilingual catalog is fully migrated. Normalize only for lookup so the
+    // existing Chinese keys still resolve to their English fallback.
+    final legacyLookupText = text
+        .replaceAll('Melly（Melly）', '小万（OmniAi）')
+        .replaceAll('Melly', '小万');
+    final exact = _exactEn[text] ?? _exactEn[legacyLookupText];
     if (exact != null) {
       return exact;
     }
     for (final (pattern, rewrite) in _regexEn) {
-      final match = pattern.firstMatch(text);
+      final match = pattern.firstMatch(legacyLookupText);
       if (match != null) {
         return rewrite(match);
       }

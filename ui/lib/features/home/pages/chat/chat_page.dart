@@ -495,7 +495,7 @@ abstract class _ChatPageStateBase extends State<ChatPage>
       if (!hasXiaowan)
         const ChatAcpAgentModeOption(
           id: 'xiaowan-acp',
-          name: '小万',
+          name: 'Melly',
           enabled: true,
           installed: true,
           status: 'online',

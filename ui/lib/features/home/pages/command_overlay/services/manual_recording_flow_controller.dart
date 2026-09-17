@@ -238,5 +238,5 @@ class ManualRecordingFlowController {
   }
 
   static String _text(Locale locale, String zh, String en) =>
-      locale.languageCode == 'en' ? en : zh;
+      locale.languageCode != 'zh' ? en : zh;
 }

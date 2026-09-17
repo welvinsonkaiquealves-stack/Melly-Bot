@@ -20,7 +20,7 @@
     <string name="quick_log_font_regular">Regular</string>
     <string name="quick_log_font_large">Large</string>
     <string name="quick_log_entry_title">Write memory</string>
-    <string name="quick_log_entry_subtitle">Write what you want to remember. Omnibot will sync it to short-term memory.</string>
+    <string name="quick_log_entry_subtitle">Write what you want to remember. Melly will sync it to short-term memory.</string>
     <string name="quick_log_entry_edit_title">Edit memory</string>
     <string name="quick_log_entry_edit_subtitle">Changes here will sync back into short memories.</string>
     <string name="quick_log_entry_hint">Write what you want to remember</string>

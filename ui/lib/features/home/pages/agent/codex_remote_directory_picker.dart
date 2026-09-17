@@ -50,7 +50,7 @@ class _CodexRemoteDirectoryPickerSheetState
   bool _isLoading = true;
   String? _error;
 
-  bool get _isEnglish => Localizations.localeOf(context).languageCode == 'en';
+  bool get _isEnglish => Localizations.localeOf(context).languageCode != 'zh';
 
   @override
   void initState() {

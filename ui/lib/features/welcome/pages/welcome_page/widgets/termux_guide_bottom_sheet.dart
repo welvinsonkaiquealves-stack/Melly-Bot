@@ -214,7 +214,7 @@ class _TermuxGuideBottomSheetState extends State<TermuxGuideBottomSheet>
           ),
           const SizedBox(height: 12),
           const Text(
-            '开启后，小万会直接在应用内所选的 Alpine 或 Ubuntu（proot）环境执行终端命令，不需要再单独安装 Termux；/workspace 会映射到 Omnibot 应用内部工作区。',
+            '开启后，Melly会直接在应用内所选的 Alpine 或 Ubuntu（proot）环境执行终端命令，不需要再单独安装 Termux；/workspace 会映射到 Melly 应用内部工作区。',
             style: TextStyle(
               color: AppColors.text,
               fontSize: 14,
@@ -257,7 +257,7 @@ class _TermuxGuideBottomSheetState extends State<TermuxGuideBottomSheet>
           index: '3',
           title: '工作区仍叫 /workspace',
           description:
-              '所选终端系统内依然使用 /workspace 这套路径语义，但底层已经切到 Omnibot 应用内部目录，更适合运行 uv、venv 和其它开发工具。',
+              '所选终端系统内依然使用 /workspace 这套路径语义，但底层已经切到 Melly 应用内部目录，更适合运行 uv、venv 和其它开发工具。',
         ),
         SizedBox(height: 12),
         _GuideItem(

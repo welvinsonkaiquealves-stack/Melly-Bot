@@ -9,7 +9,8 @@ import java.util.Locale
 enum class AppLanguageMode(val storageValue: String) {
     SYSTEM("system"),
     ZH_HANS("zhHans"),
-    EN("en");
+    EN("en"),
+    PT_BR("ptBr");
 
     companion object {
         fun fromStorageValue(raw: String?): AppLanguageMode {
@@ -24,7 +25,8 @@ enum class PromptLocale(
     val locale: Locale
 ) {
     ZH_CN("zh-CN", Locale.SIMPLIFIED_CHINESE),
-    EN_US("en-US", Locale.US);
+    EN_US("en-US", Locale.US),
+    PT_BR("pt-BR", Locale.forLanguageTag("pt-BR"));
 
     companion object {
         fun fromTag(raw: String?): PromptLocale? {
@@ -32,6 +34,7 @@ enum class PromptLocale(
             return when (normalized) {
                 "zh", "zh-cn", "zh_hans", "zh-hans" -> ZH_CN
                 "en", "en-us" -> EN_US
+                "pt", "pt-br", "pt_br" -> PT_BR
                 else -> null
             }
         }
@@ -40,12 +43,14 @@ enum class PromptLocale(
 
 data class LocalizedText(
     val zhCN: String,
-    val enUS: String
+    val enUS: String,
+    val ptBR: String? = null,
 ) {
     fun resolve(locale: PromptLocale): String {
         return when (locale) {
             PromptLocale.ZH_CN -> zhCN
             PromptLocale.EN_US -> enUS
+            PromptLocale.PT_BR -> ptBR ?: enUS
         }
     }
 
@@ -78,6 +83,7 @@ object AppLocaleManager {
         return when (mode) {
             AppLanguageMode.ZH_HANS -> PromptLocale.ZH_CN
             AppLanguageMode.EN -> PromptLocale.EN_US
+            AppLanguageMode.PT_BR -> PromptLocale.PT_BR
             AppLanguageMode.SYSTEM -> normalize(systemLocale)
         }
     }
@@ -95,11 +101,11 @@ object AppLocaleManager {
     }
 
     fun isEnglish(context: Context): Boolean {
-        return resolvePromptLocale(context) == PromptLocale.EN_US
+        return resolvePromptLocale(context) != PromptLocale.ZH_CN
     }
 
     fun isEnglish(): Boolean {
-        return currentPromptLocale() == PromptLocale.EN_US
+        return currentPromptLocale() != PromptLocale.ZH_CN
     }
 
     fun brandName(context: Context): String {
@@ -112,8 +118,9 @@ object AppLocaleManager {
 
     fun brandName(locale: PromptLocale): String {
         return when (locale) {
-            PromptLocale.ZH_CN -> "小万"
-            PromptLocale.EN_US -> "Omnibot"
+            PromptLocale.ZH_CN,
+            PromptLocale.EN_US,
+            PromptLocale.PT_BR -> "Melly"
         }
     }
 
@@ -152,10 +159,10 @@ object AppLocaleManager {
     }
 
     private fun normalize(locale: Locale): PromptLocale {                 
-        return if (locale.language.lowercase() == "zh") {  
-            PromptLocale.ZH_CN
-        } else {
-            PromptLocale.EN_US
+        return when (locale.language.lowercase()) {
+            "zh" -> PromptLocale.ZH_CN
+            "pt" -> PromptLocale.PT_BR
+            else -> PromptLocale.EN_US
         }                                                                 
     }
 }

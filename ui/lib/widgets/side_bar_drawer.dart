@@ -87,7 +87,7 @@ class _SidebarDrawerState extends State<SidebarDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     return Drawer(
       child: Container(
         color: Colors.grey[100], // 浅灰色背景
@@ -458,7 +458,7 @@ class _SidebarDrawerState extends State<SidebarDrawer> {
       mode: conversation.mode,
     );
     if (!mounted) return;
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -476,7 +476,7 @@ class _SidebarDrawerState extends State<SidebarDrawer> {
       mode: conversation.mode,
     );
     if (!mounted) return;
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -492,7 +492,7 @@ class _SidebarDrawerState extends State<SidebarDrawer> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+        final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
         return AlertDialog(
           title: Text(isEnglish ? "Delete conversation" : "删除对话"),
           content: Text(

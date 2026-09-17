@@ -371,7 +371,7 @@ class ProviderModelGroup {
 class ModelProviderConfigService {
   static const String _kOfficialProfileId = 'omnibot-official-ai';
   static const String _kOfficialSourceType = 'omnibot_official';
-  static const String _kOfficialProfileName = 'OmniBot 官方 AI';
+  static const String _kOfficialProfileName = 'Melly 官方 AI';
   static const String _kManualModelIdsKey = 'manual_provider_model_ids_v2';
   static const String _kHiddenChatModelIdsKey =
       'hidden_chat_provider_model_ids_v1';

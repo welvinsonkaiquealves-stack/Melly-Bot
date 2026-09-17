@@ -257,7 +257,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   List<_SettingSection> _buildSections(String workspaceMemorySubtitle) {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     return [
       _SettingSection(
         label: isEnglish ? 'Account' : '账号',

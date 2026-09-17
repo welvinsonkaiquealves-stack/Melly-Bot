@@ -26,13 +26,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get memoryShortDeleted => '短期记忆已删除';
 
   @override
-  String get appName => '小万';
+  String get appName => 'Melly';
 
   @override
-  String get brandName => '小万';
+  String get brandName => 'Melly';
 
   @override
-  String get brandNameEnglish => 'Omnibot';
+  String get brandNameEnglish => 'Melly';
 
   @override
   String get commonLoading => '加载中';
@@ -122,7 +122,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsLocalServiceTitle => '本机服务';
 
   @override
-  String get settingsLocalServiceSubtitle => '在局域网内访问小万 MCP 和 webchat 服务';
+  String get settingsLocalServiceSubtitle => '在局域网内访问Melly MCP 和 webchat 服务';
 
   @override
   String get settingsAlpineTitle => '终端环境';
@@ -188,7 +188,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsHabitualHandRight => '右手';
 
   @override
-  String get settingsAboutTitle => '关于小万';
+  String get settingsAboutTitle => '关于Melly';
 
   @override
   String get settingsHideRecentsFailed => '设置后台隐藏失败';
@@ -429,7 +429,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get networkErrorMessage => '抱歉，刚刚网络开小差了。再发一次试试？';
 
   @override
-  String get rateLimitErrorMessage => '小万忙不过来了，等会儿再试试吧';
+  String get rateLimitErrorMessage => 'Melly忙不过来了，等会儿再试试吧';
 
   @override
   String get chatHistoryArchivedTitle => '归档对话';
@@ -608,7 +608,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String pluginUninstallConfirmMsg(Object name) {
-    return '确认卸载\"$name\"？';
+    return '确认卸载"$name"？';
   }
 
   @override
@@ -743,7 +743,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String skillDeleteConfirmMsg(Object name) {
-    return '确认删除\"$name\"？';
+    return '确认删除"$name"？';
   }
 
   @override
@@ -859,7 +859,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String modelDeleteProviderMsg(Object name) {
-    return '确定删除\"$name\"吗？场景绑定会保留，但需要重新选择可用 Provider。';
+    return '确定删除"$name"吗？场景绑定会保留，但需要重新选择可用 Provider。';
   }
 
   @override
@@ -1311,7 +1311,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get aboutDescription =>
-      '小万，是一款以智能对话为核心的手机AI助\n手，通过语义理解与持续学习能力，协助用户\n完成信息处理、决策辅助和日常管理。';
+      'Melly，是一款以智能对话为核心的手机AI助\n手，通过语义理解与持续学习能力，协助用户\n完成信息处理、决策辅助和日常管理。';
 
   @override
   String get aboutBetaProgramTitle => '加入 beta 测试';
@@ -1506,7 +1506,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String alpineDeleteBootTaskMsg(Object name) {
-    return '确认删除\"$name\"吗？';
+    return '确认删除"$name"吗？';
   }
 
   @override
@@ -1545,7 +1545,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get alpineBootTasksDesc =>
-      '打开 Omnibot 时会在后台检查已启用的任务，并在对应 ReTerminal 会话内启动命令，适合常驻服务。';
+      '打开 Melly 时会在后台检查已启用的任务，并在对应 ReTerminal 会话内启动命令，适合常驻服务。';
 
   @override
   String get alpineAddTask => '新增任务';
@@ -1606,7 +1606,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get alpineWorkDir => '工作目录';
 
   @override
-  String get alpineBootAutoStart => '打开小万时自动启动';
+  String get alpineBootAutoStart => '打开Melly时自动启动';
 
   @override
   String get alpineDevEnv => '开发环境';
@@ -1656,7 +1656,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeDrawerAgentSection => 'Agent';
 
   @override
-  String get homeDrawerOmniAiSection => '小万';
+  String get homeDrawerOmniAiSection => 'Melly';
 
   @override
   String get homeDrawerChatOnlySection => '纯聊天';
@@ -1668,7 +1668,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeDrawerGreeting => '你好！';
 
   @override
-  String get homeDrawerWelcome => '欢迎使用小万';
+  String get homeDrawerWelcome => '欢迎使用Melly';
 
   @override
   String get homeDrawerDawnGreeting => '凌晨啦';
@@ -1728,7 +1728,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeDrawerLunchGreeting3 => '午餐不知道吃什么？';
 
   @override
-  String get homeDrawerLunchSub3 => '让小万帮你推荐吧！';
+  String get homeDrawerLunchSub3 => '让Melly帮你推荐吧！';
 
   @override
   String get homeDrawerAfternoonGreeting => '喝杯茶提提神';
@@ -1776,7 +1776,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeDrawerNightGreeting3 => '该休息了';
 
   @override
-  String get homeDrawerNightSub3 => '让小万帮你定个闹钟吧！';
+  String get homeDrawerNightSub3 => '让Melly帮你定个闹钟吧！';
 
   @override
   String get homeDrawerLateNightGreeting => '放下手机早点睡';
@@ -1789,4 +1789,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get homeDrawerLateNightSub2 => '好好和今天说晚安～';
+
+  @override
+  String get languagePortugueseBrazil => '巴西葡萄牙语';
 }

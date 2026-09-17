@@ -874,7 +874,7 @@ class _ModelProviderSettingPageState extends State<ModelProviderSettingPage> {
   }
 
   String _headerText(String zh, String en) {
-    return Localizations.localeOf(context).languageCode == 'en' ? en : zh;
+    return Localizations.localeOf(context).languageCode != 'zh' ? en : zh;
   }
 
   void _replaceCustomHeaderEntries(Map<String, String> headers) {
@@ -2354,7 +2354,7 @@ class _ModelProviderSettingPageState extends State<ModelProviderSettingPage> {
     final languageCode = Localizations.localeOf(context).languageCode;
     final displayLabel =
         vendor?.labelForLanguage(languageCode) ??
-        (languageCode == 'en' ? 'Other' : '其他');
+        (languageCode != 'zh' ? 'Other' : '其他');
     final labelStyle = TextStyle(
       color: _tertiaryTextColor,
       fontSize: 11,

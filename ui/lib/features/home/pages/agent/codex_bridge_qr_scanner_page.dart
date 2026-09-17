@@ -178,7 +178,7 @@ class _CodexBridgeQrScannerPageState extends State<CodexBridgeQrScannerPage> {
   bool _handled = false;
   DateTime? _lastInvalidToastAt;
 
-  bool get _isEnglish => Localizations.localeOf(context).languageCode == 'en';
+  bool get _isEnglish => Localizations.localeOf(context).languageCode != 'zh';
 
   @override
   void initState() {
@@ -222,8 +222,8 @@ class _CodexBridgeQrScannerPageState extends State<CodexBridgeQrScannerPage> {
     _lastInvalidToastAt = now;
     showToast(
       _isEnglish
-          ? 'This is not an Omnibot Codex Bridge QR code.'
-          : '这不是 Omnibot Codex Bridge 二维码。',
+          ? 'This is not a Melly Codex Bridge QR code.'
+          : '这不是 Melly Codex Bridge 二维码。',
       type: ToastType.warning,
     );
   }

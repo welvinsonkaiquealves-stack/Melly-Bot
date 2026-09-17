@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
+import 'app_localizations_pt.dart';
 import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -95,6 +96,7 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
+    Locale('pt'),
     Locale('zh'),
   ];
 
@@ -131,19 +133,19 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In zh, this message translates to:
-  /// **'小万'**
+  /// **'Melly'**
   String get appName;
 
   /// No description provided for @brandName.
   ///
   /// In zh, this message translates to:
-  /// **'小万'**
+  /// **'Melly'**
   String get brandName;
 
   /// No description provided for @brandNameEnglish.
   ///
   /// In zh, this message translates to:
-  /// **'Omnibot'**
+  /// **'Melly'**
   String get brandNameEnglish;
 
   /// No description provided for @commonLoading.
@@ -223,6 +225,9 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'English'**
   String get languageEnglish;
+
+  /// Label for the Brazilian Portuguese language option.
+  String get languagePortugueseBrazil;
 
   /// No description provided for @settingsTitle.
   ///
@@ -323,7 +328,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsLocalServiceSubtitle.
   ///
   /// In zh, this message translates to:
-  /// **'在局域网内访问小万 MCP 和 webchat 服务'**
+  /// **'在局域网内访问Melly MCP 和 webchat 服务'**
   String get settingsLocalServiceSubtitle;
 
   /// No description provided for @settingsAlpineTitle.
@@ -449,7 +454,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsAboutTitle.
   ///
   /// In zh, this message translates to:
-  /// **'关于小万'**
+  /// **'关于Melly'**
   String get settingsAboutTitle;
 
   /// No description provided for @settingsHideRecentsFailed.
@@ -905,7 +910,7 @@ abstract class AppLocalizations {
   /// No description provided for @rateLimitErrorMessage.
   ///
   /// In zh, this message translates to:
-  /// **'小万忙不过来了，等会儿再试试吧'**
+  /// **'Melly忙不过来了，等会儿再试试吧'**
   String get rateLimitErrorMessage;
 
   /// No description provided for @chatHistoryArchivedTitle.
@@ -2513,7 +2518,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutDescription.
   ///
   /// In zh, this message translates to:
-  /// **'小万，是一款以智能对话为核心的手机AI助\n手，通过语义理解与持续学习能力，协助用户\n完成信息处理、决策辅助和日常管理。'**
+  /// **'Melly，是一款以智能对话为核心的手机AI助\n手，通过语义理解与持续学习能力，协助用户\n完成信息处理、决策辅助和日常管理。'**
   String get aboutDescription;
 
   /// No description provided for @aboutBetaProgramTitle.
@@ -2957,7 +2962,7 @@ abstract class AppLocalizations {
   /// No description provided for @alpineBootTasksDesc.
   ///
   /// In zh, this message translates to:
-  /// **'打开 Omnibot 时会在后台检查已启用的任务，并在对应 ReTerminal 会话内启动命令，适合常驻服务。'**
+  /// **'打开 Melly 时会在后台检查已启用的任务，并在对应 ReTerminal 会话内启动命令，适合常驻服务。'**
   String get alpineBootTasksDesc;
 
   /// No description provided for @alpineAddTask.
@@ -3077,7 +3082,7 @@ abstract class AppLocalizations {
   /// No description provided for @alpineBootAutoStart.
   ///
   /// In zh, this message translates to:
-  /// **'打开小万时自动启动'**
+  /// **'打开Melly时自动启动'**
   String get alpineBootAutoStart;
 
   /// No description provided for @alpineDevEnv.
@@ -3173,7 +3178,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeDrawerOmniAiSection.
   ///
   /// In zh, this message translates to:
-  /// **'小万'**
+  /// **'Melly'**
   String get homeDrawerOmniAiSection;
 
   /// No description provided for @homeDrawerChatOnlySection.
@@ -3197,7 +3202,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeDrawerWelcome.
   ///
   /// In zh, this message translates to:
-  /// **'欢迎使用小万'**
+  /// **'欢迎使用Melly'**
   String get homeDrawerWelcome;
 
   /// No description provided for @homeDrawerDawnGreeting.
@@ -3317,7 +3322,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeDrawerLunchSub3.
   ///
   /// In zh, this message translates to:
-  /// **'让小万帮你推荐吧！'**
+  /// **'让Melly帮你推荐吧！'**
   String get homeDrawerLunchSub3;
 
   /// No description provided for @homeDrawerAfternoonGreeting.
@@ -3413,7 +3418,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeDrawerNightSub3.
   ///
   /// In zh, this message translates to:
-  /// **'让小万帮你定个闹钟吧！'**
+  /// **'让Melly帮你定个闹钟吧！'**
   String get homeDrawerNightSub3;
 
   /// No description provided for @homeDrawerLateNightGreeting.
@@ -3452,7 +3457,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'zh'].contains(locale.languageCode);
+      <String>['en', 'pt', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -3463,6 +3468,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'en':
       return AppLocalizationsEn();
+    case 'pt':
+      return AppLocalizationsPt();
     case 'zh':
       return AppLocalizationsZh();
   }

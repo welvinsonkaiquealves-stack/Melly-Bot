@@ -135,6 +135,11 @@ object AppUpdateManager {
     private const val KEY_CLOUD_SERVICE_POLICY_MESSAGE = "cloud_service_policy_message"
     private const val KEY_CLOUD_SERVICE_POLICY_CHECKED_AT = "cloud_service_policy_checked_at"
 
+    // Melly does not have a release channel yet. Keep the inherited updater
+    // code dormant so this fork can never fetch or install OpenOmniBot APKs.
+    @VisibleForTesting
+    internal const val UPDATES_ENABLED = false
+
     private const val WORKER_UPDATES_PATH = "updates"
     private const val WORKER_DOWNLOADS_PATH = "downloads"
     private const val GITHUB_RELEASE_DOWNLOAD_PREFIX =
@@ -157,6 +162,10 @@ object AppUpdateManager {
     }
 
     fun schedulePeriodicChecks(context: Context) {
+        if (!UPDATES_ENABLED) {
+            WorkManager.getInstance(context.applicationContext).cancelUniqueWork(WORK_NAME)
+            return
+        }
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -178,6 +187,7 @@ object AppUpdateManager {
 
     fun requestSilentCheckIfDue(context: Context) {
         schedulePeriodicChecks(context)
+        if (!UPDATES_ENABLED) return
         CoroutineScope(Dispatchers.IO).launch {
             runCatching {
                 checkNow(context.applicationContext, force = true)
@@ -189,11 +199,12 @@ object AppUpdateManager {
 
     fun getCachedStatus(context: Context): AppUpdateState {
         val appContext = context.applicationContext
-        return readState(
+        val state = readState(
             context = appContext,
             currentVersion = currentVersion(appContext),
             includeBeta = isBetaOptIn(appContext)
         )
+        return if (UPDATES_ENABLED) state else disabledReleaseState(state)
     }
 
     fun getCloudServiceAccessState(context: Context): CloudServiceAccessState {
@@ -254,6 +265,11 @@ object AppUpdateManager {
         val includeBeta = isBetaOptIn(appContext)
         val downloadSource = getApkDownloadSource(appContext)
         val cached = readState(appContext, currentVersion, includeBeta)
+        if (!UPDATES_ENABLED) {
+            val disabled = disabledReleaseState(cached).copy(checkedAt = now)
+            saveState(appContext, disabled)
+            return disabled
+        }
         if (!force && now - cached.checkedAt < SILENT_CHECK_INTERVAL_MS) {
             return cached
         }
@@ -269,6 +285,13 @@ object AppUpdateManager {
     }
 
     suspend fun installLatestApk(context: Context): ExternalApkInstallResult {
+        if (!UPDATES_ENABLED) {
+            return ExternalApkInstallResult(
+                success = false,
+                status = ExternalApkInstaller.STATUS_INSTALL_FAILED,
+                message = "Automatic updates are disabled for this Melly build."
+            )
+        }
         val installState = resolveInstallState(context)
         if (!installState.hasUpdate || installState.apkDownloadUrl.isBlank()) {
             return ExternalApkInstallResult(
@@ -298,6 +321,19 @@ object AppUpdateManager {
             ?.substringBefore('+')
             ?.trim()
             .orEmpty()
+    }
+
+    @VisibleForTesting
+    internal fun disabledReleaseState(state: AppUpdateState): AppUpdateState {
+        return state.copy(
+            latestVersion = state.currentVersion,
+            hasUpdate = false,
+            publishedAt = 0L,
+            releaseUrl = "",
+            releaseNotes = "",
+            apkName = "",
+            apkDownloadUrl = "",
+        )
     }
 
     @VisibleForTesting

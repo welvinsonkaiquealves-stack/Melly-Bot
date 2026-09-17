@@ -39,7 +39,7 @@ extension _HomeDrawerHeaderFooter on HomeDrawerState {
   }
 
   Widget _buildWebQuickLaunchButton(OmniPluginActionItem action) {
-    final english = Localizations.localeOf(context).languageCode == 'en';
+    final english = Localizations.localeOf(context).languageCode != 'zh';
     final key = '${action.pluginId}/${action.id}';
     final busy = _busyWebQuickActionKey == key;
     final disabled = _busyWebQuickActionKey != null;

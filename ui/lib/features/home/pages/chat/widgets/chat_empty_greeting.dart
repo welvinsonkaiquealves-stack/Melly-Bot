@@ -58,7 +58,7 @@ class ChatEmptyGreeting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     final palette = context.omniPalette;
     final primaryColor = primaryTextColor ?? palette.textPrimary;
     final secondaryColor = secondaryTextColor ?? palette.textSecondary;
@@ -67,7 +67,7 @@ class ChatEmptyGreeting extends StatelessWidget {
         MediaQuery.maybeOf(context)?.disableAnimations ?? false;
     final resolvedAgentName = agentName?.trim() ?? '';
     final displayAgentName = resolvedAgentName.isEmpty
-        ? (isEnglish ? 'Omnibot' : '小万')
+        ? (isEnglish ? 'Melly' : 'Melly')
         : resolvedAgentName;
     final headline = isEnglish
         ? "Hi 👋, I'm $displayAgentName"

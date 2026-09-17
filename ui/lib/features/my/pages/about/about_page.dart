@@ -226,7 +226,7 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   void _openUserGuide() {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     GoRouterManager.push(
       '/webview/webview_page',
       extra: <String, dynamic>{

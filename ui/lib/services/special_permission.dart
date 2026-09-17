@@ -648,8 +648,8 @@ class ShizukuStatusSnapshot {
             : 'Shizuku 已通过 adb shell 就绪。Agent 高权限工具已启用，支持任意 shell 和持久高权限会话，但能力仍受 adb shell 后端限制；每次 raw shell 与高权限会话命令都需要用户确认。';
       case 'PERMISSION_DENIED':
         return LegacyTextLocalizer.isEnglish
-            ? 'Open Shizuku and grant Omnibot permission.'
-            : '请打开 Shizuku 并授予 Omnibot 权限。';
+            ? 'Open Shizuku and grant Melly permission.'
+            : '请打开 Shizuku 并授予 Melly 权限。';
       case 'NOT_RUNNING':
         return LegacyTextLocalizer.isEnglish
             ? 'Open Shizuku and start it. On Android 11+, non-root devices usually start it from Wireless debugging. You need to restart Shizuku after each reboot.'
@@ -660,8 +660,8 @@ class ShizukuStatusSnapshot {
             : 'Shizuku 已重启或断开，请重新打开并启动。';
       default:
         return LegacyTextLocalizer.isEnglish
-            ? 'Install Shizuku first, then start it and grant Omnibot permission.'
-            : '请先安装 Shizuku，然后启动它并授予 Omnibot 权限。';
+            ? 'Install Shizuku first, then start it and grant Melly permission.'
+            : '请先安装 Shizuku，然后启动它并授予 Melly 权限。';
     }
   }
 }

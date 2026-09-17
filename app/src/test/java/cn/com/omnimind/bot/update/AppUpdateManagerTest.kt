@@ -10,6 +10,38 @@ import org.junit.Test
 
 class AppUpdateManagerTest {
     @Test
+    fun inheritedOpenOmniBotUpdaterIsDisabledForMelly() {
+        assertFalse(AppUpdateManager.UPDATES_ENABLED)
+    }
+
+    @Test
+    fun disabledUpdaterClearsInheritedReleaseDataButPreservesCloudPolicy() {
+        val state = AppUpdateState(
+            currentVersion = "0.6.2.3",
+            latestVersion = "99.0.0",
+            hasUpdate = true,
+            checkedAt = 123L,
+            publishedAt = 456L,
+            releaseUrl = "https://github.com/omnimind-ai/OpenOmniBot/releases/99.0.0",
+            releaseNotes = "upstream",
+            apkName = "OpenOmniBot-v99.0.0.apk",
+            apkDownloadUrl = "https://example.invalid/upstream.apk",
+            cloudServicePolicyKnown = true,
+            cloudServicePolicyEnabled = true,
+            cloudServiceAccessAllowed = true,
+        )
+
+        val disabled = AppUpdateManager.disabledReleaseState(state)
+
+        assertEquals(state.currentVersion, disabled.latestVersion)
+        assertFalse(disabled.hasUpdate)
+        assertEquals("", disabled.releaseUrl)
+        assertEquals("", disabled.apkDownloadUrl)
+        assertTrue(disabled.cloudServicePolicyKnown)
+        assertTrue(disabled.cloudServiceAccessAllowed)
+    }
+
+    @Test
     fun normalizeVersionStripsLeadingV() {
         assertEquals("0.0.1", AppUpdateManager.normalizeVersion("v0.0.1"))
         assertEquals("1.2.3", AppUpdateManager.normalizeVersion("V1.2.3"))

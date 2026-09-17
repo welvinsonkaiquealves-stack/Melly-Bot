@@ -2227,12 +2227,12 @@ mixin _ChatPageAgentMixin on _ChatPageStateBase {
       ScaffoldMessenger.maybeOf(context)?.showSnackBar(
         SnackBar(
           content: Text(
-            Localizations.localeOf(context).languageCode == 'en'
+            Localizations.localeOf(context).languageCode != 'zh'
                 ? 'Agent login required'
                 : '需要登录 Agent',
           ),
           action: SnackBarAction(
-            label: Localizations.localeOf(context).languageCode == 'en'
+            label: Localizations.localeOf(context).languageCode != 'zh'
                 ? 'Login'
                 : '登录',
             onPressed: () {

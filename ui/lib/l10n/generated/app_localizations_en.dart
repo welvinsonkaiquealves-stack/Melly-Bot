@@ -28,13 +28,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memoryShortDeleted => 'Short-term memories deleted';
 
   @override
-  String get appName => 'Omnibot';
+  String get appName => 'Melly';
 
   @override
-  String get brandName => 'Omnibot';
+  String get brandName => 'Melly';
 
   @override
-  String get brandNameEnglish => 'Omnibot';
+  String get brandNameEnglish => 'Melly';
 
   @override
   String get commonLoading => 'Loading';
@@ -132,7 +132,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsLocalServiceSubtitle =>
-      'Access Omnibot MCP and webchat over your local network';
+      'Access Melly MCP and webchat over your local network';
 
   @override
   String get settingsAlpineTitle => 'Terminal Environment';
@@ -205,7 +205,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsHabitualHandRight => 'Right';
 
   @override
-  String get settingsAboutTitle => 'About Omnibot';
+  String get settingsAboutTitle => 'About Melly';
 
   @override
   String get settingsHideRecentsFailed => 'Failed to update hide-from-recents';
@@ -460,7 +460,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rateLimitErrorMessage =>
-      'Omnibot is busy right now. Please try again in a moment.';
+      'Melly is busy right now. Please try again in a moment.';
 
   @override
   String get chatHistoryArchivedTitle => 'Archived Conversations';
@@ -648,7 +648,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String pluginUninstallConfirmMsg(Object name) {
-    return 'Uninstall \"$name\"?';
+    return 'Uninstall "$name"?';
   }
 
   @override
@@ -787,7 +787,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String skillDeleteConfirmMsg(Object name) {
-    return 'Delete \"$name\"?';
+    return 'Delete "$name"?';
   }
 
   @override
@@ -908,7 +908,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String modelDeleteProviderMsg(Object name) {
-    return 'Delete \"$name\"? Scene bindings will be preserved, but you need to reselect an available Provider.';
+    return 'Delete "$name"? Scene bindings will be preserved, but you need to reselect an available Provider.';
   }
 
   @override
@@ -1362,7 +1362,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get storageHintConversation =>
-      'If history is not released, re-enter the page and run \"Reanalyze\"';
+      'If history is not released, re-enter the page and run "Reanalyze"';
 
   @override
   String get storageHintTerminal =>
@@ -1400,7 +1400,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutDescription =>
-      'Omnibot is an AI assistant app centered on\nintelligent conversation, using semantic understanding\nand continuous learning to help with information\nprocessing, decision support, and daily management.';
+      'Melly is an AI assistant app centered on\nintelligent conversation, using semantic understanding\nand continuous learning to help with information\nprocessing, decision support, and daily management.';
 
   @override
   String get aboutBetaProgramTitle => 'Join beta testing';
@@ -1608,7 +1608,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String alpineDeleteBootTaskMsg(Object name) {
-    return 'Delete \"$name\"?';
+    return 'Delete "$name"?';
   }
 
   @override
@@ -1648,7 +1648,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alpineBootTasksDesc =>
-      'When Omnibot opens, enabled tasks are checked in the background and commands are started in the corresponding ReTerminal session. Suitable for persistent services.';
+      'When Melly opens, enabled tasks are checked in the background and commands are started in the corresponding ReTerminal session. Suitable for persistent services.';
 
   @override
   String get alpineAddTask => 'Add Task';
@@ -1709,7 +1709,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alpineWorkDir => 'Working Directory';
 
   @override
-  String get alpineBootAutoStart => 'Auto-start when Omnibot opens';
+  String get alpineBootAutoStart => 'Auto-start when Melly opens';
 
   @override
   String get alpineDevEnv => 'Dev Environment';
@@ -1760,7 +1760,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeDrawerAgentSection => 'Agent';
 
   @override
-  String get homeDrawerOmniAiSection => 'OmniAi';
+  String get homeDrawerOmniAiSection => 'Melly';
 
   @override
   String get homeDrawerChatOnlySection => 'Pure chat';
@@ -1772,7 +1772,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeDrawerGreeting => 'Hello!';
 
   @override
-  String get homeDrawerWelcome => 'Welcome to Omnibot';
+  String get homeDrawerWelcome => 'Welcome to Melly';
 
   @override
   String get homeDrawerDawnGreeting => 'Late night';
@@ -1832,7 +1832,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeDrawerLunchGreeting3 => 'Not sure what to eat?';
 
   @override
-  String get homeDrawerLunchSub3 => 'Let Omnibot recommend for you';
+  String get homeDrawerLunchSub3 => 'Let Melly recommend for you';
 
   @override
   String get homeDrawerAfternoonGreeting => 'Time for a tea break';
@@ -1880,7 +1880,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeDrawerNightGreeting3 => 'Time to rest';
 
   @override
-  String get homeDrawerNightSub3 => 'Let Omnibot set an alarm for you';
+  String get homeDrawerNightSub3 => 'Let Melly set an alarm for you';
 
   @override
   String get homeDrawerLateNightGreeting =>
@@ -1894,4 +1894,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeDrawerLateNightSub2 => 'Say good night to today';
+
+  @override
+  String get languagePortugueseBrazil => 'Português (Brasil)';
 }

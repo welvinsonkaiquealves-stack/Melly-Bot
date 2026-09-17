@@ -318,7 +318,7 @@ mixin _ChatInputAreaComposerMixin on _ChatInputAreaStateBase {
   }
 
   Widget _buildLargeAddButton() {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     return IconButton(
       key: const ValueKey('chat-input-add-or-cancel-edit-button'),
       padding: EdgeInsets.zero,
@@ -386,10 +386,10 @@ mixin _ChatInputAreaComposerMixin on _ChatInputAreaStateBase {
       child: IconButton(
         key: const ValueKey('chat-input-send-or-stop-button'),
         tooltip: action == ChatComposerPrimaryAction.cancel
-            ? (Localizations.localeOf(context).languageCode == 'en'
+            ? (Localizations.localeOf(context).languageCode != 'zh'
                   ? 'Stop'
                   : '停止')
-            : (Localizations.localeOf(context).languageCode == 'en'
+            : (Localizations.localeOf(context).languageCode != 'zh'
                   ? 'Send'
                   : '发送'),
         padding: EdgeInsets.zero,

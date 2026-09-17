@@ -557,7 +557,7 @@ class MessageBubble extends StatelessWidget {
       );
     }
     final isEnglish =
-        Localizations.maybeLocaleOf(context)?.languageCode == 'en';
+        Localizations.maybeLocaleOf(context)?.languageCode != 'zh';
     final title = preview.title.trim();
     final description = preview.description.trim();
     final siteName = preview.displaySiteName.trim();
@@ -689,7 +689,7 @@ class MessageBubble extends StatelessWidget {
     required bool isUserMessage,
   }) {
     final isEnglish =
-        Localizations.maybeLocaleOf(context)?.languageCode == 'en';
+        Localizations.maybeLocaleOf(context)?.languageCode != 'zh';
     final title = preview.title.trim();
     final description = preview.description.trim();
     final siteName = preview.displaySiteName.trim();

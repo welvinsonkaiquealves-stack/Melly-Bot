@@ -5,9 +5,9 @@
   "memoryShortDeleteFailed": "Deletion was not completed. The list has been refreshed; select the entries again and retry.",
   "memoryShortDeleted": "Short-term memories deleted",
   "@@locale": "en",
-  "appName": "Omnibot",
-  "brandName": "Omnibot",
-  "brandNameEnglish": "Omnibot",
+  "appName": "Melly",
+  "brandName": "Melly",
+  "brandNameEnglish": "Melly",
   "commonLoading": "Loading",
   "homeDrawerSearchHint": "Search",
   "homeDrawerClearSearch": "Clear search",
@@ -37,7 +37,7 @@
   "settingsMcpToolsTitle": "MCP Tools",
   "settingsMcpToolsSubtitle": "Add, enable, and manage remote MCP services",
   "settingsLocalServiceTitle": "Local Service",
-  "settingsLocalServiceSubtitle": "Access Omnibot MCP and webchat over your local network",
+  "settingsLocalServiceSubtitle": "Access Melly MCP and webchat over your local network",
   "settingsAlpineTitle": "Terminal Environment",
   "settingsAlpineSubtitle": "Choose and manage the built-in Alpine or Ubuntu terminal system",
   "settingsHideRecentsTitle": "Hide from Recents",
@@ -58,7 +58,7 @@
   "settingsHabitualHandSubtitle": "Changes the swipe direction for chat history menus",
   "settingsHabitualHandLeft": "Left",
   "settingsHabitualHandRight": "Right",
-  "settingsAboutTitle": "About Omnibot",
+  "settingsAboutTitle": "About Melly",
   "settingsHideRecentsFailed": "Failed to update hide-from-recents",
   "settingsSaveFailed": "Failed to save settings",
   "settingsMcpEnabledToast": "MCP enabled: {endpoint}",
@@ -134,8 +134,7 @@
   "browserOverlayClose": "Close browser window",
   "browserOverlayUnsupported": "Browser tool view is not supported on this platform yet",
   "networkErrorMessage": "Sorry, the network stumbled just now. Please try sending it again.",
-  "rateLimitErrorMessage": "Omnibot is busy right now. Please try again in a moment.",
-
+  "rateLimitErrorMessage": "Melly is busy right now. Please try again in a moment.",
   "chatHistoryArchivedTitle": "Archived Conversations",
   "chatHistoryTitle": "Chat History",
   "chatHistoryNoArchived": "No archived conversations",
@@ -148,7 +147,6 @@
   "homeDrawerArchive": "Archive",
   "homeDrawerNewChat": "New conversation",
   "webchatNoChats": "Start a new conversation",
-
   "memoryCenterTitle": "Memory Center",
   "memoryShortTermTitle": "Short-term Memory",
   "memoryLongTermTitle": "Long-term Memory",
@@ -179,7 +177,6 @@
   "memoryLongTermFailed": "Long-term memory operation failed: {error}",
   "memoryNoMemories": "No memories",
   "memoryNoMemoriesDesc": "Start exploring and add content you like",
-
   "pluginMarketTitle": "Plugin Market",
   "pluginMarketEmpty": "No plugins available",
   "pluginMarketEmptyDesc": "Official plugins will appear here once connected",
@@ -222,7 +219,6 @@
   "pluginEnableTitle": "Enable plugin",
   "pluginEnableDescription": "Allow the Agent to use capabilities from this plugin",
   "pluginRetry": "Retry",
-
   "skillStoreTitle": "Skill Store",
   "skillBuiltin": "Built-in",
   "skillOfficial": "Official",
@@ -249,7 +245,6 @@
   "skillSyncOfficialSuccess": "Official skills synced ({count})",
   "skillSyncOfficialFailed": "Failed to sync official skills",
   "skillLoadFailed": "Failed to load skills",
-
   "modelProviderConfigTitle": "Provider Configuration",
   "modelProviderConfigDesc": "Add, switch, and maintain model service provider names, addresses, and keys.",
   "modelProviderName": "Provider Name",
@@ -286,7 +281,6 @@
     }
   },
   "modelProviderFetchFailed": "Failed to fetch the model list: {error}",
-
   "sceneModelMapping": "Scene Mapping",
   "sceneModelMappingDesc": "Bind Providers and models by scene. Unbound scenes will continue using the default model.",
   "sceneModelRefreshList": "Refresh model list",
@@ -340,9 +334,7 @@
       "error": {}
     }
   },
-
   "modelsNoAvailableModels": "No models available",
-
   "alarmSaved": "Alarm settings saved",
   "alarmRingtoneSource": "Ringtone Source",
   "alarmSystemDefault": "System Default",
@@ -357,7 +349,6 @@
   "alarmEnterHttpsUrl": "Please enter an HTTP(S) MP3 URL",
   "alarmLocalFile": "Local File",
   "alarmSelectMp3": "Select MP3 File",
-
   "authorizePageTitle": "App Permission Authorization",
   "authorizeReceiveNotifications": "Receive message notifications",
   "authorizeNotificationsDesc": "Enable this to get task progress updates in time",
@@ -396,7 +387,6 @@
   "storageSystemStats": "System statistics (closer to system settings)",
   "storageDirectoryScan": "Directory scan estimate",
   "storageAdditionalInfo": "Additional Info",
-
   "storageCatAppBinary": "App Binary",
   "storageCatAppBinaryDesc": "Installed app files (APK/AAB split)",
   "storageCatCache": "Cache",
@@ -440,14 +430,12 @@
   "storageCatLegacyWorkspaceHint": "Confirm it is no longer needed before cleanup",
   "storageCatOtherUserData": "Other Data",
   "storageCatOtherUserDataDesc": "Data not matched to any category rule",
-
   "storageStrategySafeQuick": "Safe Quick Cleanup",
   "storageStrategySafeQuickDesc": "Prioritize cleaning low-risk cache and temporary artifacts",
   "storageStrategyBalanceDeep": "Balanced Deep Cleanup",
   "storageStrategyBalanceDeepDesc": "Free more space while keeping core user data and files",
   "storageStrategyFree1gb": "Target Free 1GB",
   "storageStrategyFree1gbDesc": "Clean in high-value order, aiming for 1GB release target",
-
   "storageHintConversation": "If history is not released, re-enter the page and run \"Reanalyze\"",
   "storageHintTerminal": "After terminal runtime is cleaned, you can re-initialize it from the Terminal Environment page",
   "storageHintGeneral": "If cleanup fails, try again later or restart the app",
@@ -457,8 +445,7 @@
   "storageCleanPartialFailedGeneric": "Some files failed to clean up, please try again later",
   "storageTrendVsLast": "Vs last analysis: total {total}, cleanable {cleanable}",
   "storageLastAnalyzed": "Last analyzed: {time}",
-
-  "aboutDescription": "Omnibot is an AI assistant app centered on\nintelligent conversation, using semantic understanding\nand continuous learning to help with information\nprocessing, decision support, and daily management.",
+  "aboutDescription": "Melly is an AI assistant app centered on\nintelligent conversation, using semantic understanding\nand continuous learning to help with information\nprocessing, decision support, and daily management.",
   "aboutBetaProgramTitle": "Join beta testing",
   "aboutBetaProgramDescription": "Get faster four-part beta updates.",
   "aboutBetaProgramToggleFailed": "Failed to update beta testing preference",
@@ -472,7 +459,6 @@
   "aboutApkSourceOptionGithubDescription": "Official release source",
   "aboutApkSourceSwitchFailed": "Failed to switch APK download source",
   "aboutUpdateHintDefault": "Check for updates to get the latest version",
-
   "workspaceMemoryLoadFailed": "Failed to load workspace memory config",
   "agentSoulSaved": "Agent soul setting saved",
   "agentSoulSaveFailed": "Failed to save Agent soul setting",
@@ -498,7 +484,6 @@
   "agentSoulSetting": "Agent Soul",
   "chatPromptSetting": "Chat-only system prompt",
   "workspaceMemoryMd": "MEMORY.md (Long-term Memory)",
-
   "alpineNodeJs": "Node.js Runtime",
   "alpineNpm": "Node.js Package Manager",
   "alpineGit": "Git Version Control",
@@ -534,7 +519,7 @@
   "alpineDetectingDesc": "Detecting version info of common development tools in the selected terminal system.",
   "alpineReadyCount": "{ready}/{total} items ready in the selected terminal system. Check missing items and auto-configure in ReTerminal.",
   "alpineBootTasks": "Boot Tasks",
-  "alpineBootTasksDesc": "When Omnibot opens, enabled tasks are checked in the background and commands are started in the corresponding ReTerminal session. Suitable for persistent services.",
+  "alpineBootTasksDesc": "When Melly opens, enabled tasks are checked in the background and commands are started in the corresponding ReTerminal session. Suitable for persistent services.",
   "alpineAddTask": "Add Task",
   "alpineOpenTerminal": "Open Terminal",
   "alpineNoTasksDesc": "No tasks. You can add persistent commands like `python app.py`, `node server.js`, or `./start.sh`.",
@@ -554,14 +539,12 @@
   "alpineStartCommand": "Start Command",
   "alpineCommandExample": "e.g., python app.py or pnpm start",
   "alpineWorkDir": "Working Directory",
-  "alpineBootAutoStart": "Auto-start when Omnibot opens",
+  "alpineBootAutoStart": "Auto-start when Melly opens",
   "alpineDevEnv": "Dev Environment",
   "alpineAiAgent": "AI Agent",
   "alpineEnvConfig": "Environment Config",
   "alpineWorkDirValue": "Working directory: {dir}",
-
   "workspaceEmbeddingRetrieval": "Memory Embedding Retrieval",
-
   "chatHistoryStartConversation": "Start a conversation",
   "homeDrawerSearching": "Searching conversations...",
   "homeDrawerNoResults": "No matching conversations found",
@@ -572,11 +555,11 @@
   "homeDrawerScheduledTasks": "Scheduled tasks",
   "homeDrawerPinnedConversations": "Pinned conversations",
   "homeDrawerAgentSection": "Agent",
-  "homeDrawerOmniAiSection": "OmniAi",
+  "homeDrawerOmniAiSection": "Melly",
   "homeDrawerChatOnlySection": "Pure chat",
   "homeDrawerAgentNoProject": "Other",
   "homeDrawerGreeting": "Hello!",
-  "homeDrawerWelcome": "Welcome to Omnibot",
+  "homeDrawerWelcome": "Welcome to Melly",
   "homeDrawerDawnGreeting": "Late night",
   "homeDrawerDawnSub": "Still awake?",
   "homeDrawerDawnGreeting2": "Before dawn",
@@ -596,7 +579,7 @@
   "homeDrawerLunchGreeting2": "Good noon~",
   "homeDrawerLunchSub2": "Take a short break after lunch",
   "homeDrawerLunchGreeting3": "Not sure what to eat?",
-  "homeDrawerLunchSub3": "Let Omnibot recommend for you",
+  "homeDrawerLunchSub3": "Let Melly recommend for you",
   "homeDrawerAfternoonGreeting": "Time for a tea break",
   "homeDrawerAfternoonSub": "You've got this!",
   "homeDrawerAfternoonGreeting2": "Look away for a bit",
@@ -612,9 +595,13 @@
   "homeDrawerNightGreeting2": "Night is settling in",
   "homeDrawerNightSub2": "Get ready to rest earlier",
   "homeDrawerNightGreeting3": "Time to rest",
-  "homeDrawerNightSub3": "Let Omnibot set an alarm for you",
+  "homeDrawerNightSub3": "Let Melly set an alarm for you",
   "homeDrawerLateNightGreeting": "Put the phone down and sleep earlier",
   "homeDrawerLateNightSub": "Recharge for tomorrow",
   "homeDrawerLateNightGreeting2": "It is late",
-  "homeDrawerLateNightSub2": "Say good night to today"
+  "homeDrawerLateNightSub2": "Say good night to today",
+  "languagePortugueseBrazil": "Português (Brasil)",
+  "@languagePortugueseBrazil": {
+    "description": "Label for the Brazilian Portuguese language option"
+  }
 }

@@ -129,7 +129,7 @@ class OmnibotWorkspaceBrowserState extends State<OmnibotWorkspaceBrowser> {
       GlobalKey<_WorkspaceInlineFilePreviewState>();
   bool _isBulkSelectionMode = false;
 
-  bool get _isEnglish => Localizations.localeOf(context).languageCode == 'en';
+  bool get _isEnglish => Localizations.localeOf(context).languageCode != 'zh';
 
   Color _surfaceColor({double opacity = 0.8}) {
     return backgroundSurfaceColor(
@@ -616,7 +616,7 @@ class OmnibotWorkspaceBrowserState extends State<OmnibotWorkspaceBrowser> {
         children: [
           if (widget.showHeaderTitle) ...[
             Text(
-              Localizations.localeOf(context).languageCode == 'en'
+              Localizations.localeOf(context).languageCode != 'zh'
                   ? 'Workspace'
                   : '工作区',
               style: TextStyle(
@@ -896,14 +896,14 @@ class OmnibotWorkspaceBrowserState extends State<OmnibotWorkspaceBrowser> {
                 : !exists
                 ? _buildStatusList(
                     message:
-                        Localizations.localeOf(context).languageCode == 'en'
+                        Localizations.localeOf(context).languageCode != 'zh'
                         ? 'Workspace not found'
                         : '工作区不存在',
                   )
                 : itemCount == 0
                 ? _buildStatusList(
                     message:
-                        Localizations.localeOf(context).languageCode == 'en'
+                        Localizations.localeOf(context).languageCode != 'zh'
                         ? 'Current directory is empty'
                         : '当前目录为空',
                   )
@@ -1346,7 +1346,7 @@ class OmnibotWorkspaceBrowserState extends State<OmnibotWorkspaceBrowser> {
                 Text(
                   mountEntry == null
                       ? '长按左侧图标并拖动到目标文件夹可移动位置'
-                      : (Localizations.localeOf(context).languageCode == 'en'
+                      : (Localizations.localeOf(context).languageCode != 'zh'
                             ? 'This entry is a mounted host directory'
                             : '这是一个挂载进 /workspace 的宿主目录'),
                   style: TextStyle(
@@ -2168,14 +2168,14 @@ class _WorkspaceInlineFilePreviewState
 
   Widget _buildEditor() {
     final statusText = _loadingText && _textContent == null
-        ? (Localizations.localeOf(context).languageCode == 'en'
+        ? (Localizations.localeOf(context).languageCode != 'zh'
               ? 'Loading original content, you can start editing first'
               : '正在加载原始内容，可先开始编辑')
         : (_isDirty
-              ? (Localizations.localeOf(context).languageCode == 'en'
+              ? (Localizations.localeOf(context).languageCode != 'zh'
                     ? 'Editing with unsaved changes'
                     : '编辑中，存在未保存修改')
-              : (Localizations.localeOf(context).languageCode == 'en'
+              : (Localizations.localeOf(context).languageCode != 'zh'
                     ? 'Editing. Save will write back to workspace immediately'
                     : '编辑中，保存后会立即写回 workspace'));
     return Column(
@@ -2213,7 +2213,7 @@ class _WorkspaceInlineFilePreviewState
               decoration: InputDecoration(
                 filled: true,
                 fillColor: context.omniPalette.surfacePrimary,
-                hintText: Localizations.localeOf(context).languageCode == 'en'
+                hintText: Localizations.localeOf(context).languageCode != 'zh'
                     ? 'Enter file content'
                     : '输入文件内容',
                 alignLabelWithHint: true,
@@ -2249,7 +2249,7 @@ class _WorkspaceInlineFilePreviewState
                 onPressed: _isSaving ? null : _handleCancelEditing,
                 icon: const Icon(Icons.close_rounded),
                 label: Text(
-                  Localizations.localeOf(context).languageCode == 'en'
+                  Localizations.localeOf(context).languageCode != 'zh'
                       ? 'Cancel'
                       : '取消',
                 ),
@@ -2275,10 +2275,10 @@ class _WorkspaceInlineFilePreviewState
                   : const Icon(Icons.edit_outlined),
               label: Text(
                 _isEditing
-                    ? (Localizations.localeOf(context).languageCode == 'en'
+                    ? (Localizations.localeOf(context).languageCode != 'zh'
                           ? 'Save'
                           : '保存')
-                    : (Localizations.localeOf(context).languageCode == 'en'
+                    : (Localizations.localeOf(context).languageCode != 'zh'
                           ? 'Edit'
                           : '编辑'),
               ),
@@ -2293,7 +2293,7 @@ class _WorkspaceInlineFilePreviewState
     if (!widget.metadata.exists) {
       return Center(
         child: Text(
-          Localizations.localeOf(context).languageCode == 'en'
+          Localizations.localeOf(context).languageCode != 'zh'
               ? 'File does not exist'
               : '文件不存在',
         ),
@@ -2329,7 +2329,7 @@ class _WorkspaceInlineFilePreviewState
         if (_textContent == null) {
           return Center(
             child: Text(
-              Localizations.localeOf(context).languageCode == 'en'
+              Localizations.localeOf(context).languageCode != 'zh'
                   ? 'No content'
                   : '暂无内容',
             ),

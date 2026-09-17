@@ -298,7 +298,7 @@ class AssistsCoreManager(private val context: Context) {
     private fun t(zh: String, en: String): String {
         return when (currentLocale()) {
             PromptLocale.ZH_CN -> zh
-            PromptLocale.EN_US -> en
+            PromptLocale.EN_US, PromptLocale.PT_BR -> en
         }
     }
 
@@ -1191,7 +1191,7 @@ class AssistsCoreManager(private val context: Context) {
                     content = JsonPrimitive(
                         when (currentLocale()) {
                             PromptLocale.ZH_CN -> """
-                                你是小万，一个温暖的AI助手。
+                                你是 Melly，一个温暖的AI助手。
                                 请根据用户记忆生成一句简短、温馨、个性化的问候语。
                                 要求：
                                 1. 问候语不超过30个字。
@@ -1199,8 +1199,8 @@ class AssistsCoreManager(private val context: Context) {
                                 3. 禁止使用“你好呀”开头。
                                 4. 必须通过工具 $MEMORY_GREETING_TOOL 返回结果，不要输出普通文本。
                             """.trimIndent()
-                            PromptLocale.EN_US -> """
-                                You are Omnibot, a warm AI assistant.
+                            PromptLocale.EN_US, PromptLocale.PT_BR -> """
+                                You are Melly, a warm AI assistant.
                                 Generate one short, warm, personalized greeting based on the user's memory.
                                 Requirements:
                                 1. Keep the greeting within 30 words.
@@ -1245,7 +1245,7 @@ class AssistsCoreManager(private val context: Context) {
     private fun buildMemoryGreetingLegacyPrompt(recordBlock: String): String {
         return when (currentLocale()) {
             PromptLocale.ZH_CN -> """
-                你是小万，一个温暖的AI助手。根据用户的记忆内容（包含本地记忆和长期记忆），生成一句简短、温馨的问候语。
+                你是 Melly，一个温暖的AI助手。根据用户的记忆内容（包含本地记忆和长期记忆），生成一句简短、温馨的问候语。
 
                 要求：
                 1. 问候语要简短（不超过30个字）
@@ -1257,8 +1257,8 @@ class AssistsCoreManager(private val context: Context) {
                 用户的记忆内容：
                 $recordBlock
             """.trimIndent()
-            PromptLocale.EN_US -> """
-                You are Omnibot, a warm AI assistant. Based on the user's memory content, including local memory and long-term memory, generate one short and warm greeting.
+            PromptLocale.EN_US, PromptLocale.PT_BR -> """
+                You are Melly, a warm AI assistant. Based on the user's memory content, including local memory and long-term memory, generate one short and warm greeting.
 
                 Requirements:
                 1. Keep the greeting short, within 30 words.

@@ -75,7 +75,7 @@ object WebChatStaticHandler {
             <head>
               <meta charset="utf-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1" />
-              <title>Omnibot Web Chat</title>
+              <title>Melly Web Chat</title>
               <style>
                 body { font-family: sans-serif; margin: 0; padding: 32px; background: #f7f9fc; color: #24324a; }
                 .card { max-width: 680px; margin: 8vh auto 0; background: white; border-radius: 20px; padding: 28px; box-shadow: 0 16px 48px rgba(19, 38, 72, 0.12); }

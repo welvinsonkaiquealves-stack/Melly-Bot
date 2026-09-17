@@ -72,7 +72,7 @@ class HomeQuickPrompt {
 
   String resolveTitle(BuildContext context) {
     final languageCode = Localizations.localeOf(context).languageCode;
-    if (languageCode == 'en' && titleEn?.trim().isNotEmpty == true) {
+    if (languageCode != 'zh' && titleEn?.trim().isNotEmpty == true) {
       return titleEn!.trim();
     }
     return LegacyTextLocalizer.localize(
@@ -83,7 +83,7 @@ class HomeQuickPrompt {
 
   String resolvePrompt(BuildContext context) {
     final languageCode = Localizations.localeOf(context).languageCode;
-    if (languageCode == 'en' && promptEn?.trim().isNotEmpty == true) {
+    if (languageCode != 'zh' && promptEn?.trim().isNotEmpty == true) {
       return promptEn!.trim();
     }
     return LegacyTextLocalizer.localize(

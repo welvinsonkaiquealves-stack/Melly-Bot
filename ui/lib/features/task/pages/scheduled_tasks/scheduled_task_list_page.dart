@@ -895,7 +895,7 @@ class _ScheduledTaskListPageState extends State<ScheduledTaskListPage> {
                         if (!task.notificationEnabled) ...[
                           const SizedBox(width: 6),
                           Text(
-                            Localizations.localeOf(context).languageCode == 'en'
+                            Localizations.localeOf(context).languageCode != 'zh'
                                 ? 'Notifications off'
                                 : '通知关闭',
                             style: TextStyle(

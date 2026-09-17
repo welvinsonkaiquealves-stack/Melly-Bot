@@ -23,5 +23,24 @@ class AppLocaleManagerTest {
             PromptLocale.ZH_CN,
             AppLocaleManager.resolvePromptLocale(AppLanguageMode.SYSTEM, Locale.SIMPLIFIED_CHINESE)
         )
+        assertEquals(
+            PromptLocale.PT_BR,
+            AppLocaleManager.resolvePromptLocale(AppLanguageMode.PT_BR, Locale.US)
+        )
+        assertEquals(
+            PromptLocale.PT_BR,
+            AppLocaleManager.resolvePromptLocale(AppLanguageMode.SYSTEM, Locale.forLanguageTag("pt-BR"))
+        )
+    }
+
+    @Test
+    fun localizedTextFallsBackToEnglishWhenPortugueseIsMissing() {
+        val text = LocalizedText(zhCN = "中文", enUS = "English")
+
+        assertEquals("English", text.resolve(PromptLocale.PT_BR))
+        assertEquals(
+            "Português",
+            text.copy(ptBR = "Português").resolve(PromptLocale.PT_BR)
+        )
     }
 }

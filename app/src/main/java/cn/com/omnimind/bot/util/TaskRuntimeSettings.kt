@@ -251,7 +251,7 @@ object TaskRuntimeSettings {
             if (petHintShown) OVERLAY_ALERT_CHANNEL_ID else CHANNEL_ID
         )
             .setSmallIcon(context.applicationInfo.icon.takeIf { it != 0 } ?: R.mipmap.ic_launcher)
-            .setContentTitle(title.ifBlank { "Omnibot task completed" })
+            .setContentTitle(title.ifBlank { "Melly task completed" })
             .setContentText(body)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
             .setAutoCancel(true)
@@ -392,7 +392,7 @@ object TaskRuntimeSettings {
                     "Task completion overlay alerts",
                     NotificationManager.IMPORTANCE_DEFAULT
                 ).apply {
-                    description = "Sound and vibration alerts when the floating Omnibot bubble shows task completion"
+                    description = "Sound and vibration alerts when the floating Melly bubble shows task completion"
                     enableLights(false)
                     enableVibration(true)
                     vibrationPattern = longArrayOf(0, 250, 120, 250)
@@ -420,7 +420,7 @@ object TaskRuntimeSettings {
                 "Task completion reminders",
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Reminders after OmniAi, Agent, and chat tasks finish"
+                description = "Reminders after Melly, Agent, and chat tasks finish"
                 enableLights(true)
                 enableVibration(true)
                 vibrationPattern = longArrayOf(0, 250, 120, 250)
