@@ -1,7 +1,7 @@
 # Melly: execution handoff
 
 **Updated:** 2026-09-15 UTC  
-**Current stage:** E0-A2 implemented and CI-verified; device validation pending
+**Current stage:** E0-A3 implemented locally; pull-request CI pending
 
 ## Current state
 
@@ -26,7 +26,7 @@ without renaming Kotlin packages or beginning the E9 brand redesign.
 - E0-A merge commit on `main`: `eef88dc81bbd6c79a42274a05d93160351071e09`
 - P0-A merge commit on `main`: `442967a11a4607dc74079abe07dab3ab4e77a5cc`
 - Infrastructure/docs merge commit on `main`: `0a81b43d42098f1c414ced0cb9803f5c5fa60b67`
-- Current working branch: `e0a2/minimum-app-identity`
+- Current working branch: `e0a3/identity-portuguese`
 - Upstream `HEAD` and `main` both resolved to the audited commit before clone.
 - Initial working tree: clean.
 - GitHub `main` was verified at the audited commit before this bootstrap branch.
@@ -284,11 +284,27 @@ snapshot were intentionally not imported.
   exported debug actions can collide if an unscoped test broadcast is sent
   while both apps are installed, so device scripts must target the Melly package
   explicitly until E9 or a dedicated test-harness migration.
+- Merged E0-A2 through pull request #4 as merge commit `b226a721`; its CI
+  artifact installs with application ID `com.melly.assistant`.
+- Implemented E0-A3 visible identity cleanup without renaming internal
+  protocols, Kotlin packages, `Theme.OmnibotApp` resources or the legacy
+  `Download/OmnibotApp/` compatibility path.
+- Added Brazilian Portuguese to Flutter and Kotlin locale selectors. The 557
+  inherited ARB messages have pt-BR translations, plus one new language-option
+  label; Android has 37 matching `values-pt-rBR` strings. Placeholder and key
+  parity were verified locally.
+- Changed legacy bilingual Flutter and Kotlin paths to use English for pt-BR
+  when a dedicated Portuguese string has not yet been migrated. Chinese is now
+  selected only for a Chinese locale.
+- Disabled the inherited OpenOmniBot update channel fail-closed: periodic work
+  is cancelled, manual/silent checks return a no-update state, cached upstream
+  release URLs are suppressed, and install requests are rejected. Cloud-policy
+  fields remain preserved.
 
 ## Work not completed
 
-- Device validation.
-- Independent review and merge of E0-A2 pull request #4.
+- Device validation of E0-A2/E0-A3.
+- E0-A3 pull-request CI and independent review/merge.
 - Conversion of archival branch `upstream-54aeae8` into a Git tag.
 - Deletion of obsolete branch `melly/main`.
 - Branch protection for archival branch `upstream-54aeae8`.
@@ -297,10 +313,10 @@ snapshot were intentionally not imported.
 
 ## Next exact action
 
-Review and merge E0-A2 pull request #4. Then download run #10's debug APK,
-confirm Android installs `com.melly.assistant` beside the existing OpenOmniBot
-app, and begin the E0 measurement protocol. No Agent Loop or privileged-tool
-code belongs in E0-A2.
+Run the full GitHub Actions suite for E0-A3, correct only failures attributable
+to this branch, and publish the resulting debug APK. Then install it on the
+owner's Android device and verify Melly identity, pt-BR selection/fallback and
+the disabled update surface before beginning E0 measurements.
 
 ## Real blockers and risks
 
@@ -318,11 +334,17 @@ code belongs in E0-A2.
   evidence must be committed separately, not left only in the artifact.
 - The provisional `M` launcher art is intentionally not the final Melly brand;
   replace it during E9 rather than expanding E0-A2 into a UI redesign.
+- The pt-BR ARB catalog is an initial machine-assisted translation with focused
+  terminology corrections. It needs native-speaker copy review over time, but
+  no missing key or placeholder is known.
+- About/privacy links still target inherited OpenOmniBot documentation because
+  Melly does not yet have replacement legal/documentation pages. Do not silently
+  repoint them to a nonexistent endpoint.
 
 ## For the next agent
 
 Do not repeat the architecture audit, baseline setup or P0-A implementation.
-Read this file and inspect the current E0-A2 pull request. Never reuse
-`melly/main`, the P0-A branch or the infrastructure branch. Do not rename the
-Kotlin namespace/packages as part of installation identity. After a green CI
-run, validate side-by-side device installation before continuing E0 metrics.
+Read this file and inspect the E0-A3 pull request/CI. Never reuse `melly/main`,
+the P0-A branch or prior infrastructure branches. Do not rename internal
+Omnibot protocol identifiers during identity cleanup. After a green CI run,
+validate pt-BR and side-by-side device installation before continuing E0.
