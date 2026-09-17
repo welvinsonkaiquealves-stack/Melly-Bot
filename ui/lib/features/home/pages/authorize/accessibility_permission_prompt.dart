@@ -108,8 +108,8 @@ class _AccessibilityPermissionDialogState
           Text(
             _text(
               context,
-              '小万需要读取页面并执行点击、滑动和输入。',
-              'Omnibot needs to observe the screen and perform taps, swipes, and text input.',
+              'Melly需要读取页面并执行点击、滑动和输入。',
+              'Melly needs to observe the screen and perform taps, swipes, and text input.',
             ),
           ),
           const SizedBox(height: 14),
@@ -121,8 +121,8 @@ class _AccessibilityPermissionDialogState
           Text(
             _text(
               context,
-              '系统设置 → 无障碍 → 已下载的应用（或已安装的服务）→ 小万 → 开启',
-              'System Settings → Accessibility → Downloaded apps (or Installed services) → Omnibot → On',
+              '系统设置 → 无障碍 → 已下载的应用（或已安装的服务）→ Melly → 开启',
+              'System Settings → Accessibility → Downloaded apps (or Installed services) → Melly → On',
             ),
           ),
           if (_checking) ...[
@@ -166,4 +166,4 @@ Future<bool> _isAccessibilityReady() async {
 }
 
 String _text(BuildContext context, String zh, String en) =>
-    Localizations.localeOf(context).languageCode == 'en' ? en : zh;
+    Localizations.localeOf(context).languageCode != 'zh' ? en : zh;

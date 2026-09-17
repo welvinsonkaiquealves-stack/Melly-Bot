@@ -831,4 +831,4 @@ String _firstText(Iterable<dynamic> values) {
 }
 
 String _text(BuildContext context, String zh, String en) =>
-    Localizations.localeOf(context).languageCode == 'en' ? en : zh;
+    Localizations.localeOf(context).languageCode != 'zh' ? en : zh;

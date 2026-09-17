@@ -63,7 +63,7 @@ class CodexRemoteWorkspaceBrowserState
   String? _error;
   int _requestSerial = 0;
 
-  bool get _isEnglish => Localizations.localeOf(context).languageCode == 'en';
+  bool get _isEnglish => Localizations.localeOf(context).languageCode != 'zh';
 
   bool get canGoUp {
     final root = _normalizePath(_rootPath);

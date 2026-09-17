@@ -47,7 +47,7 @@ class _CodexRemoteFilePreviewPageState
   bool _isSaving = false;
   bool _isDirty = false;
 
-  bool get _isEnglish => Localizations.localeOf(context).languageCode == 'en';
+  bool get _isEnglish => Localizations.localeOf(context).languageCode != 'zh';
 
   bool get _isTextLike => _payload?.isTextLike == true;
 

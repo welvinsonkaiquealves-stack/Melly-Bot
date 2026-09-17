@@ -221,7 +221,7 @@ class _AgentRunGroupMessageState extends State<AgentRunGroupMessage>
 
   String? _activeToolLabel(BuildContext context) {
     final isEnglish =
-        Localizations.maybeLocaleOf(context)?.languageCode == 'en';
+        Localizations.maybeLocaleOf(context)?.languageCode != 'zh';
     for (final message in widget.group.processMessagesNewestFirst) {
       final cardData = message.cardData;
       if (cardData == null || cardData['type'] != kAgentToolSummaryCardType) {
@@ -493,7 +493,7 @@ class _AgentToolCallGroup extends StatelessWidget {
       alpha: context.isDarkTheme ? 0.10 : 0.06,
     );
     final isEnglish =
-        Localizations.maybeLocaleOf(context)?.languageCode == 'en';
+        Localizations.maybeLocaleOf(context)?.languageCode != 'zh';
     final title = _toolGroupTitle(
       messages,
       isEnglish: isEnglish,
@@ -653,7 +653,7 @@ class _LegacyAgentRunSummaryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isEnglish =
-        Localizations.maybeLocaleOf(context)?.languageCode == 'en';
+        Localizations.maybeLocaleOf(context)?.languageCode != 'zh';
     final palette = context.omniPalette;
     // Both collapsed AND expanded show the same "已处理 <elapsed>" label.
     // The per-tool count summary was deliberately retired — the user wants

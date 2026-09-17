@@ -35,8 +35,8 @@ class PermissionService {
             ? 'Built-in workspace'
             : '内置 workspace',
         description: LegacyTextLocalizer.isEnglish
-            ? 'Omnibot maintains `/workspace` internally; public storage permission is usually unnecessary'
-            : 'Omnibot 会在应用内部维护 `/workspace`，通常无需再单独授予公共存储权限',
+            ? 'Melly maintains `/workspace` internally; public storage permission is usually unnecessary'
+            : 'Melly 会在应用内部维护 `/workspace`，通常无需再单独授予公共存储权限',
       ),
       kPublicStoragePermissionId => _PermissionDisplaySpec(
         id: kPublicStoragePermissionId,
@@ -319,7 +319,7 @@ class PermissionService {
                   : '悬浮窗权限',
               description: LegacyTextLocalizer.isEnglish
                   ? 'Desktop overlay for quick access'
-                  : '桌面悬浮显示，快速唤起小万',
+                  : '桌面悬浮显示，快速唤起Melly',
               onAuthorize: () async {},
               checkAuthorization: () async => false,
             ),

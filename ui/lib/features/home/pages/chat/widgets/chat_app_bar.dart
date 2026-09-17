@@ -586,7 +586,7 @@ class _ChatAppBarModeShortcutButtonState
     setState(() => _isOpen = true);
     final palette = context.omniPalette;
     final selectedColor = palette.accentPrimary;
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     final canSelectPureChat =
         widget.isAgentSelected ||
         (!widget.isPureChatToggleLocked && widget.onPureChatToggleTap != null);
@@ -622,7 +622,7 @@ class _ChatAppBarModeShortcutButtonState
               ? _ChatAppBarModeShortcutMenuItemData(
                   action: _ChatAppBarModeShortcutAction.omniAi,
                   iconAsset: _kChatAppBarAgentIconAsset,
-                  tooltip: isEnglish ? 'OmniAi' : '小万',
+                  tooltip: isEnglish ? 'Melly' : 'Melly',
                   selected:
                       widget.isOmniAiSelected &&
                       (widget.activeAcpAgentId?.trim().isEmpty ?? true),
@@ -785,7 +785,7 @@ class _ChatAppBarModeShortcutButtonState
     final effectiveIconColor = _isOpen || hasSelectedMode
         ? selectedColor
         : widget.iconTint;
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     final icon = Center(
       child: _isOpen
           ? _buildOpenIcon(effectiveIconColor)

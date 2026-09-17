@@ -92,7 +92,7 @@ class _AuthorizeSettingPageState extends State<AuthorizeSettingPage>
 
   String _localeText({required String zh, required String en}) {
     final languageCode = Localizations.localeOf(context).languageCode;
-    return languageCode == 'en' ? en : zh;
+    return languageCode != 'zh' ? en : zh;
   }
 
   List<_AuthorizeSettingSection> _buildSections() {
@@ -160,8 +160,8 @@ class _AuthorizeSettingPageState extends State<AuthorizeSettingPage>
             icon: LucideIcons.pictureInPicture2,
             title: context.trLegacy('悬浮窗权限'),
             subtitle: _localeText(
-              zh: '允许小万在其他应用上方显示宠物、半屏聊天和任务提醒。',
-              en: 'Allow Omnibot to show the pet, half-screen chat, and task reminders above other apps.',
+              zh: '允许Melly在其他应用上方显示宠物、半屏聊天和任务提醒。',
+              en: 'Allow Melly to show the pet, half-screen chat, and task reminders above other apps.',
             ),
             trailing: _buildPermissionTrailing(
               label: context.trLegacy(_overlayPermission ? '已开启' : '去开启'),
@@ -201,8 +201,8 @@ class _AuthorizeSettingPageState extends State<AuthorizeSettingPage>
             icon: LucideIcons.folderOpen,
             title: _localeText(zh: '所有文件访问权限', en: 'All files access'),
             subtitle: _localeText(
-              zh: '允许小万访问设备公共存储中的文件与文件夹，用于文件读取、整理和下载等操作。',
-              en: 'Allow Omnibot to read and manage files in shared device storage for file tasks and downloads.',
+              zh: '允许Melly访问设备公共存储中的文件与文件夹，用于文件读取、整理和下载等操作。',
+              en: 'Allow Melly to read and manage files in shared device storage for file tasks and downloads.',
             ),
             trailing: _buildPermissionTrailing(
               label: context.trLegacy(_publicStoragePermission ? '已开启' : '去开启'),

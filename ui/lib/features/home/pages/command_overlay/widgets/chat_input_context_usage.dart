@@ -124,7 +124,7 @@ class _ContextUsageRingButtonState extends State<_ContextUsageRingButton> {
 
   @override
   Widget build(BuildContext context) {
-    final english = Localizations.localeOf(context).languageCode == 'en';
+    final english = Localizations.localeOf(context).languageCode != 'zh';
     final hasUsage = widget.ratio?.isFinite == true;
     final ring = SizedBox(
       width: 22,

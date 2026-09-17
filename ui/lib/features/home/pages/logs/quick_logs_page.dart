@@ -307,7 +307,7 @@ class _QuickLogsPageState extends State<QuickLogsPage> {
                             Text(
                               _t(
                                 '\u65b0\u589e\u65e5\u5fd7\u4f1a\u81ea\u52a8\u540c\u6b65\u5230\u77ed\u671f\u8bb0\u5fc6\uff0c\u65b9\u4fbf\u5c0f\u4e07\u5728\u540e\u7eed\u4f1a\u8bdd\u91cc\u8bb0\u4f4f\u4eca\u5929\u53d1\u751f\u7684\u4e8b\u3002',
-                                'New logs sync into short memories so Omnibot can recall them later.',
+                                'New logs sync into short memories so Melly can recall them later.',
                               ),
                               style: TextStyle(
                                 fontSize: 13,

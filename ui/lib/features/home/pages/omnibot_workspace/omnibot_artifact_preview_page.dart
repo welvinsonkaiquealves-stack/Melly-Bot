@@ -173,16 +173,16 @@ class _OmnibotArtifactPreviewPageState
     if (_isDirty) {
       final confirmed = await AppDialog.confirm(
         context,
-        title: Localizations.localeOf(context).languageCode == 'en'
+        title: Localizations.localeOf(context).languageCode != 'zh'
             ? 'Discard changes'
             : '放弃修改',
-        content: Localizations.localeOf(context).languageCode == 'en'
+        content: Localizations.localeOf(context).languageCode != 'zh'
             ? 'There are unsaved changes. Discard them?'
             : '当前有未保存修改，确认放弃吗？',
-        cancelText: Localizations.localeOf(context).languageCode == 'en'
+        cancelText: Localizations.localeOf(context).languageCode != 'zh'
             ? 'Keep editing'
             : '继续编辑',
-        confirmText: Localizations.localeOf(context).languageCode == 'en'
+        confirmText: Localizations.localeOf(context).languageCode != 'zh'
             ? 'Discard'
             : '放弃',
       );
@@ -217,7 +217,7 @@ class _OmnibotArtifactPreviewPageState
       await _loadIfNeeded(showLoading: false);
       if (!mounted) return;
       showToast(
-        Localizations.localeOf(context).languageCode == 'en'
+        Localizations.localeOf(context).languageCode != 'zh'
             ? 'File saved'
             : '文件已保存',
         type: ToastType.success,
@@ -225,7 +225,7 @@ class _OmnibotArtifactPreviewPageState
     } catch (error) {
       if (!mounted) return;
       showToast(
-        Localizations.localeOf(context).languageCode == 'en'
+        Localizations.localeOf(context).languageCode != 'zh'
             ? 'Save failed: $error'
             : '保存失败：$error',
         type: ToastType.error,
@@ -238,7 +238,7 @@ class _OmnibotArtifactPreviewPageState
   }
 
   Future<void> _handleOpenWithSystem() async {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     try {
       final opened = await OmnibotResourceService.openWithSystem(
         sourcePath: widget.path,
@@ -263,7 +263,7 @@ class _OmnibotArtifactPreviewPageState
   }
 
   Future<void> _handleOpenInBrowser() async {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     try {
       final opened = await OmnibotResourceService.openInBrowser(
         sourcePath: widget.path,
@@ -286,7 +286,7 @@ class _OmnibotArtifactPreviewPageState
   }
 
   Future<void> _handleSaveFile() async {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     try {
       final savedUri = await OmnibotResourceService.saveToLocal(
         sourcePath: widget.path,
@@ -310,7 +310,7 @@ class _OmnibotArtifactPreviewPageState
   }
 
   Future<void> _handleShareFile() async {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     try {
       final shared = await OmnibotResourceService.shareFile(
         sourcePath: widget.path,
@@ -356,16 +356,16 @@ class _OmnibotArtifactPreviewPageState
     }
     final confirmed = await AppDialog.confirm(
       context,
-      title: Localizations.localeOf(context).languageCode == 'en'
+      title: Localizations.localeOf(context).languageCode != 'zh'
           ? 'Exit editing'
           : '退出编辑',
-      content: Localizations.localeOf(context).languageCode == 'en'
+      content: Localizations.localeOf(context).languageCode != 'zh'
           ? 'There are unsaved changes. Exit editing?'
           : '当前有未保存修改，确认退出吗？',
-      cancelText: Localizations.localeOf(context).languageCode == 'en'
+      cancelText: Localizations.localeOf(context).languageCode != 'zh'
           ? 'Keep editing'
           : '继续编辑',
-      confirmText: Localizations.localeOf(context).languageCode == 'en'
+      confirmText: Localizations.localeOf(context).languageCode != 'zh'
           ? 'Exit'
           : '退出',
     );
@@ -454,7 +454,7 @@ class _OmnibotArtifactPreviewPageState
               decoration: InputDecoration(
                 filled: true,
                 fillColor: palette.surfacePrimary,
-                hintText: Localizations.localeOf(context).languageCode == 'en'
+                hintText: Localizations.localeOf(context).languageCode != 'zh'
                     ? 'Enter file content'
                     : '输入文件内容',
                 alignLabelWithHint: true,
@@ -482,7 +482,7 @@ class _OmnibotArtifactPreviewPageState
     if (!widget.exists) {
       return Center(
         child: Text(
-          Localizations.localeOf(context).languageCode == 'en'
+          Localizations.localeOf(context).languageCode != 'zh'
               ? 'File does not exist'
               : '文件不存在',
         ),
@@ -524,7 +524,7 @@ class _OmnibotArtifactPreviewPageState
         if (_textContent == null) {
           return Center(
             child: Text(
-              Localizations.localeOf(context).languageCode == 'en'
+              Localizations.localeOf(context).languageCode != 'zh'
                   ? 'No content'
                   : '暂无内容',
             ),
@@ -571,7 +571,7 @@ class _OmnibotArtifactPreviewPageState
                   onPressed: _handleOpenWithSystem,
                   icon: const Icon(Icons.open_in_new_outlined),
                   label: Text(
-                    Localizations.localeOf(context).languageCode == 'en'
+                    Localizations.localeOf(context).languageCode != 'zh'
                         ? 'Open with system'
                         : '系统打开',
                   ),
@@ -621,7 +621,7 @@ class _OmnibotArtifactPreviewPageState
       actions.add(
         PopupMenuButton<_ArtifactPreviewAction>(
           key: const ValueKey('artifact-preview-more-actions'),
-          tooltip: Localizations.localeOf(context).languageCode == 'en'
+          tooltip: Localizations.localeOf(context).languageCode != 'zh'
               ? 'More actions'
               : '更多操作',
           splashRadius: 18,
@@ -631,7 +631,7 @@ class _OmnibotArtifactPreviewPageState
               PopupMenuItem<_ArtifactPreviewAction>(
                 value: _ArtifactPreviewAction.openInBrowser,
                 child: Text(
-                  Localizations.localeOf(context).languageCode == 'en'
+                  Localizations.localeOf(context).languageCode != 'zh'
                       ? 'Open in browser'
                       : '在浏览器打开',
                 ),
@@ -639,7 +639,7 @@ class _OmnibotArtifactPreviewPageState
             PopupMenuItem<_ArtifactPreviewAction>(
               value: _ArtifactPreviewAction.saveFile,
               child: Text(
-                Localizations.localeOf(context).languageCode == 'en'
+                Localizations.localeOf(context).languageCode != 'zh'
                     ? 'Save to device'
                     : '保存到设备',
               ),
@@ -647,7 +647,7 @@ class _OmnibotArtifactPreviewPageState
             PopupMenuItem<_ArtifactPreviewAction>(
               value: _ArtifactPreviewAction.openWithSystem,
               child: Text(
-                Localizations.localeOf(context).languageCode == 'en'
+                Localizations.localeOf(context).languageCode != 'zh'
                     ? 'Open with system'
                     : '系统打开',
               ),
@@ -655,7 +655,7 @@ class _OmnibotArtifactPreviewPageState
             PopupMenuItem<_ArtifactPreviewAction>(
               value: _ArtifactPreviewAction.shareFile,
               child: Text(
-                Localizations.localeOf(context).languageCode == 'en'
+                Localizations.localeOf(context).languageCode != 'zh'
                     ? 'Share file'
                     : '分享文件',
               ),

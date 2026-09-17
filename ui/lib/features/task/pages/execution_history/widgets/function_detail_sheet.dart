@@ -412,7 +412,7 @@ Set<String> _stringSet(dynamic value) =>
 String _string(dynamic value) => value?.toString().trim() ?? '';
 
 String _text(BuildContext context, String zh, String en) =>
-    Localizations.localeOf(context).languageCode == 'en' ? en : zh;
+    Localizations.localeOf(context).languageCode != 'zh' ? en : zh;
 
 extension on String {
   String? get nullIfEmpty => isEmpty ? null : this;

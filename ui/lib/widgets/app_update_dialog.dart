@@ -10,7 +10,7 @@ Future<void> showAppUpdateDialog(
   AppUpdateStatus status,
 ) async {
   final hasDirectInstall = status.canInstall;
-  final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+  final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
   final palette = context.omniPalette;
   final confirmed = await AppDialog.confirm(
     context,
@@ -85,7 +85,7 @@ class _AppUpdateDialogContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = context.omniPalette;
     final isDark = context.isDarkTheme;
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     final notesSurfaceColor = isDark
         ? palette.surfaceSecondary.withValues(alpha: 0.82)
         : const Color(0xFFF6F8FA);

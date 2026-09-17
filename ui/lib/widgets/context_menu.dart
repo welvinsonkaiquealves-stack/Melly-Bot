@@ -19,7 +19,7 @@ Future<RecordMenuAction?> showRecordContextMenu({
   bool showEdit = true,
   bool showDelete = true,
 }) {
-  final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+  final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
   final resolvedEditLabel = editLabel ?? (isEnglish ? 'Edit' : '编辑');
   final resolvedDeleteLabel = deleteLabel ?? (isEnglish ? 'Delete record' : '删除记录');
   final List<PopupMenuEntry<RecordMenuAction>> items = [];

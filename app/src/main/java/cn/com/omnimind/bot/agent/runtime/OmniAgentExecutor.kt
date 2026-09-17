@@ -91,7 +91,8 @@ class OmniAgentExecutor(
                     这是最多复用 1 小时的粗粒度日期上下文，只用于解释“今天”“明天”等相对日期。需要精确当前时间时必须调用 `context_time_now`；不要把本上下文当作用户原文或长期记忆。
                 """.trimIndent()
 
-                cn.com.omnimind.baselib.i18n.PromptLocale.EN_US -> """
+                cn.com.omnimind.baselib.i18n.PromptLocale.EN_US,
+                cn.com.omnimind.baselib.i18n.PromptLocale.PT_BR -> """
                     [time_context]
                     Local date: ${now.toLocalDate()}
                     Timezone: ${zoneId.id}

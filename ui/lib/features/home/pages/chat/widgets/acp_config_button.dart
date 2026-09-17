@@ -123,7 +123,7 @@ class _AcpConfigButtonState extends State<AcpConfigButton> {
   Widget build(BuildContext context) => TextFieldTapRegion(
     child: Builder(
       builder: (anchor) => Tooltip(
-        message: Localizations.localeOf(context).languageCode == 'en'
+        message: Localizations.localeOf(context).languageCode != 'zh'
             ? 'Model & settings'
             : '模型与参数',
         child: InkWell(
@@ -171,7 +171,7 @@ class _AcpConfigPanelState extends State<AcpConfigPanel> {
   bool _loading = true;
   bool _saving = false;
   String? _expandedId;
-  bool get _english => Localizations.localeOf(context).languageCode == 'en';
+  bool get _english => Localizations.localeOf(context).languageCode != 'zh';
 
   @override
   void initState() {

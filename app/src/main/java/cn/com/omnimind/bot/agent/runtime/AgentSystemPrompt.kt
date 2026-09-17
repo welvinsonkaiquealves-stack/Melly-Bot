@@ -69,7 +69,7 @@ object AgentSystemPrompt {
                         Agent 灵魂（来自应用设置）：
                         $it
                     """.trimIndent()
-                    PromptLocale.EN_US -> """
+                    PromptLocale.EN_US, PromptLocale.PT_BR -> """
                         Agent soul (from app settings):
                         $it
                     """.trimIndent()
@@ -134,7 +134,7 @@ object AgentSystemPrompt {
                 $installedSkillSection
                 $soulSection
             """.trimIndent()
-            PromptLocale.EN_US -> """
+            PromptLocale.EN_US, PromptLocale.PT_BR -> """
                 You are an AI Agent operating inside the $distributionName environment, and you can also control the user's phone through tool calls.
 
                 Current workspace:

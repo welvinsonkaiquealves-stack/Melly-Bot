@@ -16,7 +16,7 @@ class BotStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
     if (status == BotStatusType.completed && isEnglish) {
       final completedText = (costTime != null && costTime!.trim().isNotEmpty)
           ? 'Thought for ${costTime!.trim()}'
@@ -33,10 +33,10 @@ class BotStatus extends StatelessWidget {
         return _buildStatusRow(
           context,
           svgPath: 'assets/chatbot/thinking_icon.svg',
-          text: Localizations.localeOf(context).languageCode == 'en'
+          text: Localizations.localeOf(context).languageCode != 'zh'
               ? 'Thinking...'
               : '正在思考...',
-          timeDesc: Localizations.localeOf(context).languageCode == 'en'
+          timeDesc: Localizations.localeOf(context).languageCode != 'zh'
               ? 'Time taken'
               : '已用时',
           costTime: costTime,
@@ -45,10 +45,10 @@ class BotStatus extends StatelessWidget {
         return _buildStatusRow(
           context,
           icon: Icons.check_circle,
-          text: Localizations.localeOf(context).languageCode == 'en'
+          text: Localizations.localeOf(context).languageCode != 'zh'
               ? 'Thinking complete'
               : '已完成思考',
-          timeDesc: Localizations.localeOf(context).languageCode == 'en'
+          timeDesc: Localizations.localeOf(context).languageCode != 'zh'
               ? 'Total time'
               : '总用时',
           costTime: costTime,
@@ -59,7 +59,7 @@ class BotStatus extends StatelessWidget {
           svgPath: 'assets/chatbot/thinking_icon.svg',
           text:
               hintText ??
-              (Localizations.localeOf(context).languageCode == 'en'
+              (Localizations.localeOf(context).languageCode != 'zh'
                   ? 'Hint'
                   : '提示'),
         );

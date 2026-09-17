@@ -239,7 +239,7 @@ class WorkspaceMemoryService(
     private fun t(zh: String, en: String): String {
         return when (currentLocale()) {
             PromptLocale.ZH_CN -> zh
-            PromptLocale.EN_US -> en
+            PromptLocale.EN_US, PromptLocale.PT_BR -> en
         }
     }
 
@@ -935,7 +935,7 @@ class WorkspaceMemoryService(
                 4. 如果没有可沉淀内容，longTermCandidates 返回空数组。
                 5. 必须通过工具 $ROLLUP_SUBMIT_TOOL 提交结果，不要输出普通文本。
             """.trimIndent()
-            PromptLocale.EN_US -> """
+            PromptLocale.EN_US, PromptLocale.PT_BR -> """
                 You are the Workspace memory rollup assistant.
                 Goal: summarize the day's short-term memory and identify information that should be promoted into long-term memory.
 
@@ -966,7 +966,7 @@ class WorkspaceMemoryService(
                 现有长期记忆（用于避免重复）：
                 $longTermBlock
             """.trimIndent()
-            PromptLocale.EN_US -> """
+            PromptLocale.EN_US, PromptLocale.PT_BR -> """
                 Date: $date
 
                 Daily short-term memory:
@@ -1010,7 +1010,7 @@ class WorkspaceMemoryService(
                 现有长期记忆（用于避免重复）：
                 $longTermBlock
             """.trimIndent()
-            PromptLocale.EN_US -> """
+            PromptLocale.EN_US, PromptLocale.PT_BR -> """
                 You are the Workspace memory rollup assistant. Based on the day's short-term memory, generate a daily summary and identify information that should become long-term memory.
 
                 Rules:

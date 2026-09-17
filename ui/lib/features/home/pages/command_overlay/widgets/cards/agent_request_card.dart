@@ -213,7 +213,7 @@ class _AgentRequestNoticeState extends State<AgentRequestNotice> {
       if (!mounted) return;
       setState(() => _submitting = false);
       showToast(
-        Localizations.maybeLocaleOf(context)?.languageCode == 'en'
+        Localizations.maybeLocaleOf(context)?.languageCode != 'zh'
             ? 'Reply was not sent. Try again.'
             : '回复未送达，可以重试',
         type: ToastType.warning,
@@ -469,7 +469,7 @@ class _AgentRequestCardState extends State<AgentRequestCard> {
             const SizedBox(height: 8),
             Text(
               interactionUnavailableReason == 'session_ended'
-                  ? (Localizations.maybeLocaleOf(context)?.languageCode == 'en'
+                  ? (Localizations.maybeLocaleOf(context)?.languageCode != 'zh'
                         ? 'This request expired with the ACP session. Start a new prompt to continue.'
                         : 'ACP 会话已结束，该请求已过期。请发起新的请求继续。')
                   : 'This request cannot be answered because ACP omitted its request id.',
@@ -632,7 +632,7 @@ class _AgentRequestCardState extends State<AgentRequestCard> {
         _isSubmitting = false;
       });
       showToast(
-        Localizations.maybeLocaleOf(context)?.languageCode == 'en'
+        Localizations.maybeLocaleOf(context)?.languageCode != 'zh'
             ? 'Reply was not sent. Try again.'
             : '回复未送达，可以重试',
         type: ToastType.warning,
@@ -998,7 +998,7 @@ class _RequestFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = context.omniPalette;
     final isEnglish =
-        Localizations.maybeLocaleOf(context)?.languageCode == 'en';
+        Localizations.maybeLocaleOf(context)?.languageCode != 'zh';
     if (isSubmitting) {
       return Align(
         alignment: Alignment.centerRight,

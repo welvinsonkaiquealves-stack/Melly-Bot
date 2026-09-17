@@ -5,9 +5,9 @@
   "memoryShortDeleteFailed": "删除未完成，列表已刷新，请重新选择后重试。",
   "memoryShortDeleted": "短期记忆已删除",
   "@@locale": "zh",
-  "appName": "小万",
-  "brandName": "小万",
-  "brandNameEnglish": "Omnibot",
+  "appName": "Melly",
+  "brandName": "Melly",
+  "brandNameEnglish": "Melly",
   "commonLoading": "加载中",
   "homeDrawerSearchHint": "搜索全部对话",
   "homeDrawerClearSearch": "清空搜索",
@@ -37,7 +37,7 @@
   "settingsMcpToolsTitle": "MCP 工具",
   "settingsMcpToolsSubtitle": "添加、启停和管理远端 MCP 服务",
   "settingsLocalServiceTitle": "本机服务",
-  "settingsLocalServiceSubtitle": "在局域网内访问小万 MCP 和 webchat 服务",
+  "settingsLocalServiceSubtitle": "在局域网内访问Melly MCP 和 webchat 服务",
   "settingsAlpineTitle": "终端环境",
   "settingsAlpineSubtitle": "选择并管理应用内 Alpine 或 Ubuntu 终端系统",
   "settingsHideRecentsTitle": "后台隐藏",
@@ -58,7 +58,7 @@
   "settingsHabitualHandSubtitle": "影响聊天历史记录的侧滑菜单方向",
   "settingsHabitualHandLeft": "左手",
   "settingsHabitualHandRight": "右手",
-  "settingsAboutTitle": "关于小万",
+  "settingsAboutTitle": "关于Melly",
   "settingsHideRecentsFailed": "设置后台隐藏失败",
   "settingsSaveFailed": "设置失败",
   "settingsMcpEnabledToast": "MCP 已开启：{endpoint}",
@@ -134,8 +134,7 @@
   "browserOverlayClose": "关闭浏览器窗口",
   "browserOverlayUnsupported": "当前平台暂不支持浏览器工具视图",
   "networkErrorMessage": "抱歉，刚刚网络开小差了。再发一次试试？",
-  "rateLimitErrorMessage": "小万忙不过来了，等会儿再试试吧",
-
+  "rateLimitErrorMessage": "Melly忙不过来了，等会儿再试试吧",
   "chatHistoryArchivedTitle": "归档对话",
   "chatHistoryTitle": "聊天记录",
   "chatHistoryNoArchived": "暂无归档对话",
@@ -148,7 +147,6 @@
   "homeDrawerArchive": "归档对话",
   "homeDrawerNewChat": "新对话",
   "webchatNoChats": "开始一个新的对话吧",
-
   "memoryCenterTitle": "记忆中心",
   "memoryShortTermTitle": "短期记忆",
   "memoryLongTermTitle": "长期记忆",
@@ -179,7 +177,6 @@
   "memoryLongTermFailed": "长期记忆操作失败：{error}",
   "memoryNoMemories": "暂无记忆",
   "memoryNoMemoriesDesc": "快去探索，添加喜欢的内容吧",
-
   "pluginMarketTitle": "插件市场",
   "pluginMarketEmpty": "暂无可用插件",
   "pluginMarketEmptyDesc": "官方插件接入后会显示在这里",
@@ -222,7 +219,6 @@
   "pluginEnableTitle": "启用插件",
   "pluginEnableDescription": "允许 Agent 使用此插件提供的能力",
   "pluginRetry": "重试",
-
   "skillStoreTitle": "技能仓库",
   "skillBuiltin": "内置",
   "skillOfficial": "官方",
@@ -249,7 +245,6 @@
   "skillSyncOfficialSuccess": "官方 Skills 已同步（{count} 个）",
   "skillSyncOfficialFailed": "同步官方 Skills 失败",
   "skillLoadFailed": "加载技能仓库失败",
-
   "modelProviderConfigTitle": "Provider 配置",
   "modelProviderConfigDesc": "新增、切换并维护模型服务提供商的名称、地址与密钥。",
   "modelProviderName": "Provider 名称",
@@ -286,7 +281,6 @@
     }
   },
   "modelProviderFetchFailed": "拉取模型列表失败：{error}",
-
   "sceneModelMapping": "场景映射",
   "sceneModelMappingDesc": "按场景绑定 Provider 与模型，未绑定的场景会继续使用默认模型。",
   "sceneModelRefreshList": "刷新模型列表",
@@ -340,9 +334,7 @@
       "error": {}
     }
   },
-
   "modelsNoAvailableModels": "暂无可用模型",
-
   "alarmSaved": "闹钟设置已保存",
   "alarmRingtoneSource": "铃声来源",
   "alarmSystemDefault": "系统默认铃声",
@@ -357,7 +349,6 @@
   "alarmEnterHttpsUrl": "请输入 http(s) 开头的 mp3 直链",
   "alarmLocalFile": "本地文件",
   "alarmSelectMp3": "选择 mp3 文件",
-
   "authorizePageTitle": "应用权限授权",
   "authorizeReceiveNotifications": "接收消息通知",
   "authorizeNotificationsDesc": "打开后可以及时了解任务进展",
@@ -396,7 +387,6 @@
   "storageSystemStats": "系统统计（与系统设置更接近）",
   "storageDirectoryScan": "目录扫描估算",
   "storageAdditionalInfo": "附加信息",
-
   "storageCatAppBinary": "应用安装包",
   "storageCatAppBinaryDesc": "应用安装文件占用（APK/AAB split）",
   "storageCatCache": "缓存",
@@ -440,14 +430,12 @@
   "storageCatLegacyWorkspaceHint": "建议确认无用后再清理",
   "storageCatOtherUserData": "其他数据",
   "storageCatOtherUserDataDesc": "未命中分类规则的数据",
-
   "storageStrategySafeQuick": "安全快速清理",
   "storageStrategySafeQuickDesc": "优先清理低风险缓存与临时产物",
   "storageStrategyBalanceDeep": "平衡深度清理",
   "storageStrategyBalanceDeepDesc": "释放更多空间，保留核心用户数据与文件",
   "storageStrategyFree1gb": "目标释放 1GB",
   "storageStrategyFree1gbDesc": "按高收益顺序清理，尽量达到 1GB 释放目标",
-
   "storageHintConversation": "如历史未释放，请重新进入页面执行「重新分析」",
   "storageHintTerminal": "终端运行时被清理后，可在终端环境页重新初始化",
   "storageHintGeneral": "若清理失败，可稍后重试或重启应用后再次清理",
@@ -457,8 +445,7 @@
   "storageCleanPartialFailedGeneric": "部分文件清理失败，请稍后重试",
   "storageTrendVsLast": "对比上次分析：总计 {total}，可清理 {cleanable}",
   "storageLastAnalyzed": "上次分析时间：{time}",
-
-  "aboutDescription": "小万，是一款以智能对话为核心的手机AI助\n手，通过语义理解与持续学习能力，协助用户\n完成信息处理、决策辅助和日常管理。",
+  "aboutDescription": "Melly，是一款以智能对话为核心的手机AI助\n手，通过语义理解与持续学习能力，协助用户\n完成信息处理、决策辅助和日常管理。",
   "aboutBetaProgramTitle": "加入 beta 测试",
   "aboutBetaProgramDescription": "接收更快的四段版更新。",
   "aboutBetaProgramToggleFailed": "beta 测试设置更新失败",
@@ -472,7 +459,6 @@
   "aboutApkSourceOptionGithubDescription": "官方 Release",
   "aboutApkSourceSwitchFailed": "安装包下载源切换失败",
   "aboutUpdateHintDefault": "检查更新获取最新版本",
-
   "workspaceMemoryLoadFailed": "加载 workspace 记忆配置失败",
   "agentSoulSaved": "Agent 灵魂设置已保存",
   "agentSoulSaveFailed": "Agent 灵魂设置保存失败",
@@ -498,7 +484,6 @@
   "agentSoulSetting": "Agent 灵魂",
   "chatPromptSetting": "纯聊天系统提示词",
   "workspaceMemoryMd": "MEMORY.md（长期记忆）",
-
   "alpineNodeJs": "Node.js 运行时",
   "alpineNpm": "Node.js 包管理器",
   "alpineGit": "Git 版本控制",
@@ -534,7 +519,7 @@
   "alpineDetectingDesc": "正在后台检测当前终端系统内常见开发环境的版本信息。",
   "alpineReadyCount": "当前终端系统已就绪 {ready}/{total} 项，可直接勾选缺失项并进入 ReTerminal 自动配置。",
   "alpineBootTasks": "自启动任务",
-  "alpineBootTasksDesc": "打开 Omnibot 时会在后台检查已启用的任务，并在对应 ReTerminal 会话内启动命令，适合常驻服务。",
+  "alpineBootTasksDesc": "打开 Melly 时会在后台检查已启用的任务，并在对应 ReTerminal 会话内启动命令，适合常驻服务。",
   "alpineAddTask": "新增任务",
   "alpineOpenTerminal": "打开终端",
   "alpineNoTasksDesc": "暂无任务。你可以添加例如 `python app.py`、`node server.js`、`./start.sh` 之类的常驻命令。",
@@ -554,14 +539,12 @@
   "alpineStartCommand": "启动命令",
   "alpineCommandExample": "例如：python app.py 或 pnpm start",
   "alpineWorkDir": "工作目录",
-  "alpineBootAutoStart": "打开小万时自动启动",
+  "alpineBootAutoStart": "打开Melly时自动启动",
   "alpineDevEnv": "开发环境",
   "alpineAiAgent": "AI Agent",
   "alpineEnvConfig": "环境配置",
   "alpineWorkDirValue": "工作目录：{dir}",
-
   "workspaceEmbeddingRetrieval": "记忆嵌入检索",
-
   "chatHistoryStartConversation": "开始对话",
   "homeDrawerSearching": "正在搜索对话内容…",
   "homeDrawerNoResults": "没有找到相关对话",
@@ -572,11 +555,11 @@
   "homeDrawerScheduledTasks": "定时任务",
   "homeDrawerPinnedConversations": "置顶会话",
   "homeDrawerAgentSection": "Agent",
-  "homeDrawerOmniAiSection": "小万",
+  "homeDrawerOmniAiSection": "Melly",
   "homeDrawerChatOnlySection": "纯聊天",
   "homeDrawerAgentNoProject": "其他",
   "homeDrawerGreeting": "你好！",
-  "homeDrawerWelcome": "欢迎使用小万",
+  "homeDrawerWelcome": "欢迎使用Melly",
   "homeDrawerDawnGreeting": "凌晨啦",
   "homeDrawerDawnSub": "还没休息吗？",
   "homeDrawerDawnGreeting2": "天还没亮",
@@ -596,7 +579,7 @@
   "homeDrawerLunchGreeting2": "午安～",
   "homeDrawerLunchSub2": "吃完记得歇会儿",
   "homeDrawerLunchGreeting3": "午餐不知道吃什么？",
-  "homeDrawerLunchSub3": "让小万帮你推荐吧！",
+  "homeDrawerLunchSub3": "让Melly帮你推荐吧！",
   "homeDrawerAfternoonGreeting": "喝杯茶提提神",
   "homeDrawerAfternoonSub": "剩下的任务也能轻松搞定～",
   "homeDrawerAfternoonGreeting2": "工作间隙看看窗外",
@@ -612,9 +595,13 @@
   "homeDrawerNightGreeting2": "夜色渐浓",
   "homeDrawerNightSub2": "准备下早点休息啦～",
   "homeDrawerNightGreeting3": "该休息了",
-  "homeDrawerNightSub3": "让小万帮你定个闹钟吧！",
+  "homeDrawerNightSub3": "让Melly帮你定个闹钟吧！",
   "homeDrawerLateNightGreeting": "放下手机早点睡",
   "homeDrawerLateNightSub": "明天才能元气满满～",
   "homeDrawerLateNightGreeting2": "深夜了",
-  "homeDrawerLateNightSub2": "好好和今天说晚安～"
+  "homeDrawerLateNightSub2": "好好和今天说晚安～",
+  "languagePortugueseBrazil": "巴西葡萄牙语",
+  "@languagePortugueseBrazil": {
+    "description": "Label for the Brazilian Portuguese language option"
+  }
 }

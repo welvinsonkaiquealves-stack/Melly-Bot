@@ -15,7 +15,7 @@ extension _ChatInputAgentControls on _ChatInputAreaStateBase {
     final settings = widget.modelPickerSettings!;
     final palette = context.omniPalette;
     final modelId = settings.modelId.trim();
-    final english = Localizations.localeOf(context).languageCode == 'en';
+    final english = Localizations.localeOf(context).languageCode != 'zh';
     final selectedColor = palette.accentPrimary;
     final enabled = settings.hasSelectableModels;
     final vendor = modelId.isEmpty ? null : ModelVendorCatalog.resolve(modelId);
@@ -79,7 +79,7 @@ extension _ChatInputAgentControls on _ChatInputAreaStateBase {
     final modelId = settings.modelId.trim();
     final effort = settings.reasoningEffort.trim();
     final agentName = settings.agentName.trim();
-    final english = Localizations.localeOf(context).languageCode == 'en';
+    final english = Localizations.localeOf(context).languageCode != 'zh';
     final selectedColor = palette.accentPrimary;
     final menuTextColor = context.isDarkTheme
         ? palette.textPrimary
@@ -259,7 +259,7 @@ extension _ChatInputAgentControls on _ChatInputAreaStateBase {
 
   String _agentReasoningEffortLabel(String effort, {bool compact = false}) {
     final normalized = effort.trim().toLowerCase();
-    final english = Localizations.localeOf(context).languageCode == 'en';
+    final english = Localizations.localeOf(context).languageCode != 'zh';
     return switch (normalized) {
       'none' || 'no' => english ? 'No reasoning' : (compact ? '无' : '无推理'),
       'minimal' || 'min' => english ? 'Minimal' : '极低',
@@ -404,13 +404,13 @@ extension _ChatInputAgentControls on _ChatInputAreaStateBase {
   String _agentPermissionTooltip() {
     final agentName = widget.agentRunSettings?.agentName.trim() ?? '';
     final displayName = agentName.isNotEmpty ? agentName : 'Agent';
-    return Localizations.localeOf(context).languageCode == 'en'
+    return Localizations.localeOf(context).languageCode != 'zh'
         ? '$displayName permissions'
         : '$displayName 权限';
   }
 
   String _agentPermissionLabel(AgentPermissionMode mode) {
-    final english = Localizations.localeOf(context).languageCode == 'en';
+    final english = Localizations.localeOf(context).languageCode != 'zh';
     return switch (mode) {
       AgentPermissionMode.readOnly => english ? 'Read only' : '只读',
       AgentPermissionMode.defaultMode => english ? 'Workspace write' : '工作区读写',

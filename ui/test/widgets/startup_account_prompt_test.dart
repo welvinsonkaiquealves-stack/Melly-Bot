@@ -102,7 +102,7 @@ void main() {
             .height,
         lessThan(600),
       );
-      expect(find.text('小万通灵，云启大千'), findsOneWidget);
+      expect(find.text('Melly通灵，云启大千'), findsOneWidget);
       final sloganRect = tester.getRect(
         find.byKey(const ValueKey('startup-account-slogan')),
       );

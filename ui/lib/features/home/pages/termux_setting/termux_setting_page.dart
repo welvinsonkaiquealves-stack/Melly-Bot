@@ -199,7 +199,7 @@ class _TermuxSettingPageState extends State<TermuxSettingPage>
       _selectedLostCount > 0;
 
   bool get _isDarkTheme => context.isDarkTheme;
-  bool get _isEnglish => Localizations.localeOf(context).languageCode == 'en';
+  bool get _isEnglish => Localizations.localeOf(context).languageCode != 'zh';
   Color get _pageBackground => _isDarkTheme
       ? context.omniPalette.pageBackground
       : const Color(0xFFF6F8FA);

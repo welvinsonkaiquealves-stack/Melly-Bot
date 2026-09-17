@@ -109,7 +109,7 @@ class _AgentRunHeaderState extends State<AgentRunHeader> {
   Widget build(BuildContext context) {
     final palette = context.omniPalette;
     final isEnglish =
-        Localizations.maybeLocaleOf(context)?.languageCode == 'en';
+        Localizations.maybeLocaleOf(context)?.languageCode != 'zh';
     final running = widget.isRunning;
     final canToggleExpanded = !running && widget.onToggleExpanded != null;
     final label = running

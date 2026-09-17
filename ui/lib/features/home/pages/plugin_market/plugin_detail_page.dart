@@ -841,5 +841,5 @@ class _PluginDetailPageState extends State<PluginDetailPage> {
   }
 
   String _text(String zh, String en) =>
-      Localizations.localeOf(context).languageCode == 'en' ? en : zh;
+      Localizations.localeOf(context).languageCode != 'zh' ? en : zh;
 }

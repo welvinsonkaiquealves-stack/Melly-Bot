@@ -34,7 +34,7 @@ class _AgentSessionsPageState extends State<AgentSessionsPage> {
   Timer? _sessionPollTimer;
   bool _isRefreshing = false;
 
-  bool get _isEnglish => Localizations.localeOf(context).languageCode == 'en';
+  bool get _isEnglish => Localizations.localeOf(context).languageCode != 'zh';
 
   @override
   void initState() {

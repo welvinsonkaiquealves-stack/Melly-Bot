@@ -595,7 +595,7 @@ class _OmniFlowExecutionCenterPageState
               )
             : _text(
                 context,
-                '小万原生 GUI 无需安装；复用指令与 OmniTransfer 运行时会在首次使用时按需准备。',
+                'Melly原生 GUI 无需安装；复用指令与 OmniTransfer 运行时会在首次使用时按需准备。',
                 'XiaoWan GUI needs no installation. Functions and the OmniTransfer runtime are prepared lazily on first use.',
               ),
         actionLabel: installed
@@ -1199,7 +1199,7 @@ dynamic _parseArgument(String value, String type) => switch (type) {
 };
 
 String _text(BuildContext context, String zh, String en) =>
-    Localizations.localeOf(context).languageCode == 'en' ? en : zh;
+    Localizations.localeOf(context).languageCode != 'zh' ? en : zh;
 
 extension on String {
   String? get nullIfEmpty => isEmpty ? null : this;
