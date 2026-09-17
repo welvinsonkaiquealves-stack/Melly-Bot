@@ -4,7 +4,7 @@
   "memoryShortDeleteScope": "Exclui permanentemente apenas as memórias de curto prazo selecionadas e o índice de busca correspondente. O histórico de conversas, as notas rápidas originais, as memórias de longo prazo extraídas e o contexto da conversa atual são preservados.",
   "memoryShortDeleteFailed": "A eliminação não foi concluída. A lista foi atualizada. Selecione as entradas novamente e tente novamente.",
   "memoryShortDeleted": "Memórias de curto prazo apagadas",
-  "@@locale": "pt_BR",
+  "@@locale": "pt",
   "appName": "Melly",
   "brandName": "Melly",
   "brandNameEnglish": "Melly",

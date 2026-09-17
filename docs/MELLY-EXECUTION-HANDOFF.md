@@ -306,6 +306,10 @@ snapshot were intentionally not imported.
   exists. Added the base Portuguese ARB with the same complete 558-message
   catalog; this is a branch-attributable localization configuration correction,
   not a dependency or inherited baseline failure.
+- CI run `35181116540` then rejected the copied base catalog because its
+  `@@locale` still declared `pt_BR` while the filename declared `pt`. Corrected
+  only the base catalog metadata to `pt`; the regional catalog continues to
+  declare `pt_BR`.
 
 ## Work not completed
 
