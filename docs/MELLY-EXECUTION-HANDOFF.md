@@ -1,7 +1,7 @@
 # Melly: execution handoff
 
 **Updated:** 2026-09-17 UTC
-**Current stage:** E0-A3 pull request #5 open; CI correction in progress
+**Current stage:** E0-A3 pull request #5 green; merge and device validation pending
 
 ## Current state
 
@@ -183,6 +183,27 @@ CI proves that the new application ID and launcher resources compile and that
 the automated baseline remains green. Only installation on the owner's Android
 device can prove side-by-side coexistence with the reference OpenOmniBot app.
 
+### E0-A3 identity and Portuguese verification
+
+Workflow: `Pull Request CI`, pull request #5, successful run #15
+(`35181823042`), functional head `080e03e63141619ffa44321ad8d36b26c80e7900`.
+
+- Full workflow: passed in 20m 52s.
+- Secret scan and Gradle wrapper validation: passed.
+- Worker/models.dev suite: 24 tests passed; 0 failed.
+- Flutter dependencies and localization generation: passed with both base `pt`
+  and regional `pt_BR` catalogs.
+- Flutter tests: 1,258 passed; 0 failed.
+- Flutter analyze: passed with the configured non-fatal policy; 591 inherited
+  findings were reported.
+- Kotlin/JVM tests: 1,101 passed; 0 failures, 0 errors, 0 skipped.
+- Android lint: 322 findings; 0 errors/fatal.
+- Debug APK: one file, 198.22 MiB before artifact compression.
+- Combined Gradle command: `BUILD SUCCESSFUL in 13m 41s`.
+- Artifact `melly-develop-standard-debug-c9ed278ec081f5d1ad02e596fcb68b36476e4141`
+  was published with 14-day retention. The artifact is tied to E0-A3 head
+  `080e03e6`; its suffix is GitHub's temporary pull-request merge SHA.
+
 The approved planning, audit, architecture, decisions and build documents are
 under `docs/melly/`. The device measurement kit is under `medicao/`. The live
 state remains this handoff; the obsolete pre-Git state file and incomplete code
@@ -318,7 +339,7 @@ snapshot were intentionally not imported.
 ## Work not completed
 
 - Device validation of E0-A2/E0-A3.
-- E0-A3 pull-request CI and independent review/merge.
+- E0-A3 pull-request merge and device validation.
 - Conversion of archival branch `upstream-54aeae8` into a Git tag.
 - Deletion of obsolete branch `melly/main`.
 - Branch protection for archival branch `upstream-54aeae8`.
@@ -327,10 +348,9 @@ snapshot were intentionally not imported.
 
 ## Next exact action
 
-Rerun the full GitHub Actions suite for E0-A3 after the required base Portuguese
-ARB correction and publish the resulting debug APK. Then install it on the
-owner's Android device and verify Melly identity, pt-BR selection/fallback and
-the disabled update surface before beginning E0 measurements.
+Merge green pull request #5, then install its debug artifact on the owner's
+Android device and verify Melly identity, pt-BR selection/fallback and the
+disabled update surface before beginning E0 measurements.
 
 ## Real blockers and risks
 
