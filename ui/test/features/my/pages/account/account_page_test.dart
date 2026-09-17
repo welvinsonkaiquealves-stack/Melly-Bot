@@ -68,7 +68,7 @@ void main() {
     await tester.pumpWidget(_testApp());
     await tester.pumpAndSettle();
 
-    expect(find.text('登录小万账号'), findsOneWidget);
+    expect(find.text('登录Melly账号'), findsOneWidget);
     expect(find.text('邮箱'), findsOneWidget);
     expect(find.text('密码'), findsOneWidget);
     expect(find.text('登录'), findsWidgets);
@@ -79,7 +79,7 @@ void main() {
     await tester.tap(find.text('注册'));
     await tester.pumpAndSettle();
 
-    expect(find.text('创建小万账号'), findsOneWidget);
+    expect(find.text('创建Melly账号'), findsOneWidget);
     expect(
       find.byKey(const Key('auth-confirm-password-field')),
       findsOneWidget,
@@ -346,7 +346,7 @@ void main() {
       'verificationRequestId': 'reset-request-1',
       'verificationCode': '123456',
     });
-    expect(find.text('登录小万账号'), findsOneWidget);
+    expect(find.text('登录Melly账号'), findsOneWidget);
     await tester.pump(const Duration(seconds: 3));
   });
 
@@ -757,7 +757,7 @@ void main() {
     expect(deleteCalls.single.arguments, <String, Object?>{
       'currentPassword': 'current password',
     });
-    expect(find.text('登录小万账号'), findsOneWidget);
+    expect(find.text('登录Melly账号'), findsOneWidget);
     await tester.pump(const Duration(seconds: 3));
   });
 }

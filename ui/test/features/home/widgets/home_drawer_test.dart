@@ -1397,7 +1397,7 @@ void main() {
         find.byKey(const ValueKey('home-drawer-completed-agent:61')),
         findsOneWidget,
       );
-      expect(find.byTooltip('小万 · 已完成'), findsOneWidget);
+      expect(find.byTooltip('Melly · 已完成'), findsOneWidget);
     },
   );
 }

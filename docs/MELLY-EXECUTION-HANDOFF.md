@@ -310,6 +310,10 @@ snapshot were intentionally not imported.
   `@@locale` still declared `pt_BR` while the filename declared `pt`. Corrected
   only the base catalog metadata to `pt`; the regional catalog continues to
   declare `pt_BR`.
+- CI run `35181357636` passed dependency/localization generation and executed
+  1,258 Flutter tests: 1,253 passed and five failed on stale expectations for
+  visible `小万` labels changed by E0-A3. Updated only those UI assertions to
+  the corresponding `Melly` labels; internal Omnibot fixtures remain intact.
 
 ## Work not completed
 
