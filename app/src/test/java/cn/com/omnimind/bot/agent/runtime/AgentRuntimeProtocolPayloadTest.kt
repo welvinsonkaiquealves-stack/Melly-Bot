@@ -568,7 +568,7 @@ class AgentRuntimeProtocolPayloadTest {
     @Test
     fun managedAcpCatalogIncludesSupportedAgentsWithoutGemini() {
         assertEquals(
-            listOf("小万", "Kimi Code", "Claude Code", "Codex", "OpenCode", "DeepSeek Harness"),
+            listOf("Melly", "Kimi Code", "Claude Code", "Codex", "OpenCode", "DeepSeek Harness"),
             officialCatalogAgents().map { it.name }
         )
         assertTrue(officialCatalogAgents().all { it.builtIn })

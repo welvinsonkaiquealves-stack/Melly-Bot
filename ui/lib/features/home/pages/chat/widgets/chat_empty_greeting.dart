@@ -58,7 +58,10 @@ class ChatEmptyGreeting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isEnglish = Localizations.localeOf(context).languageCode != 'zh';
+    final languageCode = Localizations.localeOf(context).languageCode;
+    final isChinese = languageCode == 'zh';
+    final isPortuguese = languageCode == 'pt';
+    final isEnglish = !isChinese;
     final palette = context.omniPalette;
     final primaryColor = primaryTextColor ?? palette.textPrimary;
     final secondaryColor = secondaryTextColor ?? palette.textSecondary;
@@ -67,11 +70,13 @@ class ChatEmptyGreeting extends StatelessWidget {
         MediaQuery.maybeOf(context)?.disableAnimations ?? false;
     final resolvedAgentName = agentName?.trim() ?? '';
     final displayAgentName = resolvedAgentName.isEmpty
-        ? (isEnglish ? 'Melly' : 'Melly')
+        ? 'Melly'
         : resolvedAgentName;
-    final headline = isEnglish
-        ? "Hi 👋, I'm $displayAgentName"
-        : '你好👋，我是$displayAgentName';
+    final headline = isChinese
+        ? '你好👋，我是$displayAgentName'
+        : isPortuguese
+        ? 'Olá 👋, eu sou $displayAgentName'
+        : "Hi 👋, I'm $displayAgentName";
     final prefix = isEnglish ? 'I can help you' : '我可以帮助你';
     final workspaceName = agentWorkspaceName?.trim() ?? '';
     final useAgentWorkspaceGreeting = workspaceName.isNotEmpty;

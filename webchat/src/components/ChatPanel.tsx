@@ -112,7 +112,7 @@ function EmptyGreeting() {
   return (
     <div className="empty-state">
       <div className="empty-greeting">
-        <p>你好👋，我是小万</p>
+        <p>你好👋，我是Melly</p>
         <p>我可以帮助你 <SlotWordRotator words={GREETING_WORDS} /></p>
       </div>
     </div>

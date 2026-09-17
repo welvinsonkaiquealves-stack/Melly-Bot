@@ -24,6 +24,47 @@ void main() {
       find.byKey(const ValueKey('chat-empty-omnibot-guide')),
       findsNothing,
     );
+    expect(find.text("Hi 👋, I'm Melly"), findsOneWidget);
+  });
+
+  testWidgets('uses the Melly brand in the Portuguese empty greeting', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        locale: Locale('pt', 'BR'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: MediaQuery(
+            data: MediaQueryData(disableAnimations: true),
+            child: ChatEmptyGreeting(),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('Olá 👋, eu sou Melly'), findsOneWidget);
+  });
+
+  testWidgets('uses the Melly brand in the Chinese empty greeting', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        locale: Locale('zh'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: MediaQuery(
+            data: MediaQueryData(disableAnimations: true),
+            child: ChatEmptyGreeting(),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('你好👋，我是Melly'), findsOneWidget);
   });
 
   testWidgets('uses the active Harness name in the empty greeting', (
