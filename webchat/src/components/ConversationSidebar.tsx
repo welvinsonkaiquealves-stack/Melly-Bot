@@ -71,7 +71,7 @@ const SECTION_LABELS: Record<ConversationSection, string> = {
   claude: "Claude Code",
   opencode: "OpenCode",
   acp: "Agent",
-  omni: "小万",
+  omni: "Melly",
   chat: "纯聊天",
 };
 
@@ -153,7 +153,7 @@ export function ConversationSidebar({
       {
         key: "omni",
         target: { mode: "normal" } as ConversationCreateTarget,
-        label: "小万",
+        label: "Melly",
         icon: "agent" as IconName,
       },
       ...profiles

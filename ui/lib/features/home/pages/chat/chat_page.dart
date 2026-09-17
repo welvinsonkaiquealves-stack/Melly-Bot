@@ -458,6 +458,12 @@ abstract class _ChatPageStateBase extends State<ChatPage>
 
   String get _activeAcpAgentDisplayName {
     final activeAgentId = _activeAcpAgentId?.trim() ?? '';
+    // The built-in profile predates Melly and may still be restored from a
+    // persisted catalog carrying its former display name. Its stable ID is an
+    // internal protocol identifier; the user-facing brand is always Melly.
+    if (activeAgentId == _kXiaowanAcpAgentId) {
+      return 'Melly';
+    }
     if (activeAgentId == _kRemoteCodexModeAgentId) {
       return 'Agent Remote';
     }

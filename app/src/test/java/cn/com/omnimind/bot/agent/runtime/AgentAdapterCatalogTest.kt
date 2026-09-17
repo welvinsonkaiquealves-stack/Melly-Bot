@@ -14,6 +14,9 @@ class AgentAdapterCatalogTest {
             File("src/main/assets/$it").readText()
         }.agents
         assertEquals(6, profiles.size)
+        val melly = profiles.single { it.id == AcpAgentProfileStore.XIAOWAN_AGENT_ID }
+        assertEquals("Melly", melly.name)
+        assertFalse(melly.description.contains("小万"))
         for (profile in profiles) {
             val runtime = requireNotNull(AcpAgentProfileStore.officialRuntime(profile))
             val adapter = runtime.harnessAdapter
