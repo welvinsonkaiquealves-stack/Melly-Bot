@@ -1,7 +1,7 @@
 # Melly: execution handoff
 
-**Updated:** 2026-09-15 UTC  
-**Current stage:** E0-A3 implemented locally; pull-request CI pending
+**Updated:** 2026-09-17 UTC
+**Current stage:** E0-A3 pull request #5 open; CI correction in progress
 
 ## Current state
 
@@ -300,6 +300,12 @@ snapshot were intentionally not imported.
   is cancelled, manual/silent checks return a no-update state, cached upstream
   release URLs are suppressed, and install requests are rejected. Cloud-policy
   fields remain preserved.
+- Opened E0-A3 pull request #5 from `e0a3/identity-portuguese`. CI run
+  `35180775263` reached `flutter pub get --enforce-lockfile` and failed before
+  tests because Flutter requires a base `app_pt.arb` whenever `app_pt_BR.arb`
+  exists. Added the base Portuguese ARB with the same complete 558-message
+  catalog; this is a branch-attributable localization configuration correction,
+  not a dependency or inherited baseline failure.
 
 ## Work not completed
 
@@ -313,8 +319,8 @@ snapshot were intentionally not imported.
 
 ## Next exact action
 
-Run the full GitHub Actions suite for E0-A3, correct only failures attributable
-to this branch, and publish the resulting debug APK. Then install it on the
+Rerun the full GitHub Actions suite for E0-A3 after the required base Portuguese
+ARB correction and publish the resulting debug APK. Then install it on the
 owner's Android device and verify Melly identity, pt-BR selection/fallback and
 the disabled update surface before beginning E0 measurements.
 
