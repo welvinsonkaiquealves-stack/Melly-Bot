@@ -1,0 +1,86 @@
+name: E1 test formatting patch
+
+on:
+  push:
+    branches:
+      - e1-agent-loop-budgets
+
+permissions:
+  contents: write
+
+jobs:
+  patch-test:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: e1-agent-loop-budgets
+          fetch-depth: 0
+      - name: Normalize the updated test block
+        shell: python
+        run: |
+          from pathlib import Path
+          from textwrap import dedent, indent
+
+          path = Path("app/src/test/java/cn/com/omnimind/bot/agent/AgentOrchestratorTest.kt")
+          text = path.read_text(encoding="utf-8")
+          start_marker = "@Test\nfun defaultAgentTurnFailsBeforeThirteenthModelRound() = runBlocking {"
+          next_marker = "\n\n    @Test\n    fun multiRoundAgentPromptLeavesOptionalToolSchedulingToTheConfiguredProvider() = runBlocking {"
+          start = text.index(start_marker)
+          end = text.index(next_marker, start)
+          block = dedent('''
+          @Test
+          fun defaultAgentTurnFailsBeforeThirteenthModelRound() = runBlocking {
+              val modelRoundCount = AgentExecutionLimits.MAX_MODEL_ROUNDS + 1
+              val llmClient = FakeLlmClient(
+                  turns = List(modelRoundCount) { index ->
+                      if (index == modelRoundCount - 1) {
+                          assistantTurn(content = "完成")
+                      } else {
+                          assistantTurn(
+                              toolCalls = listOf(
+                                  toolCall(
+                                      name = "file_read",
+                                      arguments = "{\\"path\\":\\"/workspace/missing.txt\\"}",
+                                      id = "call-file-read-$index"
+                                  )
+                              )
+                          )
+                      }
+                  }
+              )
+              val toolExecutor = FakeToolExecutor(
+                  results = mapOf(
+                      "file_read" to List(AgentExecutionLimits.MAX_MODEL_ROUNDS) {
+                          ToolExecutionResult.Error("file_read", "文件不存在")
+                      }
+                  )
+              )
+
+              val result = createOrchestrator(llmClient, toolExecutor).run(
+                  AgentOrchestrator.Input(
+                      callback = RecordingCallback(),
+                      initialMessages = initialMessages("读取文件"),
+                      executionEnv = FakeExecutionEnvironment("读取文件")
+                  )
+              )
+
+              assertTrue(result is AgentResult.Error)
+              assertEquals(AgentExecutionLimits.MAX_MODEL_ROUNDS, toolExecutor.executeCalls.size)
+              assertEquals(AgentExecutionLimits.MAX_MODEL_ROUNDS, llmClient.requests.size)
+          }
+          ''').strip('\n')
+          updated = text[:start] + indent(block, "    ") + text[end:]
+          path.write_text(updated, encoding="utf-8")
+      - name: Commit final test-only diff and remove helper
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/e1-test-format-patch.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/src/test/java/cn/com/omnimind/bot/agent/AgentOrchestratorTest.kt .github/workflows/e1-test-format-patch.yml
+          git diff --cached --check
+          git commit -m "test: keep E1 legacy budget test formatting consistent"
+          git push origin HEAD:e1-agent-loop-budgets
