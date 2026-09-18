@@ -120,10 +120,13 @@ class AgentOrchestrator(
         var lastTurnUsage: TurnUsage? = null
         var lastPrefillTokensPerSecond: Double? = null
         var lastDecodeTokensPerSecond: Double? = null
-        var completedModelRounds = 0
         var terminated = false
         var usageMessageCount = 0
         var usageContextTokens: Int? = null
+        // E1 safety fuse. Any budget breach throws into the existing ACP error
+        // path below; it never sets terminated=true and therefore cannot fall
+        // through to AgentResult.Success.
+        val executionBudget = AgentExecutionBudget()
         // A provider may reject a prompt even when the local token estimate is
         // below the configured threshold (providers do not share one length
         // unit).  Allow exactly one pre-output recovery through the canonical
@@ -134,8 +137,7 @@ class AgentOrchestrator(
 
         try {
             roundLoop@ while (true) {
-                completedModelRounds += 1
-                val round = completedModelRounds
+                val round = executionBudget.beforeModelRound()
                 val assistantContentPrefix = accumulatedAssistantContent
                 callback.onThinkingStart()
                 logInfo(
@@ -232,6 +234,7 @@ class AgentOrchestrator(
                     throw error
                 }
                 val turnUsage = resolveTurnUsage(turn)
+                executionBudget.afterModelTurn(turnUsage.completionTokens)
                 lastTurnUsage = turnUsage
                 lastFinishReason = turn.finishReason
                 latestPromptTokens = turnUsage.promptTokens
@@ -472,6 +475,7 @@ class AgentOrchestrator(
                 if (terminated) {
                     break
                 }
+                executionBudget.beforeContinuation()
                 if (advanceToNextRound) {
                     continue@roundLoop
                 }
