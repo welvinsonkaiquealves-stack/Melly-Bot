@@ -11,9 +11,10 @@ import androidx.room.RoomDatabase
         Conversation::class,
         AgentConversationEntry::class,
         TokenUsageRecord::class,
+        AgentRunSummary::class,
         AgentSessionBinding::class
     ],
-    version = 18,
+    version = 19,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -23,6 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun conversationDao(): ConversationDao
     abstract fun agentConversationEntryDao(): AgentConversationEntryDao
     abstract fun tokenUsageRecordDao(): TokenUsageRecordDao
+    abstract fun agentRunSummaryDao(): AgentRunSummaryDao
     abstract fun agentSessionBindingDao(): AgentSessionBindingDao
 
     companion object {

@@ -2,8 +2,11 @@ package cn.com.omnimind.bot.agent
 
 import android.content.Context
 import cn.com.omnimind.assists.controller.http.HttpController
+import cn.com.omnimind.baselib.database.AgentRunSummary
+import cn.com.omnimind.baselib.database.DatabaseHelper
 import cn.com.omnimind.baselib.i18n.AppLocaleManager
 import cn.com.omnimind.baselib.llm.ChatCompletionMessage
+import cn.com.omnimind.baselib.util.OmniLog
 import cn.com.omnimind.bot.agent.workspace.memory.LongTermMemoryIndex
 import cn.com.omnimind.bot.agent.tool.AgentCapabilityModule
 import cn.com.omnimind.bot.agent.tool.AgentToolHandlerModule
@@ -13,6 +16,9 @@ import com.rk.terminal.runtime.TerminalDistribution
 import java.util.concurrent.atomic.AtomicReference
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
@@ -186,10 +192,14 @@ class OmniAgentExecutor(
         continueMode: Boolean = false,
         historyMessagesOverride: List<ChatCompletionMessage>? = null
     ): AgentResult {
+        val agentRunId = UUID.randomUUID().toString()
+        val startedAt = System.currentTimeMillis()
+        val executionBudget = AgentExecutionBudget()
+        var completedResult: AgentResult? = null
+        var cancelledBeforeResult = false
         var toolRouter: AgentToolRouter? = null
         var pluginSession: OmniPluginSession? = null
         return try {
-            val agentRunId = UUID.randomUUID().toString()
             val promptCacheKey = cn.com.omnimind.baselib.llm.PromptCacheKeyStore.forConversation(
                 context,
                 conversationId
@@ -322,7 +332,8 @@ class OmniAgentExecutor(
                 toolRouter = toolRouter,
                 eventAdapter = eventAdapter,
                 model = agentModelScene,
-                toolImageContinuationPolicy = toolImageContinuationPolicy
+                toolImageContinuationPolicy = toolImageContinuationPolicy,
+                executionBudget = executionBudget
             )
 
             orchestrator.run(
@@ -367,15 +378,48 @@ class OmniAgentExecutor(
                         longTermMemoryIndex = ltmIndex
                     )
                 )
-            )
+            ).also { completedResult = it }
         } catch (e: CancellationException) {
+            cancelledBeforeResult = true
             throw e
         } catch (e: Exception) {
             callback.onError("Agent execution failed: ${e.message}")
-            AgentResult.Error("Agent execution failed", e)
+            AgentResult.Error("Agent execution failed", e).also { completedResult = it }
         } finally {
             runCatching { toolRouter?.dispose() }
             runCatching { pluginSession?.closeSuspending() }
+            val snapshot = executionBudget.snapshot()
+            val completedAt = System.currentTimeMillis()
+            val terminationReason = snapshot.terminationReasonFor(
+                result = completedResult,
+                cancellation = cancelledBeforeResult
+            )
+            runCatching {
+                withContext(NonCancellable + Dispatchers.IO) {
+                    DatabaseHelper.upsertAgentRunSummary(
+                        AgentRunSummary(
+                            agentRunId = agentRunId,
+                            conversationId = conversationId,
+                            startedAt = startedAt,
+                            completedAt = completedAt,
+                            durationMs = snapshot.durationMs,
+                            modelRounds = snapshot.modelRounds,
+                            toolCallCount = snapshot.toolCallCount,
+                            promptTokens = snapshot.promptTokens,
+                            completionTokens = snapshot.completionTokens,
+                            cachedTokens = snapshot.cachedTokens,
+                            cacheCreationTokens = snapshot.cacheCreationTokens,
+                            terminationReason = terminationReason.name
+                        )
+                    )
+                }
+            }.onFailure { error ->
+                OmniLog.e(
+                    "OmniAgentExecutor",
+                    "Failed to persist Agent run summary for $agentRunId: ${error.message}",
+                    error
+                )
+            }
         }
     }
 

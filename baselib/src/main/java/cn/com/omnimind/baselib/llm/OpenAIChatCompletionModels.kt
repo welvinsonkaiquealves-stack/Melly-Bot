@@ -2,6 +2,7 @@ package cn.com.omnimind.baselib.llm
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
@@ -13,6 +14,9 @@ import kotlinx.serialization.json.jsonPrimitive
 data class ChatCompletionRequest(
     val messages: List<ChatCompletionMessage>,
     val model: String,
+    /** Internal execution correlation. Never serialized onto the provider wire. */
+    @Transient
+    val agentRunId: String? = null,
     @SerialName("max_completion_tokens")
     val maxCompletionTokens: Int? = null,
     @SerialName("max_tokens")

@@ -109,7 +109,7 @@ class AppDatabaseMigrationTest {
     }
 
     @Test
-    fun migrate15To16_removesLocalUsageAndPreservesCloudUsage() = runBlocking {
+    fun migrate15To19_preservesCloudUsageAndAddsAgentRunInstrumentation() = runBlocking {
         createVersion15Database()
 
         val database = openMigratedDatabase()
@@ -120,6 +120,39 @@ class AppDatabaseMigrationTest {
             assertEquals("cloud-model", records.single().model)
             assertEquals(34, records.single().promptTokens)
             assertEquals(13, records.single().completionTokens)
+            assertNull(records.single().agentRunId)
+            assertColumnPresent(database, "token_usage_records", "agentRunId")
+
+            val summary = AgentRunSummary(
+                agentRunId = "run-migration-19",
+                conversationId = 8L,
+                startedAt = 1000L,
+                completedAt = 2500L,
+                durationMs = 1500L,
+                modelRounds = 2,
+                toolCallCount = 3,
+                promptTokens = 34L,
+                completionTokens = 13L,
+                cachedTokens = 3L,
+                cacheCreationTokens = 2L,
+                terminationReason = "NORMAL"
+            )
+            database.agentRunSummaryDao().upsert(summary)
+            assertEquals(summary, database.agentRunSummaryDao().getByAgentRunId(summary.agentRunId))
+
+            database.tokenUsageRecordDao().insert(
+                TokenUsageRecord(
+                    conversationId = 8L,
+                    agentRunId = summary.agentRunId,
+                    model = "cloud-model",
+                    promptTokens = 5,
+                    completionTokens = 2
+                )
+            )
+            assertEquals(
+                summary.agentRunId,
+                database.tokenUsageRecordDao().getByAgentRunId(summary.agentRunId).single().agentRunId
+            )
         } finally {
             database.close()
         }
@@ -156,6 +189,20 @@ class AppDatabaseMigrationTest {
                 )
             }
         }
+    }
+
+    private fun assertColumnPresent(
+        database: AppDatabase,
+        tableName: String,
+        columnName: String
+    ) {
+        database.openHelper.readableDatabase.query("PRAGMA table_info(`$tableName`)").use { cursor ->
+            val nameIndex = cursor.getColumnIndexOrThrow("name")
+            while (cursor.moveToNext()) {
+                if (cursor.getString(nameIndex) == columnName) return
+            }
+        }
+        throw AssertionError("Expected $columnName in $tableName")
     }
 
     private fun createVersion5Database() {

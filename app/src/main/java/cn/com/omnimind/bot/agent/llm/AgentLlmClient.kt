@@ -250,6 +250,7 @@ class HttpAgentLlmClient(
         val turn = streamTurnWithPlatformAuthRetry(
             model = request.model,
             requestJson = json.encodeToJsonElement(wireRequest).jsonObject,
+            agentRunId = request.agentRunId,
             explicitModel = effectiveExplicitModel,
             platformRoute = AiRequestTransportPolicy.isPlatformRoute(routeInfo.routeTag),
             onReasoningUpdate = onReasoningUpdate,
@@ -266,6 +267,7 @@ class HttpAgentLlmClient(
     private suspend fun streamTurnWithPlatformAuthRetry(
         model: String,
         requestJson: JsonObject,
+        agentRunId: String?,
         explicitModel: String?,
         platformRoute: Boolean,
         onReasoningUpdate: (suspend (String) -> Unit)?,
@@ -284,6 +286,7 @@ class HttpAgentLlmClient(
             streamTurnOnce(
                 model,
                 requestJson,
+                agentRunId,
                 explicitModel,
                 onReasoningUpdate = { value -> forward(onReasoningUpdate, value) },
                 onContentUpdate = { value -> forward(onContentUpdate, value) },
@@ -303,6 +306,7 @@ class HttpAgentLlmClient(
             streamTurnOnce(
                 model,
                 requestJson,
+                agentRunId,
                 explicitModel,
                 onReasoningUpdate = { value -> forward(onReasoningUpdate, value) },
                 onContentUpdate = { value -> forward(onContentUpdate, value) },
@@ -314,6 +318,7 @@ class HttpAgentLlmClient(
     private suspend fun streamTurnOnce(
         model: String,
         requestJson: JsonObject,
+        agentRunId: String?,
         explicitModel: String?,
         onReasoningUpdate: (suspend (String) -> Unit)?,
         onContentUpdate: (suspend (String) -> Unit)?,
@@ -335,6 +340,7 @@ class HttpAgentLlmClient(
                     doStreamTurnOnce(
                         model,
                         requestJson,
+                        agentRunId,
                         explicitModel,
                         onReasoningUpdate = { value -> forward(onReasoningUpdate, value) },
                         onContentUpdate = { value -> forward(onContentUpdate, value) },
@@ -347,6 +353,7 @@ class HttpAgentLlmClient(
                         doStreamTurnOnce(
                             model,
                             requestJson,
+                            agentRunId,
                             explicitModel,
                             onReasoningUpdate = { value -> forward(onReasoningUpdate, value) },
                             onContentUpdate = { value -> forward(onContentUpdate, value) },
@@ -406,6 +413,7 @@ class HttpAgentLlmClient(
     private suspend fun doStreamTurnOnce(
         model: String,
         requestJson: JsonObject,
+        agentRunId: String?,
         explicitModel: String?,
         onReasoningUpdate: (suspend (String) -> Unit)?,
         onContentUpdate: (suspend (String) -> Unit)?,
@@ -757,6 +765,7 @@ class HttpAgentLlmClient(
                 explicitProtocolType = modelOverride?.protocolType,
                 explicitWireApi = modelOverride?.wireApi,
                 forceHttp1 = forceHttp1,
+                agentRunId = agentRunId,
             )
             OmniLog.i(
                 tag,
