@@ -1865,6 +1865,59 @@ assertEquals(AgentExecutionLimits.MAX_MODEL_ROUNDS, llmClient.requests.size)
     }
 
     @Test
+    fun executionBudgetAccumulatesRoundsTokensAndDeclaredToolCalls() = runBlocking {
+        val budget = AgentExecutionBudget(startedAtNanos = 0L, nanoTime = { 5_000_000L })
+        val llmClient = FakeLlmClient(
+            turns = listOf(
+                assistantTurn(
+                    toolCalls = listOf(toolCall("file_search"), toolCall("file_read", id = "read-2")),
+                    promptTokens = 300,
+                    completionTokens = 40
+                ),
+                assistantTurn(
+                    content = "done",
+                    promptTokens = 500,
+                    completionTokens = 60
+                )
+            )
+        )
+        val toolExecutor = FakeToolExecutor(
+            results = mapOf(
+                "file_search" to listOf(ToolExecutionResult.Error("file_search", "test")),
+                "file_read" to listOf(ToolExecutionResult.Error("file_read", "test"))
+            )
+        )
+
+        val result = createOrchestrator(
+            llmClient = llmClient,
+            toolExecutor = toolExecutor,
+            executionBudget = budget
+        ).run(
+            AgentOrchestrator.Input(
+                callback = RecordingCallback(),
+                initialMessages = initialMessages("inspect"),
+                executionEnv = FakeExecutionEnvironment("inspect")
+            )
+        )
+
+        assertTrue(result is AgentResult.Success)
+        assertTrue(llmClient.requests.all { it.agentRunId == "test-run" })
+        assertEquals(
+            AgentExecutionSnapshot(
+                durationMs = 5L,
+                modelRounds = 2,
+                toolCallCount = 2,
+                promptTokens = 800L,
+                completionTokens = 100L,
+                cachedTokens = 0L,
+                cacheCreationTokens = 0L,
+                reachedLimit = null
+            ),
+            budget.snapshot()
+        )
+    }
+
+    @Test
     fun usageSpeedMetricsAreReportedInFinalChatMessage() = runBlocking {
         val callback = RecordingCallback()
 
@@ -2245,7 +2298,8 @@ assertEquals(AgentExecutionLimits.MAX_MODEL_ROUNDS, llmClient.requests.size)
         toolExecutor: FakeToolExecutor,
         availableToolNames: Set<String> = emptySet(),
         toolImageContinuationPolicy: AgentToolImageContinuationPolicy =
-            AgentToolImageContinuationPolicy.DEFAULT
+            AgentToolImageContinuationPolicy.DEFAULT,
+        executionBudget: AgentExecutionBudget = AgentExecutionBudget()
     ): AgentOrchestrator {
         return AgentOrchestrator(
             llmClient = llmClient,
@@ -2253,7 +2307,8 @@ assertEquals(AgentExecutionLimits.MAX_MODEL_ROUNDS, llmClient.requests.size)
             toolRouter = toolExecutor,
             eventAdapter = AgentEventAdapter(eventJson),
             model = "test-model",
-            toolImageContinuationPolicy = toolImageContinuationPolicy
+            toolImageContinuationPolicy = toolImageContinuationPolicy,
+            executionBudget = executionBudget
         )
     }
 

@@ -120,7 +120,8 @@ object HttpController {
         val method: String = "POST",
         val stream: Boolean,
         val requestJson: String,
-        val conversationId: Long = 0L
+        val conversationId: Long = 0L,
+        val agentRunId: String? = null
     )
 
     /**
@@ -541,6 +542,7 @@ object HttpController {
                 DatabaseHelper.insertTokenUsageRecord(
                     TokenUsageRecord(
                         conversationId = seed.conversationId,
+                        agentRunId = seed.agentRunId,
                         model = seed.model,
                         promptTokens = promptTokens,
                         completionTokens = completionTokens,
@@ -2617,7 +2619,8 @@ object HttpController {
         requestJson: String,
         event: EventSourceListener,
         forceHttp1: Boolean = false,
-        conversationId: Long = 0L
+        conversationId: Long = 0L,
+        agentRunId: String? = null
     ): EventSource = withContext(Dispatchers.IO) {
         val base = normalizeApiBase(resolved.apiBase ?: "")
             ?: throw IllegalArgumentException("Invalid apiBase for Anthropic")
@@ -2647,7 +2650,8 @@ object HttpController {
                     url = url,
                     stream = true,
                     requestJson = requestJson,
-                    conversationId = conversationId
+                    conversationId = conversationId,
+                    agentRunId = agentRunId
                 )
             )
         )
@@ -3492,16 +3496,22 @@ object HttpController {
         resolved: ResolvedSceneRequest,
         requestBodyJson: String,
         event: EventSourceListener,
-        forceHttp1: Boolean = false
+        forceHttp1: Boolean = false,
+        agentRunId: String? = null
     ): EventSource = postOpenAIChatCompletionsStreamRequest(
-        resolved, completionJson.parseToJsonElement(requestBodyJson) as KxJsonObject, event, forceHttp1
+        resolved,
+        completionJson.parseToJsonElement(requestBodyJson) as KxJsonObject,
+        event,
+        forceHttp1,
+        agentRunId
     )
 
     private suspend fun postOpenAIChatCompletionsStreamRequest(
         resolved: ResolvedSceneRequest,
         requestBody: KxJsonObject,
         event: EventSourceListener,
-        forceHttp1: Boolean = false
+        forceHttp1: Boolean = false,
+        agentRunId: String? = null
     ): EventSource = withContext(Dispatchers.IO) {
         if (resolved.protocolType == "anthropic") {
             // Parse the incoming OpenAI JSON back into a request and convert to Anthropic format
@@ -3517,7 +3527,8 @@ object HttpController {
                 anthropicJson,
                 event,
                 forceHttp1,
-                conversationId = conversationIdFromPromptCacheKey((requestBody["prompt_cache_key"] as? JsonPrimitive)?.contentOrNull)
+                conversationId = conversationIdFromPromptCacheKey((requestBody["prompt_cache_key"] as? JsonPrimitive)?.contentOrNull),
+                agentRunId = agentRunId
             )
         }
         val base = normalizeApiBase(resolved.apiBase ?: "")
@@ -3581,7 +3592,8 @@ object HttpController {
                     url = url,
                     stream = true,
                     requestJson = completionJson.requestLogJson(preparedRequest),
-                    conversationId = conversationIdFromPromptCacheKey((requestBody["prompt_cache_key"] as? JsonPrimitive)?.contentOrNull)
+                    conversationId = conversationIdFromPromptCacheKey((requestBody["prompt_cache_key"] as? JsonPrimitive)?.contentOrNull),
+                    agentRunId = agentRunId
                 )
             )
         )
@@ -3718,7 +3730,8 @@ object HttpController {
         explicitModel: String? = null,
         explicitProtocolType: String? = null,
         explicitWireApi: String? = null,
-        forceHttp1: Boolean = false
+        forceHttp1: Boolean = false,
+        agentRunId: String? = null
     ): EventSource {
         val resolved = resolveSceneRequest(
             modelOrScene = model,
@@ -3734,7 +3747,8 @@ object HttpController {
             resolved = resolved,
             requestBodyJson = requestBodyJson,
             event = event,
-            forceHttp1 = forceHttp1
+            forceHttp1 = forceHttp1,
+            agentRunId = agentRunId
         )
     }
 
@@ -3748,7 +3762,8 @@ object HttpController {
         explicitModel: String? = null,
         explicitProtocolType: String? = null,
         explicitWireApi: String? = null,
-        forceHttp1: Boolean = false
+        forceHttp1: Boolean = false,
+        agentRunId: String? = null
     ): EventSource {
         val resolved = resolveSceneRequest(
             modelOrScene = model,
@@ -3764,7 +3779,8 @@ object HttpController {
             resolved = resolved,
             requestBody = requestBody,
             event = event,
-            forceHttp1 = forceHttp1
+            forceHttp1 = forceHttp1,
+            agentRunId = agentRunId
         )
     }
 

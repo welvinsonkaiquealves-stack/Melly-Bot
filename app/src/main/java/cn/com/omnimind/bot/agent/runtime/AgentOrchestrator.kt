@@ -34,6 +34,7 @@ class AgentOrchestrator(
     private val model: String,
     private val toolImageContinuationPolicy: AgentToolImageContinuationPolicy =
         AgentToolImageContinuationPolicy.DEFAULT,
+    private val executionBudget: AgentExecutionBudget = AgentExecutionBudget(),
     /**
      * A child orchestrator may borrow a parent's router. Only the owner may
      * release the handlers and their process/session resources.
@@ -123,10 +124,9 @@ class AgentOrchestrator(
         var terminated = false
         var usageMessageCount = 0
         var usageContextTokens: Int? = null
-        // E1 safety fuse. Any budget breach throws into the existing ACP error
-        // path below; it never sets terminated=true and therefore cannot fall
-        // through to AgentResult.Success.
-        val executionBudget = AgentExecutionBudget()
+        // E1 safety fuse and E2 metric source. Any budget breach throws into
+        // the existing ACP error path below; it never sets terminated=true and
+        // therefore cannot fall through to AgentResult.Success.
         // A provider may reject a prompt even when the local token estimate is
         // below the configured threshold (providers do not share one length
         // unit).  Allow exactly one pre-output recovery through the canonical
@@ -191,6 +191,7 @@ class AgentOrchestrator(
                                 null
                             },
                             promptCacheKey = input.promptCacheKey,
+                            agentRunId = input.executionEnv.agentRunId,
                             tools = toolRegistry.toolsForModel,
                             // These optional controls belong to the active
                             // Harness/Provider. The shared loop supplies the
@@ -234,7 +235,13 @@ class AgentOrchestrator(
                     throw error
                 }
                 val turnUsage = resolveTurnUsage(turn)
-                executionBudget.afterModelTurn(turnUsage.completionTokens)
+                executionBudget.afterModelTurn(
+                    promptTokens = turnUsage.promptTokens,
+                    completionTokens = turnUsage.completionTokens,
+                    cachedTokens = turnUsage.cachedTokens,
+                    cacheCreationTokens = turnUsage.cacheCreationTokens,
+                    toolCallCount = turn.message.toolCalls.orEmpty().size
+                )
                 lastTurnUsage = turnUsage
                 lastFinishReason = turn.finishReason
                 latestPromptTokens = turnUsage.promptTokens

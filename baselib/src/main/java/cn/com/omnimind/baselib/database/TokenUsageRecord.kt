@@ -9,13 +9,15 @@ import java.util.Date
     tableName = "token_usage_records",
     indices = [
         Index(value = ["createdAt"]),
-        Index(value = ["conversationId"])
+        Index(value = ["conversationId"]),
+        Index(value = ["agentRunId"])
     ]
 )
 data class TokenUsageRecord(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val conversationId: Long,
+    val agentRunId: String? = null,
     val model: String = "",
     val promptTokens: Int = 0,
     val completionTokens: Int = 0,

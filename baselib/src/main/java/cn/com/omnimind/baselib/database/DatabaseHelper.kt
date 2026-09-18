@@ -366,6 +366,49 @@ object DatabaseHelper {
         }
     }
 
+    private val MIGRATION_18_19 = object : Migration(18, 19) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE token_usage_records ADD COLUMN agentRunId TEXT")
+            database.execSQL(
+                """
+                CREATE INDEX IF NOT EXISTS `index_token_usage_records_agentRunId`
+                ON `token_usage_records` (`agentRunId`)
+                """.trimIndent()
+            )
+            database.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `agent_run_summaries` (
+                    `agentRunId` TEXT NOT NULL,
+                    `conversationId` INTEGER,
+                    `startedAt` INTEGER NOT NULL,
+                    `completedAt` INTEGER NOT NULL,
+                    `durationMs` INTEGER NOT NULL,
+                    `modelRounds` INTEGER NOT NULL,
+                    `toolCallCount` INTEGER NOT NULL,
+                    `promptTokens` INTEGER NOT NULL,
+                    `completionTokens` INTEGER NOT NULL,
+                    `cachedTokens` INTEGER NOT NULL,
+                    `cacheCreationTokens` INTEGER NOT NULL,
+                    `terminationReason` TEXT NOT NULL,
+                    PRIMARY KEY(`agentRunId`)
+                )
+                """.trimIndent()
+            )
+            database.execSQL(
+                """
+                CREATE INDEX IF NOT EXISTS `index_agent_run_summaries_conversationId`
+                ON `agent_run_summaries` (`conversationId`)
+                """.trimIndent()
+            )
+            database.execSQL(
+                """
+                CREATE INDEX IF NOT EXISTS `index_agent_run_summaries_completedAt`
+                ON `agent_run_summaries` (`completedAt`)
+                """.trimIndent()
+            )
+        }
+    }
+
     internal val ALL_MIGRATIONS = arrayOf(
         MIGRATION_1_2,
         MIGRATION_2_3,
@@ -383,7 +426,8 @@ object DatabaseHelper {
         MIGRATION_14_15,
         MIGRATION_15_16,
         MIGRATION_16_17,
-        MIGRATION_17_18
+        MIGRATION_17_18,
+        MIGRATION_18_19
     )
 
     fun init(context: Context) {
@@ -468,6 +512,26 @@ object DatabaseHelper {
 
     suspend fun getTokenUsageRecordsSince(since: Long): List<TokenUsageRecord> {
         return getDatabase().tokenUsageRecordDao().getRecordsSince(since)
+    }
+
+    suspend fun getTokenUsageRecordsByAgentRunId(agentRunId: String): List<TokenUsageRecord> {
+        return getDatabase().tokenUsageRecordDao().getByAgentRunId(agentRunId)
+    }
+
+    suspend fun upsertAgentRunSummary(summary: AgentRunSummary) {
+        getDatabase().agentRunSummaryDao().upsert(summary)
+    }
+
+    suspend fun getAgentRunSummary(agentRunId: String): AgentRunSummary? {
+        return getDatabase().agentRunSummaryDao().getByAgentRunId(agentRunId)
+    }
+
+    suspend fun getRecentAgentRunSummaries(limit: Int): List<AgentRunSummary> {
+        return getDatabase().agentRunSummaryDao().getRecent(limit.coerceAtLeast(1))
+    }
+
+    suspend fun getAgentRunSummariesByConversationId(conversationId: Long): List<AgentRunSummary> {
+        return getDatabase().agentRunSummaryDao().getByConversationId(conversationId)
     }
 
     // Conversation相关方法

@@ -1,7 +1,7 @@
 # Melly: execution handoff
 
-**Updated:** 2026-09-17 UTC
-**Current stage:** E0-A3 pull request #5 green; merge and device validation pending
+**Updated:** 2026-09-18 UTC
+**Current stage:** E2 = DONE; pull request #8 green and ready to merge
 
 ## Current state
 
@@ -26,7 +26,11 @@ without renaming Kotlin packages or beginning the E9 brand redesign.
 - E0-A merge commit on `main`: `eef88dc81bbd6c79a42274a05d93160351071e09`
 - P0-A merge commit on `main`: `442967a11a4607dc74079abe07dab3ab4e77a5cc`
 - Infrastructure/docs merge commit on `main`: `0a81b43d42098f1c414ced0cb9803f5c5fa60b67`
-- Current working branch: `e0a3/identity-portuguese`
+- E0-A3 merge commit on `main`: `6e7fb55e85aab365510ca7593dc348518b558632`
+- Identity follow-up commit on `main`: `517426c53bfe54b6906d69b051e1b71137842496`
+- E1 merge commit on `main`: `bb57a3e0819d7e008121417ec2d7e5b5db919371`
+- Current working branch: `e2-agent-instrumentation`
+- Current pull request: #8
 - Upstream `HEAD` and `main` both resolved to the audited commit before clone.
 - Initial working tree: clean.
 - GitHub `main` was verified at the audited commit before this bootstrap branch.
@@ -209,25 +213,56 @@ under `docs/melly/`. The device measurement kit is under `medicao/`. The live
 state remains this handoff; the obsolete pre-Git state file and incomplete code
 snapshot were intentionally not imported.
 
-### E1-A read-only lifecycle investigation
+### E1 execution-budget verification
 
-- `AgentOrchestrator.run` owns the operational `while (true)` and increments
-  `completedModelRounds` before each model attempt. The name is misleading:
-  the counter also includes the one allowed pre-output overflow recovery.
-- Setting the existing `terminated = true` on budget exhaustion would return
-  `AgentResult.Success`; Xiaowan would emit ACP `END_TURN`, and Flutter would
-  present a completed turn. That is a false success and must not be used.
-- The existing error path is correct for exhaustion: a non-cancellation error
-  becomes `AgentResult.Error`, Xiaowan projects it through the official ACP
-  prompt failure, and Flutter reduces it with `stopReason = error`, settling
-  pending cards without creating a second lifecycle event.
-- `CancellationException` already has a dedicated earlier catch and maps to ACP
-  `CANCELLED`. E1-A must preserve that ordering and behavior.
-- The minimal future patch should inject a small immutable loop policy, check
-  the limit before starting the next LLM request, and test normal completion,
-  infinite tool calls, overflow retry accounting and cancellation precedence.
-  No E1-A code has been changed yet, and the provisional numeric limit remains
-  decision A001 rather than an invented constant.
+E1 is complete on `main` at `bb57a3e0819d7e008121417ec2d7e5b5db919371`.
+`AgentExecutionBudget` is the single source of truth for the three limits:
+
+- 12 model rounds;
+- 600,000 ms total execution duration;
+- 64,000 cumulative completion tokens.
+
+Limit exhaustion remains an error outcome through the existing single ACP
+lifecycle. User cancellation remains distinct and maps to ACP `CANCELLED`.
+
+### E2 run-instrumentation verification
+
+E2 is DONE. Pull request #8 adds a queryable Room summary keyed by the existing
+`agentRunId`, while extending `TokenUsageRecord` with the same nullable
+correlation key. Database version 19 contains `agent_run_summaries` with:
+
+- `agentRunId` primary key and nullable `conversationId`;
+- `startedAt`, `completedAt`, `durationMs`;
+- `modelRounds`, `toolCallCount`;
+- accumulated `promptTokens`, `completionTokens`, `cachedTokens` and
+  `cacheCreationTokens`;
+- `terminationReason`: `NORMAL`, `USER_CANCELLED`, one of the three typed E1
+  limit reasons, or `ERROR` for a non-limit failure.
+
+The summary is persisted in a non-cancellable `finally` block after every
+completed executor run. E1's budget supplies rounds, elapsed time, accumulated
+tokens and the reached limit; E2 does not recalculate them. Model-declared tool
+calls are counted at the orchestration boundary. The internal `agentRunId` is
+transient and is explicitly tested not to enter provider JSON.
+
+Authoritative functional-head CI: pull request #8, run #24
+(`35327820311`), head `a65f14878eb32cdc0eaae13c571ec0a6ad7c86b9`.
+
+- Full workflow: passed.
+- Secret scan, worker/models.dev, wrapper validation and dependency setup:
+  passed.
+- Flutter tests and analyze: passed under the repository's configured policy.
+- Kotlin/JVM tests: 1,109 passed; 0 failures, 0 errors, 0 skipped.
+- Android lint: 322 findings; 0 errors/fatal.
+- Debug APK: one file, 198.27 MiB before artifact compression.
+- Artifact
+  `melly-develop-standard-debug-7417a1c461fdec309b253aa4a44d4a81d67775ed`
+  was published with SHA-256
+  `40cab66fb14cf56a62dad23539e94d7d2912f023c3be58207d5baa5f305dc8b4`.
+
+Local Gradle compilation could not start because the clean environment could
+not download Gradle 9.5.0 (`Network is unreachable`). `git diff --check`
+passed; GitHub Actions is the authoritative build and test result.
 
 ## Important files for the next stage
 
@@ -335,22 +370,28 @@ snapshot were intentionally not imported.
   1,258 Flutter tests: 1,253 passed and five failed on stale expectations for
   visible `小万` labels changed by E0-A3. Updated only those UI assertions to
   the corresponding `Melly` labels; internal Omnibot fixtures remain intact.
+- Completed E1 on `main` with the three approved execution limits and distinct
+  cancellation semantics.
+- Added Room schema version 19 and migration 18-to-19 for correlated per-turn
+  token records and the queryable per-run summary.
+- Persisted every agent run summary from the executor lifecycle, including
+  normal, user-cancelled, each E1 limit and non-limit error outcomes.
+- Added focused tests for correlation, accumulation, all termination reasons,
+  migration/query behavior and provider-payload exclusion.
+- Completed pull request #8 functional-head CI run #24 successfully.
 
 ## Work not completed
 
 - Device validation of E0-A2/E0-A3.
-- E0-A3 pull-request merge and device validation.
 - Conversion of archival branch `upstream-54aeae8` into a Git tag.
 - Deletion of obsolete branch `melly/main`.
 - Branch protection for archival branch `upstream-54aeae8`.
 - Removal of dead `SharedHelper.parseConfirmedFlag` in a code-only patch.
-- E1-A lifecycle investigation and implementation.
 
 ## Next exact action
 
-Merge green pull request #5, then install its debug artifact on the owner's
-Android device and verify Melly identity, pt-BR selection/fallback and the
-disabled update surface before beginning E0 measurements.
+Merge green pull request #8, then perform the still-pending Android device
+validation and E0 measurements before selecting the next execution stage.
 
 ## Real blockers and risks
 
@@ -377,8 +418,8 @@ disabled update surface before beginning E0 measurements.
 
 ## For the next agent
 
-Do not repeat the architecture audit, baseline setup or P0-A implementation.
-Read this file and inspect the E0-A3 pull request/CI. Never reuse `melly/main`,
-the P0-A branch or prior infrastructure branches. Do not rename internal
-Omnibot protocol identifiers during identity cleanup. After a green CI run,
-validate pt-BR and side-by-side device installation before continuing E0.
+Do not repeat the architecture audit, baseline setup, P0-A, E1 or E2.
+`agentRunId` is the E2 correlation key; do not create another run identifier or
+recalculate E1 budget measurements elsewhere. Never reuse `melly/main`, the
+P0-A branch or prior infrastructure branches. Validate pt-BR and side-by-side
+device installation before continuing the remaining E0 measurements.

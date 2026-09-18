@@ -1,5 +1,7 @@
 package cn.com.omnimind.bot.agent
 
+import cn.com.omnimind.baselib.llm.ChatCompletionMessage
+import cn.com.omnimind.baselib.llm.ChatCompletionRequest
 import cn.com.omnimind.baselib.llm.encodeRequestToString
 import cn.com.omnimind.baselib.llm.toStreamingRequestBody
 import cn.com.omnimind.baselib.llm.requestLogJson
@@ -8,6 +10,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import okio.Buffer
@@ -16,6 +19,20 @@ import okio.Timeout
 import okio.buffer
 
 class JsonRequestEncodingTest {
+    @Test
+    fun `agent run correlation never enters provider request JSON`() {
+        val request = ChatCompletionRequest(
+            messages = listOf(ChatCompletionMessage(role = "user")),
+            model = "test-model",
+            agentRunId = "run-private-correlation"
+        )
+
+        val encoded = Json.encodeToString(request)
+
+        assertFalse(encoded.contains("agentRunId"))
+        assertFalse(encoded.contains("run-private-correlation"))
+    }
+
     @Test
     fun `large HTTP body writes bounded chunks and can be sent again without mutation`() {
         val data = "data:image/png;base64," + "abcd".repeat(6_000_000)
