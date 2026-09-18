@@ -526,46 +526,46 @@ class AgentOrchestratorTest {
         assertEquals(stepCount + 1, llmClient.requests.size)
     }
 
-    @Test
-    fun defaultAgentTurnDoesNotStopAtSixteenModelRounds() = runBlocking {
-        val modelRoundCount = 17
-        val llmClient = FakeLlmClient(
-            turns = List(modelRoundCount) { index ->
-                if (index == modelRoundCount - 1) {
-                    assistantTurn(content = "完成")
-                } else {
-                    assistantTurn(
-                        toolCalls = listOf(
-                            toolCall(
-                                name = "file_read",
-                                arguments = "{\"path\":\"/workspace/missing.txt\"}",
-                                id = "call-file-read-$index"
-                            )
-                        )
+@Test
+fun defaultAgentTurnFailsBeforeThirteenthModelRound() = runBlocking {
+val modelRoundCount = AgentExecutionLimits.MAX_MODEL_ROUNDS + 1
+val llmClient = FakeLlmClient(
+    turns = List(modelRoundCount) { index ->
+        if (index == modelRoundCount - 1) {
+            assistantTurn(content = "完成")
+        } else {
+            assistantTurn(
+                toolCalls = listOf(
+                    toolCall(
+                        name = "file_read",
+                        arguments = "{\"path\":\"/workspace/missing.txt\"}",
+                        id = "call-file-read-$index"
                     )
-                }
-            }
-        )
-        val toolExecutor = FakeToolExecutor(
-            results = mapOf(
-                "file_read" to List(modelRoundCount - 1) {
-                    ToolExecutionResult.Error("file_read", "文件不存在")
-                }
+                )
             )
-        )
-
-        val result = createOrchestrator(llmClient, toolExecutor).run(
-            AgentOrchestrator.Input(
-                callback = RecordingCallback(),
-                initialMessages = initialMessages("读取文件"),
-                executionEnv = FakeExecutionEnvironment("读取文件")
-            )
-        )
-
-        assertTrue(result is AgentResult.Success)
-        assertEquals(modelRoundCount - 1, toolExecutor.executeCalls.size)
-        assertEquals(modelRoundCount, llmClient.requests.size)
+        }
     }
+)
+val toolExecutor = FakeToolExecutor(
+    results = mapOf(
+        "file_read" to List(AgentExecutionLimits.MAX_MODEL_ROUNDS) {
+            ToolExecutionResult.Error("file_read", "文件不存在")
+        }
+    )
+)
+
+val result = createOrchestrator(llmClient, toolExecutor).run(
+    AgentOrchestrator.Input(
+        callback = RecordingCallback(),
+        initialMessages = initialMessages("读取文件"),
+        executionEnv = FakeExecutionEnvironment("读取文件")
+    )
+)
+
+assertTrue(result is AgentResult.Error)
+assertEquals(AgentExecutionLimits.MAX_MODEL_ROUNDS, toolExecutor.executeCalls.size)
+assertEquals(AgentExecutionLimits.MAX_MODEL_ROUNDS, llmClient.requests.size)
+}
 
     @Test
     fun multiRoundAgentPromptLeavesOptionalToolSchedulingToTheConfiguredProvider() = runBlocking {
